@@ -1,10 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [System.Serializable]
 public class Save
 {
+    public string GenerateName()
+    {
+        return CurrentWorld.ToString() + DateTime.UtcNow.ToString("G");
+    }
+
+    public void ToProgress()
+    {
+        CurrentProgress.currentProgress.Name = Name;
+        CurrentProgress.currentProgress.PlayerPositionX = PlayerPositionX;
+        CurrentProgress.currentProgress.PlayerPositionY = PlayerPositionY;
+        CurrentProgress.currentProgress.PlayerMaxHealth = PlayerMaxHealth;
+        CurrentProgress.currentProgress.PlayerCurrentHealth = PlayerCurrentHealth;
+        CurrentProgress.currentProgress.PlayerSpeed = PlayerSpeed;
+        CurrentProgress.currentProgress.CurrentWorld = CurrentWorld;
+    }
     public Save() { }
 
     public Save(string name, Player player, Worlds currentWorld)
@@ -37,12 +53,34 @@ public class Save
     public float PlayerCurrentHealth { get; private set; }
     public float PlayerSpeed { get; private set; }
 
-    public Worlds CurrentWorld { get; set; }
+    private int currentWorld;
+
+    public Save(string a)
+    {
+        Name = CurrentProgress.currentProgress.Name;
+        PlayerPositionX = CurrentProgress.currentProgress.PlayerPositionX;
+        PlayerPositionY = CurrentProgress.currentProgress.PlayerPositionY;
+        PlayerMaxHealth = CurrentProgress.currentProgress.PlayerMaxHealth;
+        PlayerCurrentHealth = CurrentProgress.currentProgress.PlayerCurrentHealth;
+        PlayerSpeed = CurrentProgress.currentProgress.PlayerSpeed;
+        CurrentWorld = CurrentProgress.currentProgress.CurrentWorld;
+    }
+
+    public Worlds CurrentWorld { get
+        {
+            return (Worlds)currentWorld;
+        } 
+        
+        set
+        {
+            currentWorld = (int)value;
+        } 
+    }
 
     public void SetPlayer(PlayerData player)
     {
         this.PlayerPositionX = player.PositionX;
-        this.PlayerPositionX = player.PositionY;
+        this.PlayerPositionY = player.PositionY;
         this.PlayerMaxHealth = player.MaxHealth;
         this.PlayerCurrentHealth = player.CurrentHealth;
         this.PlayerSpeed = player.Speed;

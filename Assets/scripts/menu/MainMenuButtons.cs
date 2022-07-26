@@ -10,7 +10,6 @@ public class MainMenuButtons : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("alloto_main");
-        CurrentProgress.currentProgress.Name = "alloto " + DateTime.UtcNow.ToString("G");
         CurrentProgress.currentProgress.CurrentWorld = Worlds.alloto;
 
         CurrentProgress.currentProgress.SetPlayer(

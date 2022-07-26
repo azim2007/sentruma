@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     public float PositionX { 
         get
         {
-            return _rbPlayer.velocity.x;
+            return transform.position.x;
         } 
     }
 
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     {
         get
         {
-            return _rbPlayer.velocity.y;
+            return transform.position.y;
         }
     }
 
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         _rbPlayer = GetComponent<Rigidbody2D>();
-        _rbPlayer.velocity = new Vector2(CurrentProgress.currentProgress.PlayerPositionX, CurrentProgress.currentProgress.PlayerPositionY);
+        transform.position = new Vector2(CurrentProgress.currentProgress.GetPlayer().PositionX, CurrentProgress.currentProgress.GetPlayer().PositionY);
     }
 
     void Update()
@@ -92,6 +92,14 @@ public class PlayerData
     public PlayerData() { }
 
     public PlayerData(PlayerData player)
+    {
+        Speed = player.Speed;
+        MaxHealth = player.MaxHealth;
+        this.currentHealth = player.CurrentHealth;
+        _rbPlayer = new Vector2(player.PositionX, player.PositionY);
+    }
+
+    public PlayerData(Player player)
     {
         Speed = player.Speed;
         MaxHealth = player.MaxHealth;
