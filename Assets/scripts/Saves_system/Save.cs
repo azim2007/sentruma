@@ -5,6 +5,30 @@ using UnityEngine;
 [System.Serializable]
 public class Save
 {
+    public Save() { }
+
+    public Save(string name, Player player, Worlds currentWorld)
+    {
+        Name = name;
+        PlayerPositionX = player.PositionX;
+        PlayerPositionY = player.PositionY;
+        PlayerMaxHealth = player.MaxHealth;
+        PlayerCurrentHealth = player.CurrentHealth;
+        PlayerSpeed = player.Speed;
+        CurrentWorld = currentWorld;
+    }
+
+    public Save(Save save)
+    {
+        Name = save.Name;
+        PlayerPositionX = save.PlayerPositionX;
+        PlayerPositionY = save.PlayerPositionY;
+        PlayerMaxHealth = save.PlayerMaxHealth;
+        PlayerCurrentHealth = save.PlayerCurrentHealth;
+        PlayerSpeed = save.PlayerSpeed;
+        CurrentWorld = save.CurrentWorld;
+    }
+
     public string Name { get; set; }
 
     public float PlayerPositionX { get; private set; }
@@ -15,7 +39,7 @@ public class Save
 
     public Worlds CurrentWorld { get; set; }
 
-    public void SetPlayer(Player player)
+    public void SetPlayer(PlayerData player)
     {
         this.PlayerPositionX = player.PositionX;
         this.PlayerPositionX = player.PositionY;
@@ -24,9 +48,14 @@ public class Save
         this.PlayerSpeed = player.Speed;
     }
 
-    public Player GetPlayer()
+    public PlayerData GetPlayer()
     {
-        Player player = new Player(PlayerSpeed, PlayerMaxHealth, PlayerCurrentHealth);
+        return new PlayerData(
+            speed: PlayerSpeed, 
+            maxHealth: PlayerMaxHealth, 
+            currentHealth: PlayerCurrentHealth, 
+            rbPlayer: new Vector2(PlayerPositionX, PlayerPositionY)
+        );
     }
 }
 

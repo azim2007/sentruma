@@ -4,17 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Player() { }
-
-    public Player(float speed, float maxHealth, float currentHealth)    {
-        Speed = speed;
-        MaxHealth = maxHealth;
-        CurrentHealth = currentHealth;
-    }
-
-
-    public float Speed { get; }
-    public float MaxHealth { get; }
+    public float Speed { get; private set; }
+    public float MaxHealth { get; private set; }
 
     private float currentHealth;
     public float CurrentHealth { 
@@ -51,18 +42,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    public Vector2 Position
-    {
-        set
-        {
-            _rbPlayer.position = value;
-        }
-    }
-
     private Rigidbody2D _rbPlayer;
+
     void Start()
     {
         _rbPlayer = GetComponent<Rigidbody2D>();
+        _rbPlayer.velocity = new Vector2(CurrentProgress.currentProgress.PlayerPositionX, CurrentProgress.currentProgress.PlayerPositionY);
     }
 
     void Update()
@@ -71,4 +56,88 @@ public class Player : MonoBehaviour
         float xAxis = Input.GetAxis("Horizontal");
         _rbPlayer.velocity = new Vector2(xAxis, yAxis);
     }
+
+    public void LoadPlayer(float speed, float maxHealth, float currentHealth, Vector2 rbPlayer)
+    {
+        Speed = speed;
+        MaxHealth = maxHealth;
+        this.currentHealth = currentHealth;
+    }
+
+    public void LoadPlayer(Player player)
+    {
+        Speed = player.Speed;
+        MaxHealth = player.MaxHealth;
+        currentHealth = player.CurrentHealth;
+    }
+
+    public void LoadPlayer(PlayerData player)
+    {
+        Speed = player.Speed;
+        MaxHealth = player.MaxHealth;
+        currentHealth = player.CurrentHealth;
+    }
+}
+
+public class PlayerData
+{
+    public PlayerData(float speed, float maxHealth, float currentHealth, Vector2 rbPlayer)
+    {
+        Speed = speed;
+        MaxHealth = maxHealth;
+        this.currentHealth = currentHealth;
+        _rbPlayer = new Vector2(rbPlayer.x, rbPlayer.y);
+    }
+
+    public PlayerData() { }
+
+    public PlayerData(PlayerData player)
+    {
+        Speed = player.Speed;
+        MaxHealth = player.MaxHealth;
+        this.currentHealth = player.CurrentHealth;
+        _rbPlayer = new Vector2(player.PositionX, player.PositionY);
+    }
+
+    public float Speed { get; private set; }
+    public float MaxHealth { get; private set; }
+
+    private float currentHealth;
+    public float CurrentHealth
+    {
+        get
+        {
+            return currentHealth;
+        }
+
+        set
+        {
+            if (value >= 0)
+            {
+                currentHealth -= value;
+            }
+            else
+            {
+                throw new System.Exception("damage cannot be less than zero");
+            }
+        }
+    }
+
+    public float PositionX
+    {
+        get
+        {
+            return _rbPlayer.x;
+        }
+    }
+
+    public float PositionY
+    {
+        get
+        {
+            return _rbPlayer.y;
+        }
+    }
+
+    private Vector2 _rbPlayer;
 }
