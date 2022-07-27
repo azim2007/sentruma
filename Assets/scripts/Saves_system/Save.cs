@@ -20,6 +20,7 @@ public class Save
         CurrentProgress.currentProgress.PlayerCurrentHealth = PlayerCurrentHealth;
         CurrentProgress.currentProgress.PlayerSpeed = PlayerSpeed;
         CurrentProgress.currentProgress.CurrentWorld = CurrentWorld;
+        CurrentProgress.currentProgress.Date = Date;
     }
     public Save() { }
 
@@ -32,6 +33,7 @@ public class Save
         PlayerCurrentHealth = player.CurrentHealth;
         PlayerSpeed = player.Speed;
         CurrentWorld = currentWorld;
+        Date = DateTime.Now;
     }
 
     public Save(Save save)
@@ -43,6 +45,7 @@ public class Save
         PlayerCurrentHealth = save.PlayerCurrentHealth;
         PlayerSpeed = save.PlayerSpeed;
         CurrentWorld = save.CurrentWorld;
+        Date = save.Date;
     }
 
     public string Name { get; set; }
@@ -52,6 +55,8 @@ public class Save
     public float PlayerMaxHealth { get; private set; }
     public float PlayerCurrentHealth { get; private set; }
     public float PlayerSpeed { get; private set; }
+
+    public DateTime Date { get; private set; }
 
     private int currentWorld;
 
@@ -64,6 +69,7 @@ public class Save
         PlayerCurrentHealth = CurrentProgress.currentProgress.PlayerCurrentHealth;
         PlayerSpeed = CurrentProgress.currentProgress.PlayerSpeed;
         CurrentWorld = CurrentProgress.currentProgress.CurrentWorld;
+        Date = DateTime.Now;
     }
 
     public Worlds CurrentWorld { get

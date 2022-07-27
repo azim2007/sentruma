@@ -25,6 +25,7 @@ public class AllotoSceneManager : MonoBehaviour
         CurrentProgress.currentProgress.SetPlayer(new PlayerData(player));
 
         Saver.Save(save: new Save("current"), fileName: "1");
+        Debug.Log("date " + CurrentProgress.currentProgress.Date.ToString("G"));
     }
 
     public void LoadProgress()
