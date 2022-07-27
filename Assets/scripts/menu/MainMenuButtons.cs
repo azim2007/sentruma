@@ -19,6 +19,7 @@ public class MainMenuButtons : MonoBehaviour
                 rbPlayer: new Vector2(0f, 0f)
             )
         );
+        CurrentProgress.currentProgress.GenerateName();
     }
 
     public void Settings() => Debug.Log("settings");

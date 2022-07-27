@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 464815940}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -485,6 +485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd8bdfd717e36de47a152ee7d7ed3fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  savePanelPrefab: {fileID: 1149089082738671948, guid: bee40cf365b77174ebd2d8fe57178727,
+    type: 3}
 --- !u!4 &835812591
 Transform:
   m_ObjectHideFlags: 0

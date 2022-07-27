@@ -24,13 +24,13 @@ public class AllotoSceneManager : MonoBehaviour
         CurrentProgress.currentProgress.CurrentWorld = Worlds.alloto;
         CurrentProgress.currentProgress.SetPlayer(new PlayerData(player));
 
-        Saver.Save(save: new Save("current"), fileName: "1");
-        Debug.Log("date " + CurrentProgress.currentProgress.Date.ToString("G"));
+        Saver.Save(save: new Save(name: "current"), fileName: "0");
+        Debug.Log("date " + CurrentProgress.currentProgress.Name);
     }
 
     public void LoadProgress()
     {
-        Saver.Load("1").ToProgress();
+        Saver.Load("0").ToProgress();
         Debug.Log("position " + CurrentProgress.currentProgress.GetPlayer().PositionX + " " + CurrentProgress.currentProgress.GetPlayer().PositionY);
         SceneManager.LoadScene("alloto_main");
     }

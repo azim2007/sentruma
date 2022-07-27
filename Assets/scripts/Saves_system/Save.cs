@@ -6,9 +6,9 @@ using System;
 [System.Serializable]
 public class Save
 {
-    public string GenerateName()
+    public void GenerateName()
     {
-        return CurrentWorld.ToString() + DateTime.UtcNow.ToString("G");
+        Name = CurrentWorld.ToString() + " " + DateTime.UtcNow.ToString("G");
     }
 
     public void ToProgress()
@@ -60,9 +60,8 @@ public class Save
 
     private int currentWorld;
 
-    public Save(string a)
+    public Save(string name)
     {
-        Name = CurrentProgress.currentProgress.Name;
         PlayerPositionX = CurrentProgress.currentProgress.PlayerPositionX;
         PlayerPositionY = CurrentProgress.currentProgress.PlayerPositionY;
         PlayerMaxHealth = CurrentProgress.currentProgress.PlayerMaxHealth;
@@ -70,6 +69,9 @@ public class Save
         PlayerSpeed = CurrentProgress.currentProgress.PlayerSpeed;
         CurrentWorld = CurrentProgress.currentProgress.CurrentWorld;
         Date = DateTime.Now;
+
+        GenerateName();
+        if(name != "") Name = name;
     }
 
     public Worlds CurrentWorld { get
