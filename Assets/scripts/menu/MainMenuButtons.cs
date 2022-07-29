@@ -24,5 +24,9 @@ public class MainMenuButtons : MonoBehaviour
 
     public void Settings() => Debug.Log("settings");
     public void AboutUs() => Debug.Log("AboutUs");
-    public void Saves() => Debug.Log("Saves");
+    public void Saves() 
+    {
+        Debug.Log("Saves");
+        SceneManager.LoadScene("saves_menu");
+    }
 }

@@ -21,6 +21,7 @@ public class AllotoSceneManager : MonoBehaviour
 
     public void WriteProgress()
     {
+        CurrentProgress.currentProgress.SetPlayer(new PlayerData(player));
         SceneManager.LoadScene("saves_menu");
     }
 
