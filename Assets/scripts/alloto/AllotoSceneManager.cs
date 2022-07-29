@@ -21,11 +21,7 @@ public class AllotoSceneManager : MonoBehaviour
 
     public void WriteProgress()
     {
-        CurrentProgress.currentProgress.CurrentWorld = Worlds.alloto;
-        CurrentProgress.currentProgress.SetPlayer(new PlayerData(player));
-
-        Saver.Save(save: new Save(name: "current"), fileName: "0");
-        Debug.Log("date " + CurrentProgress.currentProgress.Name);
+        SceneManager.LoadScene("saves_menu");
     }
 
     public void LoadProgress()

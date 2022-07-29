@@ -9,7 +9,6 @@ public class MainMenuButtons : MonoBehaviour
     public void Exit() => Application.Quit();
     public void StartGame()
     {
-        SceneManager.LoadScene("alloto_main");
         CurrentProgress.currentProgress.CurrentWorld = Worlds.alloto;
 
         CurrentProgress.currentProgress.SetPlayer(
@@ -20,6 +19,7 @@ public class MainMenuButtons : MonoBehaviour
             )
         );
         CurrentProgress.currentProgress.GenerateName();
+        CurrentProgress.currentProgress.LoadGame();
     }
 
     public void Settings() => Debug.Log("settings");

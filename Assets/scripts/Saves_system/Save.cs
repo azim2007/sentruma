@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
 [System.Serializable]
@@ -9,6 +10,11 @@ public class Save
     public void GenerateName()
     {
         Name = CurrentWorld.ToString() + " " + DateTime.UtcNow.ToString("G");
+    }
+
+    public void LoadGame()
+    {
+        SceneManager.LoadScene(CurrentWorld.ToString() + "_main");
     }
 
     public void ToProgress()

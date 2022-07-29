@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/alloto/alloto_main.unity
     guid: e8a8272d393c9724d9c48d76c9300207
+  - enabled: 1
+    path: Assets/Scenes/menu/saves_menu.unity
+    guid: 652a0d963e86a6944aacc37b8221941c
   m_configObjects: {}
