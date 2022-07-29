@@ -24,9 +24,12 @@ public class SaveSceneManager : MonoBehaviour
         try { Debug.Log("first save name: " + fileNames[0]); }
         catch { }
 
-        for(int i = 0; i < fileNames.Length; i++)
+        foreach(var e in fileNames)
         {
-            saves.Add(new Save(Saver.Load(System.Convert.ToString(i))));
+            string name = e.Replace(Application.persistentDataPath + "/saves/save", "");
+            name = name.Replace(Application.persistentDataPath + "/saves\\save", "");
+            name = name.Replace(".sav", "");
+            saves.Add(new Save(Saver.Load(name)));
         }
 
         try { Debug.Log("first save pos: " + saves[0].Name); }
