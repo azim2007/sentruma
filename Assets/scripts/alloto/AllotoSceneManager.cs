@@ -22,7 +22,7 @@ public class AllotoSceneManager : MonoBehaviour
     public void WriteProgress()
     {
         CurrentProgress.currentProgress.SetPlayer(new PlayerData(player));
-        SceneManager.LoadScene("saves_menu");
+        StartCoroutine(LoadSaveScene());
     }
 
     public void LoadProgress()
@@ -30,5 +30,16 @@ public class AllotoSceneManager : MonoBehaviour
         Saver.Load("0").ToProgress();
         Debug.Log("position " + CurrentProgress.currentProgress.GetPlayer().PositionX + " " + CurrentProgress.currentProgress.GetPlayer().PositionY);
         SceneManager.LoadScene("alloto_main");
+    }
+
+    IEnumerator LoadSaveScene()
+    {
+        AsyncOperation loading = SceneManager.LoadSceneAsync("saves_menu");
+        while (!loading.isDone)
+        {
+            float loadingProgress = Mathf.Clamp01(loading.progress / 0.9f);
+            Debug.Log("progress: " + loadingProgress);
+            yield return null;
+        }
     }
 }

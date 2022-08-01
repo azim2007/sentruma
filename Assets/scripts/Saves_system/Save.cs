@@ -9,7 +9,7 @@ public class Save
 {
     public void GenerateName()
     {
-        Name = CurrentWorld.ToString() + " " + DateTime.UtcNow.ToString("G");
+        Name = CurrentWorld.ToString() + " " + DateTime.Now.ToString("G");
     }
 
     public void LoadGame()
@@ -27,6 +27,8 @@ public class Save
         CurrentProgress.currentProgress.PlayerSpeed = PlayerSpeed;
         CurrentProgress.currentProgress.CurrentWorld = CurrentWorld;
         CurrentProgress.currentProgress.Date = Date;
+        CurrentProgress.currentProgress.PlayerHarisma = PlayerHarisma;
+        CurrentProgress.currentProgress.PlayerForse = PlayerForse;
     }
     public Save() { }
 
@@ -40,6 +42,8 @@ public class Save
         PlayerSpeed = player.Speed;
         CurrentWorld = currentWorld;
         Date = DateTime.Now;
+        PlayerHarisma = player.Harisma;
+        PlayerForse = player.Forse;
     }
 
     public Save(Save save)
@@ -52,6 +56,8 @@ public class Save
         PlayerSpeed = save.PlayerSpeed;
         CurrentWorld = save.CurrentWorld;
         Date = save.Date;
+        PlayerForse = save.PlayerForse;
+        PlayerHarisma = save.PlayerHarisma;
     }
 
     public string Name { get; set; }
@@ -61,6 +67,8 @@ public class Save
     public float PlayerMaxHealth { get; private set; }
     public float PlayerCurrentHealth { get; private set; }
     public float PlayerSpeed { get; private set; }
+    public float PlayerHarisma { get; private set; }
+    public float PlayerForse { get; private set; }
 
     public DateTime Date { get; private set; }
 
@@ -73,6 +81,8 @@ public class Save
         PlayerMaxHealth = CurrentProgress.currentProgress.PlayerMaxHealth;
         PlayerCurrentHealth = CurrentProgress.currentProgress.PlayerCurrentHealth;
         PlayerSpeed = CurrentProgress.currentProgress.PlayerSpeed;
+        PlayerHarisma = CurrentProgress.currentProgress.PlayerHarisma;
+        PlayerForse = CurrentProgress.currentProgress.PlayerForse;
         CurrentWorld = CurrentProgress.currentProgress.CurrentWorld;
         Date = DateTime.Now;
 
@@ -98,6 +108,8 @@ public class Save
         this.PlayerMaxHealth = player.MaxHealth;
         this.PlayerCurrentHealth = player.CurrentHealth;
         this.PlayerSpeed = player.Speed;
+        this.PlayerHarisma = player.Harisma;
+        this.PlayerForse = player.Forse;
     }
 
     public PlayerData GetPlayer()
@@ -106,7 +118,9 @@ public class Save
             speed: PlayerSpeed, 
             maxHealth: PlayerMaxHealth, 
             currentHealth: PlayerCurrentHealth, 
-            rbPlayer: new Vector2(PlayerPositionX, PlayerPositionY)
+            rbPlayer: new Vector2(PlayerPositionX, PlayerPositionY),
+            harisma: PlayerHarisma,
+            forse: PlayerForse
         );
     }
 }

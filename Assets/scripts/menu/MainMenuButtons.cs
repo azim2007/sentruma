@@ -12,10 +12,12 @@ public class MainMenuButtons : MonoBehaviour
         CurrentProgress.currentProgress.CurrentWorld = Worlds.alloto;
 
         CurrentProgress.currentProgress.SetPlayer(
-           new PlayerData(speed: 5, 
+           new PlayerData(speed: 2, 
                 maxHealth: 10, 
                 currentHealth: 1, 
-                rbPlayer: new Vector2(0f, 0f)
+                rbPlayer: new Vector2(0f, 0f),
+                harisma: 1,
+                forse: 1
             )
         );
         CurrentProgress.currentProgress.GenerateName();
@@ -27,6 +29,17 @@ public class MainMenuButtons : MonoBehaviour
     public void Saves() 
     {
         Debug.Log("Saves");
-        SceneManager.LoadScene("saves_menu");
+        StartCoroutine(LoadSaveScene());
+    }
+
+    IEnumerator LoadSaveScene()
+    {
+        AsyncOperation loading = SceneManager.LoadSceneAsync("saves_menu");
+        while (!loading.isDone)
+        {
+            float loadingProgress = Mathf.Clamp01(loading.progress / 0.9f);
+            Debug.Log("progress: " + loadingProgress);
+            yield return null;
+        }
     }
 }

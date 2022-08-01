@@ -5,46 +5,33 @@ using System.IO;
 
 public class SaveSceneManager : MonoBehaviour
 {
-    public GameObject savePanelPrefab;
+    private GameObject savePanelPrefab;
 
     private List<GameObject> savePanels;
     private List<SaveItemController> saveControllers;
-    private List<Save> saves;
     private GameObject content;
+
+    private int saveItemsCount = 20;
     
     void Start()
     {
+        savePanelPrefab = GameObject.FindGameObjectWithTag("SaveItem");
         content = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).gameObject;
         Debug.Log("content name: " + content);
 
-        saves = new List<Save>();
-        var fileNames = Directory.GetFiles(Application.persistentDataPath + "/saves", "*.sav");
-
-        Debug.Log("saves count: " + fileNames.Length);
-        try { Debug.Log("first save name: " + fileNames[0]); }
-        catch { }
-
-        foreach(var e in fileNames)
-        {
-            string name = e.Replace(Application.persistentDataPath + "/saves/save", "");
-            name = name.Replace(Application.persistentDataPath + "/saves\\save", "");
-            name = name.Replace(".sav", "");
-            saves.Add(new Save(Saver.Load(name)));
-        }
-
-        try { Debug.Log("first save pos: " + saves[0].Name); }
-        catch { }
-
         savePanels = new List<GameObject>();
         saveControllers = new List<SaveItemController>();
-        foreach(var e in saves)
-        {
-            CreateSavePanel(saveControllers.Count, e);
-        }
 
-        for(int i = saveControllers.Count; i < 100; i++)
+        for(int i = 0; i < saveItemsCount; i++)
         {
-            CreateSavePanel(i);
+            try
+            {
+                CreateSavePanel(i, Saver.Load(i.ToString()));
+            }
+            catch
+            {
+                CreateSavePanel(i);
+            }
         }
     }
 

@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     public float Speed { get; private set; }
     public float MaxHealth { get; private set; }
+    public float Harisma { get; private set; }
+    public float Forse { get; private set; }
 
     private float currentHealth;
     public float CurrentHealth { 
@@ -52,16 +54,18 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        float yAxis = Input.GetAxis("Vertical");
-        float xAxis = Input.GetAxis("Horizontal");
+        float yAxis = Mathf.Round(Input.GetAxis("Vertical")) * Speed;
+        float xAxis = Mathf.Round(Input.GetAxis("Horizontal")) * Speed;
         _rbPlayer.velocity = new Vector2(xAxis, yAxis);
     }
 
-    public void LoadPlayer(float speed, float maxHealth, float currentHealth, Vector2 rbPlayer)
+    public void LoadPlayer(float speed, float maxHealth, float currentHealth, float harisma, float forse)
     {
         Speed = speed;
         MaxHealth = maxHealth;
         this.currentHealth = currentHealth;
+        Harisma = harisma;
+        Forse = forse;
     }
 
     public void LoadPlayer(Player player)
@@ -69,6 +73,8 @@ public class Player : MonoBehaviour
         Speed = player.Speed;
         MaxHealth = player.MaxHealth;
         currentHealth = player.CurrentHealth;
+        Harisma = player.Harisma;
+        Forse = player.Forse;
     }
 
     public void LoadPlayer(PlayerData player)
@@ -76,17 +82,21 @@ public class Player : MonoBehaviour
         Speed = player.Speed;
         MaxHealth = player.MaxHealth;
         currentHealth = player.CurrentHealth;
+        Harisma = player.Harisma;
+        Forse = player.Forse;
     }
 }
 
 public class PlayerData
 {
-    public PlayerData(float speed, float maxHealth, float currentHealth, Vector2 rbPlayer)
+    public PlayerData(float speed, float maxHealth, float currentHealth, Vector2 rbPlayer, float harisma, float forse)
     {
         Speed = speed;
         MaxHealth = maxHealth;
         this.currentHealth = currentHealth;
         _rbPlayer = new Vector2(rbPlayer.x, rbPlayer.y);
+        Harisma = harisma;
+        Forse = forse;
     }
 
     public PlayerData() { }
@@ -97,6 +107,8 @@ public class PlayerData
         MaxHealth = player.MaxHealth;
         this.currentHealth = player.CurrentHealth;
         _rbPlayer = new Vector2(player.PositionX, player.PositionY);
+        Harisma = player.Harisma;
+        Forse = player.Forse;
     }
 
     public PlayerData(Player player)
@@ -105,10 +117,14 @@ public class PlayerData
         MaxHealth = player.MaxHealth;
         this.currentHealth = player.CurrentHealth;
         _rbPlayer = new Vector2(player.PositionX, player.PositionY);
+        Harisma = player.Harisma;
+        Forse = player.Forse;
     }
 
     public float Speed { get; private set; }
     public float MaxHealth { get; private set; }
+    public float Harisma { get; private set; }
+    public float Forse { get; private set; }
 
     private float currentHealth;
     public float CurrentHealth

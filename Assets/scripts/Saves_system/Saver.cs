@@ -14,7 +14,7 @@ public static class Saver
             Directory.CreateDirectory(Application.persistentDataPath + "/saves");
         }
 
-        var path = Application.persistentDataPath + "/saves/save" + fileName + ".sav";
+        var path = Application.persistentDataPath + "/saves/" + fileName + ".sav";
         var stream = new FileStream(path, FileMode.Create);
 
         Debug.Log("position on save: " + save.GetPlayer().PositionX + " " + save.GetPlayer().PositionY);
@@ -25,7 +25,7 @@ public static class Saver
 
     public static Save Load(string fileName)
     {
-        var path = Application.persistentDataPath + "/saves/save" + fileName + ".sav";
+        var path = Application.persistentDataPath + "/saves/" + fileName + ".sav";
 
         if (File.Exists(path))
         {
