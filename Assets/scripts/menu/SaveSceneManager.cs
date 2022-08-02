@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
+using System;
 
 public class SaveSceneManager : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class SaveSceneManager : MonoBehaviour
     private List<SaveItemController> saveControllers;
     private GameObject content;
 
-    private int saveItemsCount = 20;
+    private int saveItemsCount = 100;
     
     void Start()
     {
@@ -26,12 +26,15 @@ public class SaveSceneManager : MonoBehaviour
         {
             try
             {
-                CreateSavePanel(i, Saver.Load(i.ToString()));
+                Save current = Saver.Load(i.ToString());
+                CreateSavePanel(i, current);
             }
             catch
             {
                 CreateSavePanel(i);
             }
+
+            if(i % 10 == 9) GC.Collect();
         }
     }
 
@@ -47,7 +50,9 @@ public class SaveSceneManager : MonoBehaviour
 
         saveControllers.Add(savePanels[savePanels.Count - 1].GetComponent<SaveItemController>());
         saveControllers[saveControllers.Count - 1].Id = id;
-        saveControllers[saveControllers.Count - 1].Value = value;
+        saveControllers[saveControllers.Count - 1].Name = value.Name;
+        saveControllers[saveControllers.Count - 1].Date = value.Date;
+        saveControllers[saveControllers.Count - 1].CurrentWorld = value.CurrentWorld;
     }
 
     private void CreateSavePanel(int id)
@@ -57,5 +62,6 @@ public class SaveSceneManager : MonoBehaviour
 
         saveControllers.Add(savePanels[savePanels.Count - 1].GetComponent<SaveItemController>());
         saveControllers[saveControllers.Count - 1].Id = id;
+        saveControllers[saveControllers.Count - 1].Name = "";
     }
 }

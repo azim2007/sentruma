@@ -14,7 +14,7 @@ public class Save
 
     public void LoadGame()
     {
-        SceneManager.LoadScene(CurrentWorld.ToString() + "_main");
+        SceneLoader.LoadScene(CurrentWorld.ToString() + "_main", "Заходим в мир");
     }
 
     public void ToProgress()

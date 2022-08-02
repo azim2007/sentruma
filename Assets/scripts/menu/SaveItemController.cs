@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class SaveItemController : MonoBehaviour
 {
@@ -10,8 +11,10 @@ public class SaveItemController : MonoBehaviour
     private GameObject setName; //input field
 
     public int Id { get; set; }
-    public Save Value { get; set; }
-    public bool IsEmpty { get { return Value == null; } }
+    public string Name { get; set; }
+    public DateTime Date { get; set; }
+    public Worlds CurrentWorld { get; set; }
+    public bool IsEmpty { get { return Name == ""; } }
     public bool IsProgressEmpty { get { return CurrentProgress.currentProgress.GetPlayer().MaxHealth == 0; } }
 
     void Start()
@@ -30,15 +33,19 @@ public class SaveItemController : MonoBehaviour
 
     private void Load()
     {
-        Value.ToProgress();
+        Save current = Saver.Load(Id.ToString());
+        current.ToProgress();
         CurrentProgress.currentProgress.LoadGame();
     }
 
     private void Save()
     {
         string saveName = setName.GetComponent<InputField>().text;
-        Value = new Save(saveName);
-        Saver.Save(Value, Id.ToString());
+        Save current = new Save(saveName);
+        Saver.Save(current, Id.ToString());
+        this.Name = saveName;
+        this.Date = current.Date;
+        this.CurrentWorld = current.CurrentWorld;
         CheckSaveable();
         CheckLoadable();
     }
@@ -58,9 +65,9 @@ public class SaveItemController : MonoBehaviour
         if (!IsEmpty)
         {
             load.SetActive(true);
-            saveName.text = Value.Name;
-            date.text = Value.Date.ToString("G");
-            currentWorld.text = Value.CurrentWorld.ToString();
+            saveName.text = Name;
+            date.text = Date.ToString("G");
+            currentWorld.text = CurrentWorld.ToString();
             load.GetComponent<Button>().onClick.AddListener(() => Load());
         }
     }

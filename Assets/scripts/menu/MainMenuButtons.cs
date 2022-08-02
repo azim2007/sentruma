@@ -29,17 +29,6 @@ public class MainMenuButtons : MonoBehaviour
     public void Saves() 
     {
         Debug.Log("Saves");
-        StartCoroutine(LoadSaveScene());
-    }
-
-    IEnumerator LoadSaveScene()
-    {
-        AsyncOperation loading = SceneManager.LoadSceneAsync("saves_menu");
-        while (!loading.isDone)
-        {
-            float loadingProgress = Mathf.Clamp01(loading.progress / 0.9f);
-            Debug.Log("progress: " + loadingProgress);
-            yield return null;
-        }
+        SceneLoader.LoadScene("saves_menu", "Открываем загрузки");
     }
 }
