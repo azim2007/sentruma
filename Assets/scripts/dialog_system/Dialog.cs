@@ -33,4 +33,17 @@ public class Dialog
     }
 
     public Dialog(List<Replic> dialog, Func<bool> canStart, Action onEnd) : this(dialog, canStart, onEnd, false) { }
+
+    public IEnumerable<Tuple<string, string>> GetReplic()
+    {
+        foreach(var rep in DialogReplics)
+        {
+            foreach(var text in rep.GetText())
+            {
+                yield return new Tuple<string, string> (rep.Sender, text);
+            }
+        }
+        OnEnd();
+        Debug.Log("GetReplic completed");
+    }
 }

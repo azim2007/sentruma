@@ -19,45 +19,27 @@ public class Save
 
     public void ToProgress()
     {
+        CurrentProgress.currentProgress.SetPlayer(this.GetPlayer());
         CurrentProgress.currentProgress.Name = Name;
-        CurrentProgress.currentProgress.PlayerPositionX = PlayerPositionX;
-        CurrentProgress.currentProgress.PlayerPositionY = PlayerPositionY;
-        CurrentProgress.currentProgress.PlayerMaxHealth = PlayerMaxHealth;
-        CurrentProgress.currentProgress.PlayerCurrentHealth = PlayerCurrentHealth;
-        CurrentProgress.currentProgress.PlayerSpeed = PlayerSpeed;
         CurrentProgress.currentProgress.CurrentWorld = CurrentWorld;
         CurrentProgress.currentProgress.Date = Date;
-        CurrentProgress.currentProgress.PlayerHarisma = PlayerHarisma;
-        CurrentProgress.currentProgress.PlayerForse = PlayerForse;
     }
     public Save() { }
 
     public Save(string name, Player player, Worlds currentWorld)
     {
+        SetPlayer(new PlayerData(player));
         Name = name;
-        PlayerPositionX = player.PositionX;
-        PlayerPositionY = player.PositionY;
-        PlayerMaxHealth = player.MaxHealth;
-        PlayerCurrentHealth = player.CurrentHealth;
-        PlayerSpeed = player.Speed;
         CurrentWorld = currentWorld;
         Date = DateTime.Now;
-        PlayerHarisma = player.Harisma;
-        PlayerForse = player.Forse;
     }
 
     public Save(Save save)
     {
+        this.SetPlayer(save.GetPlayer());
         Name = save.Name;
-        PlayerPositionX = save.PlayerPositionX;
-        PlayerPositionY = save.PlayerPositionY;
-        PlayerMaxHealth = save.PlayerMaxHealth;
-        PlayerCurrentHealth = save.PlayerCurrentHealth;
-        PlayerSpeed = save.PlayerSpeed;
         CurrentWorld = save.CurrentWorld;
         Date = save.Date;
-        PlayerForse = save.PlayerForse;
-        PlayerHarisma = save.PlayerHarisma;
     }
 
     public string Name { get; set; }
@@ -69,6 +51,7 @@ public class Save
     public float PlayerSpeed { get; private set; }
     public float PlayerHarisma { get; private set; }
     public float PlayerForse { get; private set; }
+    public bool PlayerIsRage { get; private set; }
 
     public DateTime Date { get; private set; }
 
@@ -76,13 +59,7 @@ public class Save
 
     public Save(string name)
     {
-        PlayerPositionX = CurrentProgress.currentProgress.PlayerPositionX;
-        PlayerPositionY = CurrentProgress.currentProgress.PlayerPositionY;
-        PlayerMaxHealth = CurrentProgress.currentProgress.PlayerMaxHealth;
-        PlayerCurrentHealth = CurrentProgress.currentProgress.PlayerCurrentHealth;
-        PlayerSpeed = CurrentProgress.currentProgress.PlayerSpeed;
-        PlayerHarisma = CurrentProgress.currentProgress.PlayerHarisma;
-        PlayerForse = CurrentProgress.currentProgress.PlayerForse;
+        this.SetPlayer(CurrentProgress.currentProgress.GetPlayer());
         CurrentWorld = CurrentProgress.currentProgress.CurrentWorld;
         Date = DateTime.Now;
 
@@ -106,10 +83,11 @@ public class Save
         this.PlayerPositionX = player.PositionX;
         this.PlayerPositionY = player.PositionY;
         this.PlayerMaxHealth = player.MaxHealth;
-        this.PlayerCurrentHealth = player.CurrentHealth;
+        this.PlayerCurrentHealth = player.SetDamage;
         this.PlayerSpeed = player.Speed;
         this.PlayerHarisma = player.Harisma;
         this.PlayerForse = player.Forse;
+        this.PlayerIsRage = player.IsRage;
     }
 
     public PlayerData GetPlayer()
@@ -120,7 +98,8 @@ public class Save
             currentHealth: PlayerCurrentHealth, 
             rbPlayer: new Vector2(PlayerPositionX, PlayerPositionY),
             harisma: PlayerHarisma,
-            forse: PlayerForse
+            forse: PlayerForse,
+            isRage: PlayerIsRage
         );
     }
 }

@@ -11,7 +11,7 @@ public class AllotoSceneManager : MonoBehaviour
     {
         player = Instantiate(playerPrefab).GetComponent<Player>();
         player.LoadPlayer(CurrentProgress.currentProgress.GetPlayer());
-        Debug.Log(player.MaxHealth + " " + player.CurrentHealth);
+        Debug.Log(player.MaxHealth + " " + player.SetDamage);
     }
 
     void Update()

@@ -8,9 +8,10 @@ public class Player : MonoBehaviour
     public float MaxHealth { get; private set; }
     public float Harisma { get; private set; }
     public float Forse { get; private set; }
+    public bool IsRage { get; private set; }
 
     private float currentHealth;
-    public float CurrentHealth { 
+    public float SetDamage { 
         get 
         {
             return currentHealth;
@@ -44,8 +45,32 @@ public class Player : MonoBehaviour
         }
     }
 
-    private Rigidbody2D _rbPlayer;
+    public void LoadPlayer(float speed, float maxHealth, float currentHealth, float harisma, float forse, bool isRage)
+    {
+        Speed = speed;
+        MaxHealth = maxHealth;
+        this.currentHealth = currentHealth;
+        Harisma = harisma;
+        Forse = forse;
+        IsRage = isRage;
+    }
 
+    public void LoadPlayer(Player player)
+    {
+        LoadPlayer(new PlayerData(player));
+    }
+
+    public void LoadPlayer(PlayerData player)
+    {
+        Speed = player.Speed;
+        MaxHealth = player.MaxHealth;
+        currentHealth = player.SetDamage;
+        Harisma = player.Harisma;
+        Forse = player.Forse;
+        IsRage = player.IsRage;
+    }
+
+    private Rigidbody2D _rbPlayer;
     void Start()
     {
         _rbPlayer = GetComponent<Rigidbody2D>();
@@ -54,42 +79,21 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        float yAxis = Mathf.Round(Input.GetAxis("Vertical")) * Speed;
-        float xAxis = Mathf.Round(Input.GetAxis("Horizontal")) * Speed;
+        StartCoroutine(Move());
+    }
+
+    IEnumerator Move()
+    {
+        float yAxis = InputManager.Manager.GetAxis("Vertical") * Speed;
+        float xAxis = InputManager.Manager.GetAxis("Horizontal") * Speed;
         _rbPlayer.velocity = new Vector2(xAxis, yAxis);
-    }
-
-    public void LoadPlayer(float speed, float maxHealth, float currentHealth, float harisma, float forse)
-    {
-        Speed = speed;
-        MaxHealth = maxHealth;
-        this.currentHealth = currentHealth;
-        Harisma = harisma;
-        Forse = forse;
-    }
-
-    public void LoadPlayer(Player player)
-    {
-        Speed = player.Speed;
-        MaxHealth = player.MaxHealth;
-        currentHealth = player.CurrentHealth;
-        Harisma = player.Harisma;
-        Forse = player.Forse;
-    }
-
-    public void LoadPlayer(PlayerData player)
-    {
-        Speed = player.Speed;
-        MaxHealth = player.MaxHealth;
-        currentHealth = player.CurrentHealth;
-        Harisma = player.Harisma;
-        Forse = player.Forse;
+        yield return null;
     }
 }
 
 public class PlayerData
 {
-    public PlayerData(float speed, float maxHealth, float currentHealth, Vector2 rbPlayer, float harisma, float forse)
+    public PlayerData(float speed, float maxHealth, float currentHealth, Vector2 rbPlayer, float harisma, float forse, bool isRage)
     {
         Speed = speed;
         MaxHealth = maxHealth;
@@ -97,6 +101,7 @@ public class PlayerData
         _rbPlayer = new Vector2(rbPlayer.x, rbPlayer.y);
         Harisma = harisma;
         Forse = forse;
+        IsRage = isRage;
     }
 
     public PlayerData() { }
@@ -105,29 +110,32 @@ public class PlayerData
     {
         Speed = player.Speed;
         MaxHealth = player.MaxHealth;
-        this.currentHealth = player.CurrentHealth;
+        this.currentHealth = player.SetDamage;
         _rbPlayer = new Vector2(player.PositionX, player.PositionY);
         Harisma = player.Harisma;
         Forse = player.Forse;
+        IsRage = player.IsRage;
     }
 
     public PlayerData(Player player)
     {
         Speed = player.Speed;
         MaxHealth = player.MaxHealth;
-        this.currentHealth = player.CurrentHealth;
+        this.currentHealth = player.SetDamage;
         _rbPlayer = new Vector2(player.PositionX, player.PositionY);
         Harisma = player.Harisma;
         Forse = player.Forse;
+        IsRage = player.IsRage;
     }
 
     public float Speed { get; private set; }
     public float MaxHealth { get; private set; }
     public float Harisma { get; private set; }
     public float Forse { get; private set; }
+    public bool IsRage { get; private set; }
 
     private float currentHealth;
-    public float CurrentHealth
+    public float SetDamage
     {
         get
         {
