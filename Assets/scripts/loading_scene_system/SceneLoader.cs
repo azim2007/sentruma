@@ -16,9 +16,9 @@ public static class SceneLoader
         { 
             for(int i = previousScenesNames.Count - 1; i >= 0; i--)
             {
-                if (previousScenesNames[i] == value)
+                if (previousScenesNames[i] == value && PreviousSceneName.Contains("_menu"))
                 {
-                    previousScenesNames.RemoveRange(i, previousScenesNames.Count - i - 1);
+                    previousScenesNames.RemoveRange(i, previousScenesNames.Count - i);
                     break;
                 }
             }
@@ -33,12 +33,20 @@ public static class SceneLoader
         SceneName = sceneName;
         LoadingText = loadingText;
         PreviousSceneName = SceneManager.GetActiveScene().name;
-        Debug.Log("previous scene name: " + PreviousSceneName);
+        var debug = "previous scene names: ";
+        foreach(var e in previousScenesNames)
+        {
+            debug += e + " ";
+        }
+        Debugger.Log("from " + PreviousSceneName + " to " + sceneName);
+        Debugger.Log(debug);
         SceneManager.LoadScene("loading_scene");
     }
 
     public static void LoadPreviousScene(string loadingText)
     {
+        PreviousSceneName = SceneManager.GetActiveScene().name;
+        previousScenesNames.RemoveAt(previousScenesNames.Count - 1);
         LoadScene(PreviousSceneName, loadingText);
     }
 }

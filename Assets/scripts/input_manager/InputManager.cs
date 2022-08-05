@@ -77,7 +77,7 @@ public class InputManager
         var path = Application.persistentDataPath + "/controls/controls.con";
         var stream = new FileStream(path, FileMode.Create);
 
-        Debug.Log("saved at path: " + path);
+        Debugger.Log("saved at path: " + path);
         formatter.Serialize(stream, this);
         stream.Close();
     }

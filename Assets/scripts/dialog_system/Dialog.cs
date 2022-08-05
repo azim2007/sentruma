@@ -44,6 +44,6 @@ public class Dialog
             }
         }
         OnEnd();
-        Debug.Log("GetReplic completed");
+        Debugger.Log("GetReplic completed");
     }
 }

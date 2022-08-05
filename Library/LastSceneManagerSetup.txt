@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/menu/settings/control_menu.unity
+- path: Assets/Scenes/menu/saves_menu.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

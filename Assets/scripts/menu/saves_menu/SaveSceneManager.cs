@@ -18,7 +18,7 @@ public class SaveSceneManager : MonoBehaviour
     {
         savePanelPrefab = GameObject.FindGameObjectWithTag("SaveItem");
         content = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).gameObject;
-        Debug.Log("content name: " + content);
+        Debugger.Log("content name: " + content);
 
         savePanels = new List<GameObject>();
         saveControllers = new List<SaveItemController>();

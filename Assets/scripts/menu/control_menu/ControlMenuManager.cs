@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class ControlMenuManager : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+        GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(1).gameObject.AddComponent<BackButtonManager>();
     }
 
     // Update is called once per frame

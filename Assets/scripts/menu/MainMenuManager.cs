@@ -47,14 +47,14 @@ public class MainMenuManager : MonoBehaviour
 
     private void Settings()
     {
-        Debug.Log("settings");
+        Debugger.Log("settings");
         SceneLoader.LoadScene("settings_menu", "Открываем настройки");
     }
 
-    private void AboutUs() => Debug.Log("AboutUs");
+    private void AboutUs() => Debugger.Log("AboutUs");
     private void Saves() 
     {
-        Debug.Log("Saves");
+        Debugger.Log("Saves");
         SceneLoader.LoadScene("saves_menu", "Открываем загрузки");
     }
 }

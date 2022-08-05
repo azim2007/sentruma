@@ -48,12 +48,12 @@ public class UnitController : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<Player>().IsRage)
             {
-                Debug.Log($"{UnitName} dead");
+                Debugger.Log($"{UnitName} dead");
             }
 
             else
             {
-                Debug.Log($"{UnitName} speak");
+                Debugger.Log($"{UnitName} speak");
             }
         }
     }
