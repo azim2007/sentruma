@@ -72,6 +72,7 @@
     <Compile Include="Assets\scripts\loading_scene_system\SceneLoader.cs" />
     <Compile Include="Assets\scripts\menu\BackButtonManager.cs" />
     <Compile Include="Assets\scripts\menu\MainMenuManager.cs" />
+    <Compile Include="Assets\scripts\menu\control_menu\ControlItemController.cs" />
     <Compile Include="Assets\scripts\menu\control_menu\ControlMenuManager.cs" />
     <Compile Include="Assets\scripts\menu\saves_menu\SaveItemController.cs" />
     <Compile Include="Assets\scripts\menu\saves_menu\SaveSceneManager.cs" />

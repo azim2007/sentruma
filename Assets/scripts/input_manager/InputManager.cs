@@ -57,6 +57,14 @@ public class InputManager
         codesNames[id] = new Tuple<string, KeyCode>(codesNames[id].Item1, value);
     }
 
+    public Tuple<string, Tuple<string, KeyCode>> GetById(string id)
+    {
+        if (!codesNames.ContainsKey(id))
+            throw new InvalidOperationException("нет кейкода с айди " + id);
+
+        return new Tuple<string, Tuple<string, KeyCode>>(id, codesNames[id]);
+    }
+
     public IEnumerable<Tuple<string, Tuple<string, KeyCode>>> GetList()
     {
         foreach(var pair in codesNames)
