@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class UnitController : MonoBehaviour
 {
-    private string unitTag;
-    public string UnitTag { 
+    private UnitsIds unitId;
+    public UnitsIds UnitId { 
         private get 
         { 
-            return unitTag; 
+            return unitId; 
         } 
         
         set 
@@ -16,7 +16,7 @@ public class UnitController : MonoBehaviour
             try
             {
                 SendersList.GetSender(value);
-                unitTag = value;
+                unitId = value;
             }
 
             catch(System.Exception e)
@@ -26,7 +26,7 @@ public class UnitController : MonoBehaviour
         } 
     }
 
-    public string UnitName { get { return SendersList.GetSender(UnitTag); } }
+    public string UnitName { get { return SendersList.GetSender(UnitId); } }
 
     private List<Dialog> unitDialogs;
 

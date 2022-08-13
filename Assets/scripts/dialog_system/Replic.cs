@@ -19,7 +19,7 @@ public class Replic
             Text.Add(e);
     }
 
-    public Replic(string senderId, List<string> text) : this(text)
+    public Replic(UnitsIds senderId, List<string> text) : this(text)
     {
         Sender = SendersList.GetSender(senderId);
     }
@@ -29,7 +29,7 @@ public class Replic
         OnEnd = onEnd;
     }
 
-    public Replic(string senderId, List<string> text, Action onEnd) : this(text)
+    public Replic(UnitsIds senderId, List<string> text, Action onEnd) : this(text)
     {
         OnEnd = onEnd;
         Sender = SendersList.GetSender(senderId);
@@ -39,7 +39,7 @@ public class Replic
         : this(new List<string>(dividingText.Split(textDividers, StringSplitOptions.None)))
     { }
 
-    public Replic(string senderId, string dividingText) 
+    public Replic(UnitsIds senderId, string dividingText) 
         : this(senderId, new List<string> (dividingText.Split(textDividers, StringSplitOptions.None)))
     { }
 
@@ -47,18 +47,19 @@ public class Replic
         : this(new List<string>(dividingText.Split(textDividers, StringSplitOptions.None)), onEnd)
     { }
 
-    public Replic(string senderId, string dividingText, Action onEnd)
+    public Replic(UnitsIds senderId, string dividingText, Action onEnd)
         : this(senderId, new List<string>(dividingText.Split(textDividers, StringSplitOptions.None)), onEnd)
     { }
 
     public IEnumerable<string> GetText()
     {
         StringBuilder current = new StringBuilder();
-        OnEnd();
         foreach(var e in Text)
         {
             current.Append(e + " ");
             yield return Sender != "" ? current.ToString() : $"*{current}*";
         }
+
+        OnEnd.Invoke();
     }
 }

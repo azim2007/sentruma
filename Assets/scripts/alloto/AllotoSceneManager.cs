@@ -5,11 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class AllotoSceneManager : MonoBehaviour
 {
-    public GameObject playerPrefab;
     private Player player;
     void Start()
     {
-        player = Instantiate(playerPrefab).GetComponent<Player>();
+        var playerFactory = new PlayerFactory();
+
+        player = playerFactory.Instantiate(UnitsIds.pl, new Vector2(0f, 0f)).GetComponent<Player>();
         player.LoadPlayer(CurrentProgress.currentProgress.GetPlayer());
         Debugger.Log(player.MaxHealth + " " + player.SetDamage);
     }

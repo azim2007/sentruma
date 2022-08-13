@@ -4,12 +4,12 @@ using UnityEngine;
 
 public static class SendersList
 {
-    private static Dictionary<string, string> senders = new Dictionary<string, string>() 
+    private static Dictionary<UnitsIds, string> senders = new Dictionary<UnitsIds, string>() 
     {
-        {"pl", GetColorfulName("222831ff", "Игрок")},
-        {"al_man", GetColorfulName("Алоттянец")},
-        {"al_woman", GetColorfulName("Алоттянка")},
-        {"al_kid", GetColorfulName("Алоттенок")},
+        {UnitsIds.pl, GetColorfulName("222831ff", "Игрок")},
+        {UnitsIds.al_man, GetColorfulName("Алоттянец")},
+        {UnitsIds.al_woman, GetColorfulName("Алоттянка")},
+        {UnitsIds.al_kid, GetColorfulName("Алоттенок")},
     };
 
     private static string GetColorfulName(string color, string name)
@@ -22,7 +22,7 @@ public static class SendersList
         return GetColorfulName("4f6367ff", name);
     }
 
-    public static string GetSender(string id)
+    public static string GetSender(UnitsIds id)
     {
         if (senders.ContainsKey(id))
         {

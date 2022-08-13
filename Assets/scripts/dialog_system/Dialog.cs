@@ -43,7 +43,7 @@ public class Dialog
                 yield return new Tuple<string, string> (rep.Sender, text);
             }
         }
-        OnEnd();
+        OnEnd.Invoke();
         Debugger.Log("GetReplic completed");
     }
 }
