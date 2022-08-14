@@ -42,19 +42,41 @@ public class UnitController : MonoBehaviour
         
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player" && InputManager.Manager.GetKey("act"))
+        if(collision.tag == "Player")
         {
-            if (collision.gameObject.GetComponent<Player>().IsRage)
+            StartCoroutine(CheckAction(collision.gameObject.GetComponent<Player>()));
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            StopAllCoroutines();
+        }
+    }
+
+    private IEnumerator CheckAction(Player player)
+    {
+        while (true)
+        {
+            while (!InputManager.Manager.GetKeyDown("act"))
+            {
+                yield return null;
+            }
+
+            if (player.IsRage)
             {
                 Debugger.Log($"{UnitName} dead");
             }
-
             else
             {
                 Debugger.Log($"{UnitName} speak");
             }
+
+            yield return null;
         }
     }
 }

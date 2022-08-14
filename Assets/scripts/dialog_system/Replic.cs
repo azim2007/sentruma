@@ -11,28 +11,29 @@ public class Replic
     private List<string> Text { get; set; }
     private Action OnEnd { get; set; }
 
-    public Replic(List<string> text)
+    public Replic(List<string> text) : this(text: text, onEnd: () => { }){ }
+
+    public Replic(UnitsIds senderId, List<string> text) : this(senderId: senderId, text: text, onEnd: () => { })
     {
+        Sender = SendersList.GetSender(senderId);
+    }
+
+    public Replic(List<string> text, Action onEnd)
+    {
+        OnEnd = onEnd;
         Sender = "";
         Text = new List<string>();
         foreach (var e in text)
             Text.Add(e);
     }
 
-    public Replic(UnitsIds senderId, List<string> text) : this(text)
-    {
-        Sender = SendersList.GetSender(senderId);
-    }
-
-    public Replic(List<string> text, Action onEnd) : this(text)
-    {
-        OnEnd = onEnd;
-    }
-
-    public Replic(UnitsIds senderId, List<string> text, Action onEnd) : this(text)
+    public Replic(UnitsIds senderId, List<string> text, Action onEnd)
     {
         OnEnd = onEnd;
         Sender = SendersList.GetSender(senderId);
+        Text = new List<string>();
+        foreach (var e in text)
+            Text.Add(e);
     }
 
     public Replic(string dividingText)

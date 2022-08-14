@@ -80,6 +80,24 @@ public class Player : MonoBehaviour
     void Update()
     {
         StartCoroutine(Move());
+        CheckRage();
+    }
+
+    private void CheckRage()
+    {
+        IsRage = InputManager.Manager.GetKeyDown(id: "state") ? !IsRage : IsRage;
+        if(InputManager.Manager.GetKeyDown(id: "state"))
+        {
+            Debugger.Log("state " + IsRage);
+        }
+
+        /*StartCoroutine(Wait());
+        IEnumerator Wait()
+        {
+            while(InputManager.Manager.GetKey(id: "state")){
+                yield return new WaitForSeconds(0.1f); 
+            }
+        }*/
     }
 
     IEnumerator Move()

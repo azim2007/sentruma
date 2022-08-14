@@ -41,6 +41,14 @@ public class InputManager
         return Input.GetKey(codesNames[id].Item2);
     }
 
+    public bool GetKeyDown(string id)
+    {
+        if (!codesNames.ContainsKey(id))
+            throw new InvalidOperationException("нет кейкода с айди " + id);
+
+        return Input.GetKeyDown(codesNames[id].Item2);
+    }
+
     public string GetKeyName(string id)
     {
         if (!codesNames.ContainsKey(id))
