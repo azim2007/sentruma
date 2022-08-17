@@ -28,9 +28,12 @@ public class UnitController : MonoBehaviour
 
     public string UnitName { get { return SendersList.GetSender(UnitId); } }
 
-    private List<Dialog> unitDialogs;
-
-    public string DialogsId { private get; set; }
+    public Dialog CurrentDialog { 
+        get
+        {
+            return AllUnitsDialogs.GetById(this.UnitId).GetCurrentOrDefault();
+        } 
+    }
 
     void Start()
     {
@@ -60,6 +63,7 @@ public class UnitController : MonoBehaviour
 
     private IEnumerator CheckAction(Player player)
     {
+        var dialogManager = GameObject.FindGameObjectWithTag("DialogManager").GetComponent<DialogManager>();
         while (true)
         {
             while (!InputManager.Manager.GetKeyDown("act"))
@@ -74,6 +78,7 @@ public class UnitController : MonoBehaviour
             else
             {
                 Debugger.Log($"{UnitName} speak");
+                dialogManager.StartDialog(CurrentDialog);
             }
 
             yield return null;

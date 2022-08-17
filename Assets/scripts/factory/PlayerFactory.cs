@@ -2,14 +2,12 @@
 using System.Linq;
 using UnityEngine;
 
-class PlayerFactory : Factory
+class PlayerFactory : Factory<UnitsIds>
 {
     public PlayerFactory() : base() { }
 
     public override void SetPrefabs()
     {
-        prefabs = new Dictionary<UnitsIds, GameObject>();
-        var prefs = Resources.LoadAll<GameObject>("prefabs/player");
-        prefabs.Add(UnitsIds.pl, prefs[0]);
+        FillDictionary(directoryPath: "prefabs/player", ids: new List<UnitsIds> { UnitsIds.pl });
     }
 }

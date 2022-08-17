@@ -3,33 +3,38 @@ using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class Replic
 {
     public static readonly string[] textDividers = { "<div>" };
+    public static readonly string serviceSenderName = "$_service";
     public string Sender { get; private set; }
     private List<string> Text { get; set; }
-    private Action OnEnd { get; set; }
 
-    public Replic(List<string> text) : this(text: text, onEnd: () => { }){ }
-
-    public Replic(UnitsIds senderId, List<string> text) : this(senderId: senderId, text: text, onEnd: () => { })
+    public static Replic ServiceReplic (string command)
     {
-        Sender = SendersList.GetSender(senderId);
+        return new Replic (serviceSenderName, command.Split(' ').ToList());
     }
 
-    public Replic(List<string> text, Action onEnd)
+    private Replic(string serviceSender, List<string> command)
     {
-        OnEnd = onEnd;
+        Sender = serviceSender;
+        Text = new List<string>();
+        foreach (var e in command)
+            Text.Add(e);
+    }
+
+    public Replic(List<string> text)
+    {
         Sender = "";
         Text = new List<string>();
         foreach (var e in text)
             Text.Add(e);
     }
 
-    public Replic(UnitsIds senderId, List<string> text, Action onEnd)
+    public Replic(UnitsIds senderId, List<string> text)
     {
-        OnEnd = onEnd;
         Sender = SendersList.GetSender(senderId);
         Text = new List<string>();
         foreach (var e in text)
@@ -44,23 +49,11 @@ public class Replic
         : this(senderId, new List<string> (dividingText.Split(textDividers, StringSplitOptions.None)))
     { }
 
-    public Replic(string dividingText, Action onEnd)
-        : this(new List<string>(dividingText.Split(textDividers, StringSplitOptions.None)), onEnd)
-    { }
-
-    public Replic(UnitsIds senderId, string dividingText, Action onEnd)
-        : this(senderId, new List<string>(dividingText.Split(textDividers, StringSplitOptions.None)), onEnd)
-    { }
-
     public IEnumerable<string> GetText()
     {
-        StringBuilder current = new StringBuilder();
         foreach(var e in Text)
         {
-            current.Append(e + " ");
-            yield return Sender != "" ? current.ToString() : $"*{current}*";
+            yield return e;
         }
-
-        OnEnd.Invoke();
     }
 }
