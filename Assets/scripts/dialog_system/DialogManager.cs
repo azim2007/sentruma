@@ -15,7 +15,9 @@ public class DialogManager : MonoBehaviour
 
     public void StartDialog(Dialog dialog)
     {
+        
         dialogController = factory.Instantiate(id: "dlgVw").GetComponent<DialogController>();
+
         dialogController.ThisDialog = dialog;
     }
 }

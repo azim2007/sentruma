@@ -90,14 +90,6 @@ public class Player : MonoBehaviour
         {
             Debugger.Log("state " + IsRage);
         }
-
-        /*StartCoroutine(Wait());
-        IEnumerator Wait()
-        {
-            while(InputManager.Manager.GetKey(id: "state")){
-                yield return new WaitForSeconds(0.1f); 
-            }
-        }*/
     }
 
     IEnumerator Move()

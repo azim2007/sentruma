@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
+using System;
 
 public class DialogController : MonoBehaviour
 {
+    private static float textSpeed = 1.1f - 0.7f;
+
     private Image Background { get; set; }
+    private GameObject ReplicView { get; set; }
+    private GameObject SelectingView { get; set; }
 
     private Dialog thisDialog;
     public Dialog ThisDialog
@@ -21,23 +27,135 @@ public class DialogController : MonoBehaviour
 
             else
             {
-                throw new System.InvalidOperationException("thisDialog isnt epty. You cannot change its value");
+                throw new System.InvalidOperationException("thisDialog isnt empty. You cannot change its value");
             }
         }
     }
 
-    void Start()
+    private void ServiceHandler(string command)
+    {
+        Debugger.Log("service replic text: " + command);
+    }
+
+
+    private void GameObjectSetting()
+    {
+        Background = this.transform.GetChild(0).GetChild(0).GetComponent<Image>();
+        Background.sprite = Resources.Load<Sprite>("backgrounds/" + ThisDialog.BackgroundName);
+
+        ReplicView = this.transform.GetChild(0).GetChild(1).gameObject;
+        SelectingView = this.transform.GetChild(0).GetChild(2).gameObject;
+        SelectingView.SetActive(false);
+        ReplicView.SetActive(true);
+    }
+
+    private void Start()
     {
         this.GetComponent<Canvas>().worldCamera = 
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
-        Background = this.transform.GetChild(0).GetChild(0).GetComponent<Image>();
-        Background.sprite = Resources.Load<Sprite>("backgrounds/" + ThisDialog.BackgroundName);
-        Debugger.Log("DialogController Start() background " + (Background != null));
+        GameObjectSetting();
+
+        StartCoroutine(ShowDialog());
     }
 
-    void Update()
+    private IEnumerator ShowDialog()
     {
-        
+        if(ThisDialog == null)
+        {
+            thisDialog = new Dialog(
+                new List<Replic>(),
+                null,
+                () => true,
+                () => { },
+                "bg"
+            );
+        }
+
+        Text sender = ReplicView.transform.GetChild(0).GetComponent<Text>();
+        Text message = ReplicView.transform.GetChild(1).GetComponent<Text>();
+        bool canChange = true;
+        ReplicView.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => canChange = true);
+
+        foreach(var replic in ThisDialog.GetReplic())
+        {
+            if (replic.IsService)
+            {
+                string command = "";
+                foreach(var _operator in replic.GetText())
+                {
+                    command += _operator + " ";
+                }
+
+                ServiceHandler(command);
+                continue;
+            }
+
+            sender.text = replic.Sender;
+            message.text = "";
+            foreach(var sentence in replic.GetText())
+            {
+                canChange = false;
+                bool skip = false;
+                foreach (var e in sentence)
+                {
+                    message.text += e.ToString();
+                    yield return skip ? null : new WaitForSeconds(textSpeed * 0.04f);
+                    skip = canChange;
+                }
+
+                canChange = false;
+                while (!canChange)
+                {
+                    yield return null;
+                }
+            }
+        }
+
+        Debugger.Log("dialog has answers " + ThisDialog.HasAnswers);
+        this.gameObject.SetActive(ThisDialog.HasAnswers);
+
+        if (ThisDialog.HasAnswers)
+        {
+            ReplicView.SetActive(false);
+            var VM = new VariantManager(ThisDialog.AnswersAndNextDialogs, SelectingView);
+
+            while (VM.SelectedDialog == null)
+            {
+                yield return null;
+            }
+
+            thisDialog = VM.SelectedDialog;
+            GameObjectSetting();
+            StartCoroutine(ShowDialog());
+        }
+    }
+}
+
+public class VariantManager
+{
+    private List<Tuple<string, Dialog>> Variants { get; set; }
+    private GameObject SelectingView { get; set; }
+    public Dialog SelectedDialog { get; private set; }
+
+    public VariantManager(List<Tuple<string, Dialog>> variants, GameObject selectingView)
+    {
+        Variants = variants;
+        SelectingView = selectingView;
+
+        SelectingView.SetActive(true);
+        var dialogFactory = new DialogFactory();
+
+        foreach(var e in Variants)
+        {
+            var answer = new Tuple<string, Dialog>(e.Item1, e.Item2);
+            var variant = dialogFactory.Instantiate("vrntVw");
+
+            variant.transform.SetParent(SelectingView.transform);
+            variant.GetComponent<Text>().text = answer.Item1;
+            variant.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+
+            variant.GetComponent<Button>().onClick.AddListener(() => { SelectedDialog = answer.Item2; });
+        }
     }
 }

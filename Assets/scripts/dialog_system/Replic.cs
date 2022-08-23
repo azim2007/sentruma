@@ -12,6 +12,13 @@ public class Replic
     public string Sender { get; private set; }
     private List<string> Text { get; set; }
 
+    public bool IsService { 
+        get
+        {
+            return Sender == serviceSenderName;
+        } 
+    }
+
     public static Replic ServiceReplic (string command)
     {
         return new Replic (serviceSenderName, command.Split(' ').ToList());
