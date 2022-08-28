@@ -9,6 +9,7 @@ public class DialogController : MonoBehaviour
 {
     private static float textSpeed = 1.1f - 0.7f;
 
+    private CommandHandler CommandHandler { get; set; }
     private Image Background { get; set; }
     private GameObject ReplicView { get; set; }
     private GameObject SelectingView { get; set; }
@@ -34,7 +35,7 @@ public class DialogController : MonoBehaviour
 
     private void ServiceHandler(string command)
     {
-        Debugger.Log("service replic text: " + command);
+        CommandHandler.HandleCommand(command);
     }
 
 
@@ -42,6 +43,7 @@ public class DialogController : MonoBehaviour
     {
         Background = this.transform.GetChild(0).GetChild(0).GetComponent<Image>();
         Background.sprite = Resources.Load<Sprite>("backgrounds/" + ThisDialog.BackgroundName);
+        Background.color = Color.white;
 
         ReplicView = this.transform.GetChild(0).GetChild(1).gameObject;
         SelectingView = this.transform.GetChild(0).GetChild(2).gameObject;
@@ -57,6 +59,13 @@ public class DialogController : MonoBehaviour
         GameObjectSetting();
 
         StartCoroutine(ShowDialog());
+
+        CommandHandler = new CommandHandler(
+            new List<ICommandHandler>() 
+            { 
+                new BackgroundHandler(Background) 
+            }
+        );
     }
 
     private IEnumerator ShowDialog()
