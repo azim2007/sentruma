@@ -29,7 +29,7 @@ public static class AllotoManDialogs
                 Replic.ServiceReplic("bg bg1"),
                 Replic.ServiceReplic("i love you too"),
                 new Replic(UnitsIds.pl, "Ну...<div> ладно"),
-                Replic.ServiceReplic("bg bg color 0 255 0"),
+                Replic.ServiceReplic("bg bg bg-color 0 255 0"),
                 new Replic("*Ага, буду я для него выполнять ерунду всякую*"),
             },
 

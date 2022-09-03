@@ -11,6 +11,7 @@ public class DialogController : MonoBehaviour
 
     private CommandHandler CommandHandler { get; set; }
     private Image Background { get; set; }
+    private Image Foreground { get; set; }
     private GameObject ReplicView { get; set; }
     private GameObject SelectingView { get; set; }
 
@@ -45,8 +46,9 @@ public class DialogController : MonoBehaviour
         Background.sprite = Resources.Load<Sprite>("backgrounds/" + ThisDialog.BackgroundName);
         Background.color = Color.white;
 
-        ReplicView = this.transform.GetChild(0).GetChild(1).gameObject;
-        SelectingView = this.transform.GetChild(0).GetChild(2).gameObject;
+        Foreground = this.transform.GetChild(0).GetChild(1).GetComponent<Image>();
+        ReplicView = this.transform.GetChild(0).GetChild(2).gameObject;
+        SelectingView = this.transform.GetChild(0).GetChild(3).gameObject;
         SelectingView.SetActive(false);
         ReplicView.SetActive(true);
     }
@@ -63,7 +65,7 @@ public class DialogController : MonoBehaviour
         CommandHandler = new CommandHandler(
             new List<ICommandHandler>() 
             { 
-                new BackgroundHandler(Background) 
+                new BackgroundHandler(Background, Foreground) 
             }
         );
     }
@@ -109,7 +111,9 @@ public class DialogController : MonoBehaviour
                 foreach (var e in sentence)
                 {
                     message.text += e.ToString();
-                    yield return skip ? null : new WaitForSeconds(textSpeed * 0.04f);
+                    if(!skip)
+                        yield return new WaitForSeconds(textSpeed * 0.04f);
+
                     skip = canChange;
                 }
 
