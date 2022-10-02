@@ -98,6 +98,11 @@ public class BackgroundHandler : ICommandHandler
         }
     }
 
+    /// <summary>
+    /// превращает строку от 0 до 255 в число от 0 до 1
+    /// </summary>
+    /// <param name="a">строка от "0" до "255"</param>
+    /// <returns>double от 0 до 1, который используется в конструкторе Color()</returns>
     private float ConvertToFloat(string a)
     {
         float _byte = int.Parse(a);
