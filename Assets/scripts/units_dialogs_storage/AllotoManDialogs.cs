@@ -25,6 +25,7 @@ public static class AllotoManDialogs
             new List<Replic>()
             {
                 new Replic(UnitsIds.al_man, "Значит так, <b>Меченый</b><div>, я тебя спас, и в благородство играть не буду<div>, выполнишь для меня пару заданий и мы в расчете."),
+                Replic.ServiceReplic("bg bg bg-color 0 255 0 fg-color 0 10 150 200"),
                 new Replic(UnitsIds.al_man, "Заодно и посмотрим как быстро у тебя голова после амнезии прояснится."),
                 Replic.ServiceReplic("bg bg1"),
                 Replic.ServiceReplic("i love you too"),

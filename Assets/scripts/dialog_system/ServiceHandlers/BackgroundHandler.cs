@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
@@ -31,12 +30,14 @@ public class BackgroundHandler : ICommandHandler
         CommandAction[listCommand[0]].Invoke(commandQueue);
     }
 
-    void ChangeBackground(Queue<string> command)
+    private void ChangeBackground(Queue<string> command)
     {
         command.Dequeue();
         try
         {
             Background.sprite = Resources.Load<Sprite>("backgrounds/" + command.Dequeue());
+            Background.color = Color.white;
+            Foreground.color = new Color(0, 0, 0, 0);
         }
         catch
         {
@@ -49,43 +50,57 @@ public class BackgroundHandler : ICommandHandler
         {
             if (action == "bg-color")
             {
-                try
-                {
-                    Background.color = new Color(
-                        ConvertToFloat(command.Dequeue()),
-                        ConvertToFloat(command.Dequeue()),
-                        ConvertToFloat(command.Dequeue())
-                    );
-                }
-                catch
-                {
-                    Debugger.Log("некорректный формат цвета");
+                if (!TryChangeBGColor(command.Dequeue(), command.Dequeue(), command.Dequeue()))
                     return;
-                }
             }
             else if (action == "fg-color")
             {
-                try
-                {
-                    Foreground.color = new Color(
-                        ConvertToFloat(command.Dequeue()),
-                        ConvertToFloat(command.Dequeue()),
-                        ConvertToFloat(command.Dequeue()),
-                        ConvertToFloat(command.Dequeue())
-                    );
-                }
-                catch
-                {
-                    Debugger.Log("некорректный формат цвета");
+                if (!TryChangeFGColor(command.Dequeue(), command.Dequeue(), command.Dequeue(), command.Dequeue()))
                     return;
-                }
             }
         }
+    }
 
-        float ConvertToFloat(string a)
+    private bool TryChangeFGColor(string r, string g, string b, string a)
+    {
+        try
         {
-            float _byte = int.Parse(a);
-            return _byte / 255.0f;
+            Foreground.color = new Color(
+                ConvertToFloat(r),
+                ConvertToFloat(g),
+                ConvertToFloat(b),
+                ConvertToFloat(a)
+            );
+            return true;
         }
-    }   
+        catch
+        {
+            Debugger.Log("некорректный формат цвета");
+            return false;
+        }
+    }
+
+    private bool TryChangeBGColor(string r, string g, string b)
+    {
+        try
+        {
+            Background.color = new Color(
+                ConvertToFloat(r),
+                ConvertToFloat(g),
+                ConvertToFloat(b)
+            );
+            return true;
+        }
+        catch
+        {
+            Debugger.Log("некорректный формат цвета");
+            return false;
+        }
+    }
+
+    private float ConvertToFloat(string a)
+    {
+        float _byte = int.Parse(a);
+        return _byte / 255.0f;
+    }
 }

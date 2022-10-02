@@ -13,16 +13,8 @@ public class UnitController : MonoBehaviour
         
         set 
         {
-            try
-            {
-                SendersList.GetSender(value);
-                unitId = value;
-            }
-
-            catch(System.Exception e)
-            {
-                throw e;
-            }
+            SendersList.GetSender(value);
+            unitId = value;
         } 
     }
 

@@ -10,6 +10,7 @@ public class DialogFactory : Factory<string>
     {
         var namesList = new List<string>()
         {
+            "chrctrImg",
             "dlgMng",
             "dlgVw",
             "vrntVw"

@@ -65,7 +65,8 @@ public class DialogController : MonoBehaviour
         CommandHandler = new CommandHandler(
             new List<ICommandHandler>() 
             { 
-                new BackgroundHandler(Background, Foreground) 
+                new BackgroundHandler(Background, Foreground),
+                new CharacterHandler()
             }
         );
     }
