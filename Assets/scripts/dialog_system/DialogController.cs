@@ -60,15 +60,15 @@ public class DialogController : MonoBehaviour
 
         GameObjectSetting();
 
-        StartCoroutine(ShowDialog());
-
         CommandHandler = new CommandHandler(
-            new List<ICommandHandler>() 
-            { 
+            new List<ICommandHandler>()
+            {
                 new BackgroundHandler(Background, Foreground),
-                new CharacterHandler()
+                new CharacterHandler(Background)
             }
         );
+
+        StartCoroutine(ShowDialog());
     }
 
     private IEnumerator ShowDialog()

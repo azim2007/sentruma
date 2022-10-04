@@ -21,21 +21,16 @@ public class CharacterImageController : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        characterImage = GetComponent<Image>();
-    }
-
-    void Show(string emotion, string atHorizontal = "middle", string atVertical = "middle", string atDistance = "middle", int layer = 0)
+    public void Show(string emotion, string atHorizontal = "middle", string atVertical = "middle", string atDistance = "middle", int layer = 0)
     {
         try
         {
-            characterImage.sprite = Resources.Load<Sprite>(CharacterHandler.GetFolderName(dirPath + emotion));
+            characterImage = GetComponent<Image>();
+            characterImage.sprite = Resources.Load<Sprite>(CharacterHandler.GetFolderName(dirPath + "/" + emotion));
         }
         catch
         {
-            Debugger.Log("в папке " + dirPath +" нет эмоции " + emotion);
-            return;
+            Debugger.Log("нет эмоции " + emotion + " путь до файла " + CharacterHandler.GetFolderName(dirPath + "/" + emotion));
         }
     }
 }

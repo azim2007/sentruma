@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System;
 
 /// <summary>
 /// интерфейс, реализуемый всеми классами-обработчиками сервисных реплик (реплик для изменения фона, героев, музыки и т д)
@@ -24,8 +26,7 @@ public interface ICommandHandler
 /// </summary>
 public class CommandHandler
 {
-    private List<ICommandHandler> Handlers { get; set; }
-    private Dictionary<string, int> CommandHandlerId { get; set; }
+    private Dictionary<string, ICommandHandler> CommandHandlerId { get; set; }
 
     /// <summary>
     /// передавать все имеющиеся обработчики
@@ -33,15 +34,10 @@ public class CommandHandler
     /// <param name="handlers">лист классов-обработчиков сервисных реплик</param>
     public CommandHandler(List<ICommandHandler> handlers)
     {
-        Handlers = handlers;
-        CommandHandlerId = new Dictionary<string, int>();
-        for(int i = 0; i < Handlers.Count; i++)
-        {
-            foreach(var command in Handlers[i].GetCommands())
-            {
-                CommandHandlerId.Add(command, i);
-            }
-        }
+        CommandHandlerId = handlers
+            .SelectMany(handler => handler.GetCommands()
+            .Select(command => Tuple.Create(command, handler)))
+            .ToDictionary(tuple => tuple.Item1, tuple => tuple.Item2);
     }
 
     /// <summary>
@@ -53,11 +49,11 @@ public class CommandHandler
         var name = command.Split(' ')[0];
         try
         {
-            Handlers[CommandHandlerId[name]].HandleCommand(command);
+            CommandHandlerId[name].HandleCommand(command);
         }
         catch
         {
-            Debugger.Log("there isnt command " + command);
+            Debugger.LogError("нет команды " + command);
         }
     }
 }

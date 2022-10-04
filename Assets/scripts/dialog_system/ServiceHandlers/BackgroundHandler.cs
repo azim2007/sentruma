@@ -41,7 +41,7 @@ public class BackgroundHandler : ICommandHandler
         }
         catch
         {
-            Debugger.Log("нет такого фона");
+            Debugger.LogError("нет такого фона");
             return;
         }
 
@@ -75,7 +75,7 @@ public class BackgroundHandler : ICommandHandler
         }
         catch
         {
-            Debugger.Log("некорректный формат цвета");
+            Debugger.LogError("некорректный формат цвета");
             return false;
         }
     }
@@ -93,7 +93,7 @@ public class BackgroundHandler : ICommandHandler
         }
         catch
         {
-            Debugger.Log("некорректный формат цвета");
+            Debugger.LogError("некорректный формат цвета");
             return false;
         }
     }

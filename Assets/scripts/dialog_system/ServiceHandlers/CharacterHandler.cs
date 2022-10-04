@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
+/// <summary>
+/// класс для обработки реплик, связанных с собеседниками в диалоге
+/// </summary>
 public class CharacterHandler : ICommandHandler
 {
-    public static string GetFolderName(string name) => "charactersImages/" + name;
+    public static string GetFolderName(string name) => "charactersImages/" + name; // в этой папке хранятся все спрайты, используемые в диалогах
     private Dictionary<string, Action<Queue<string>>> CommandAction { get; set; }
-    private static Dictionary<string, CharacterImageController> DefinedCharactersNameDirPath { get; set; }
-    public CharacterHandler()
+    private Image Background { get; set;}
+    private static Dictionary<string, CharacterImageController> DefinedCharactersNameCharControllers { get; set; } // словарь для дефайна персонажа на какую-то переменную
+    public CharacterHandler(Image background)
     {
+        Background = background;
+        DefinedCharactersNameCharControllers = new Dictionary<string, CharacterImageController>();
         CommandAction = new Dictionary<string, Action<Queue<string>>>()
         {
             {"define", (Queue<string> command) => DefineCharacter(command) },
@@ -32,11 +39,37 @@ public class CharacterHandler : ICommandHandler
         CommandAction[listCommand[0]].Invoke(commandQueue);
     }
 
+    /// <summary>
+    /// отображает персонажа на экране в определенном месте с определенной эмоцией
+    /// </summary>
+    /// <param name="command"></param>
     private void ShowCharacter(Queue<string> command)
     {
         command.Dequeue();
+        string charName, emotionName;
+        try
+        {
+            charName = command.Dequeue();
+            if (!DefinedCharactersNameCharControllers.ContainsKey(charName))
+            {
+                Debugger.LogError("нет переменной с именем " + charName);
+                return;
+            }
+
+            DefinedCharactersNameCharControllers[charName].gameObject.SetActive(true);
+            emotionName = command.Dequeue();
+            DefinedCharactersNameCharControllers[charName].Show(emotionName);
+        }
+        catch
+        {
+            Debugger.LogError("некорректный формат команды");
+        }
     }
 
+    /// <summary>
+    /// добавляет персонажа в словарь DefinedCharacters и создает для него объект на сцене
+    /// </summary>
+    /// <param name="command"></param>
     private void DefineCharacter(Queue<string> command)
     {
         command.Dequeue();
@@ -47,33 +80,47 @@ public class CharacterHandler : ICommandHandler
         }
         catch
         {
-            Debugger.Log("нет такой папки персонажа");
+            Debugger.LogError("нет такой папки персонажа");
             return;
         }
 
-        if (DefinedCharactersNameDirPath.ContainsKey(characterName))
+        if (DefinedCharactersNameCharControllers.ContainsKey(characterName))
         {
-            Debugger.Log("нельзя создать несколько персонажей с одним именем");
+            Debugger.LogError("нельзя создать несколько персонажей с одним именем");
             return;
         }
 
         DialogFactory dialogFactory = new DialogFactory();
         CharacterImageController character = dialogFactory.Instantiate(id: "chrctrImg").GetComponent<CharacterImageController>();
+        character.transform.SetParent(Background.transform);
+        character.transform.localScale = new Vector3(1f, 1f, 1f);
         character.DirPath = command.Dequeue();
         character.gameObject.SetActive(false);
-        DefinedCharactersNameDirPath.Add(characterName, character);
+        DefinedCharactersNameCharControllers.Add(characterName, character);
     }
 
+    /// <summary>
+    /// убирает персонажа из словаря DefinedCharacters и удаляет его объект на сцене
+    /// </summary>
+    /// <param name="command"></param>
     private void DestroyCharacter(Queue<string> command)
     {
         command.Dequeue();
-        var characterName = command.Dequeue();
-        if (!DefinedCharactersNameDirPath.ContainsKey(characterName))
+        try
         {
-            Debugger.Log("нет переменной с именем " + characterName);
-            return;
-        }
+            string characterName = command.Dequeue();
+            if (!DefinedCharactersNameCharControllers.ContainsKey(characterName))
+            {
+                Debugger.LogError("нет переменной с именем " + characterName);
+                return;
+            }
 
-        DefinedCharactersNameDirPath.Remove(characterName);
+            GameObject.Destroy(DefinedCharactersNameCharControllers[characterName].gameObject);
+            DefinedCharactersNameCharControllers.Remove(characterName);
+        }
+        catch
+        {
+            Debugger.Log("некорректный формат команды");
+        }
     }
 }

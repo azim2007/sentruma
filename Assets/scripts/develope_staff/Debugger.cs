@@ -12,4 +12,6 @@ public static class Debugger
             Debug.Log(message);
         }
     }
+
+    public static void LogError(string message) => Log("<color=red>" + message + "</color>");
 }
