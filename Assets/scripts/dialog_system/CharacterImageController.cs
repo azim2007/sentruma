@@ -78,28 +78,28 @@ public class CharacterImageController : MonoBehaviour
 
     private Dictionary<string, float> atHorizontalPositionNameImagePosition = new Dictionary<string, float>()
     {
-        { "left", -10 },
-        { "midleft", -5 },
+        { "left", -6.6f },
+        { "midleft", -3.3f },
         { "middle", 0 },
-        { "midright", 5 },
-        { "right", 10 },
+        { "midright", 3.3f },
+        { "right", 6.6f },
     };
 
     private Dictionary<string, float> atVerticalPositionNameImagePosition = new Dictionary<string, float>()
     {
-        { "left", -10 },
-        { "midleft", -5 },
-        { "middle", 0 },
-        { "midright", 5 },
-        { "right", 10 },
+        { "bottom", -12 },
+        { "midbottom", -7 },
+        { "middle", -2 },
+        { "midtop", 3 },
+        { "top", 8 },
     };
 
     private Dictionary<string, float> atDistancePositionNameImagePosition = new Dictionary<string, float>()
     {
-        { "back", 1 },
-        { "midback", 1.5f },
-        { "middle", 2 },
-        { "midfront", 2.5f },
-        { "front", 3 },
+        { "back", 0.6f },
+        { "midback", 0.9f },
+        { "middle", 1.2f },
+        { "midfront", 1.6f },
+        { "front", 2 },
     };
 }

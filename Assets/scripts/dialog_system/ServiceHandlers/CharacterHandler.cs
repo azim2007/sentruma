@@ -45,8 +45,29 @@ public class CharacterHandler : ICommandHandler
     /// <param name="command"></param>
     private void ShowCharacter(Queue<string> command)
     {
+        #region parametrs settings
+        string atDistance = "middle", atVertical = "middle", atHorizontal = "middle", charName, emotionName;
+        int layer = 0;
+        var paramsActions = new Dictionary<string, Action<string>>()
+        {
+            {"atHorizontal", (param) => atHorizontal = param },
+            {"atVertical", (param) => atVertical = param },
+            {"atDistance", (param) => atDistance = param },
+            {"layer", (param) => 
+                {
+                    try
+                    {
+                        layer = int.Parse(param);
+                    }
+                    catch
+                    {
+                        Debugger.LogError("в параметр layer было передано " + param);
+                    }
+                } 
+            },
+        };
+        #endregion
         command.Dequeue();
-        string charName, emotionName;
         try
         {
             charName = command.Dequeue();
@@ -58,12 +79,40 @@ public class CharacterHandler : ICommandHandler
 
             DefinedCharactersNameCharControllers[charName].gameObject.SetActive(true);
             emotionName = command.Dequeue();
-            DefinedCharactersNameCharControllers[charName].Show(emotionName);
         }
         catch
         {
             Debugger.LogError("некорректный формат команды");
+            return;
         }
+
+        string action;
+        while (command.TryDequeue(out action))
+        {
+            if (action == "") continue;
+            if (!paramsActions.ContainsKey(action))
+            {
+                Debugger.LogError("некорректный параметр " + action);
+                return;
+            }
+
+            try
+            {
+                paramsActions[action](command.Dequeue());
+            }
+            catch
+            {
+                Debugger.LogError("недостаточное кол во аргументов у параметра " + action);
+                return;
+            }
+        }
+
+        DefinedCharactersNameCharControllers[charName]
+            .Show(emotion: emotionName, 
+            atHorizontal: atHorizontal, 
+            atVertical: atVertical, 
+            atDistance: atDistance, 
+            layer: layer);
     }
 
     /// <summary>
