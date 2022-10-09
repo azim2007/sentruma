@@ -11,6 +11,7 @@ public class CharacterImageController : MonoBehaviour
     private Image characterImage;
     private string dirPath;
     private const int deltaOrderInLayer = 6; //Dialog View находится на 5 order in layer, поэтому картинки персонажей надо распологать хотя бы на 6 уровне
+    private Animator animator;
     public string DirPath
     {
         set
@@ -36,6 +37,7 @@ public class CharacterImageController : MonoBehaviour
     /// <param name="layer">default order in layer</param>
     public void Show(string emotion, string atHorizontal = "middle", string atVertical = "middle", string atDistance = "middle", int layer = 0)
     {
+        animator = GetComponent<Animator>();
         if (!atHorizontalPositionNameImagePosition.ContainsKey(atHorizontal))
         {
             Debugger.LogError("нет горизонтального положения " + atHorizontal);
@@ -63,6 +65,8 @@ public class CharacterImageController : MonoBehaviour
         {
             Debugger.Log("нет эмоции " + emotion + " путь до файла " + CharacterHandler.GetFolderName(dirPath + "/" + emotion));
         }
+
+        animator.Play("FadeUp");
 
         var orderInLayerChanger = this.transform.GetComponent<Canvas>();
         orderInLayerChanger.overrideSorting = true;
