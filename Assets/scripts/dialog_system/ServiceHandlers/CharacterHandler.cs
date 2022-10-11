@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class CharacterHandler : ICommandHandler
 {
     public static string GetFolderName(string name) => "charactersImages/" + name; // в этой папке хранятся все спрайты, используемые в диалогах
     private Dictionary<string, Action<Queue<string>>> CommandAction { get; set; }
-    private Image Background { get; set;}
+    private Image Background { get; set; }
     private static Dictionary<string, CharacterImageController> DefinedCharactersNameCharControllers { get; set; } // словарь для дефайна персонажа на какую-то переменную
     public CharacterHandler(Image background)
     {
@@ -46,14 +47,15 @@ public class CharacterHandler : ICommandHandler
     private void ShowCharacter(Queue<string> command)
     {
         #region parametrs settings
-        string atDistance = "middle", atVertical = "middle", atHorizontal = "middle", charName, emotionName;
+        string atDistance = "middle", atVertical = "middle", atHorizontal = "middle", animationType = "", charName, emotionName;
         int layer = 0;
+        float animationDuration = 0;
         var paramsActions = new Dictionary<string, Action<string>>()
         {
             {"atHorizontal", (param) => atHorizontal = param },
             {"atVertical", (param) => atVertical = param },
             {"atDistance", (param) => atDistance = param },
-            {"layer", (param) => 
+            {"layer", (param) =>
                 {
                     try
                     {
@@ -63,8 +65,23 @@ public class CharacterHandler : ICommandHandler
                     {
                         Debugger.LogError("в параметр layer было передано " + param);
                     }
-                } 
+                }
             },
+
+            {"with", (param) =>
+                {
+                    var args = param.Split(' ');
+                    animationType = args[0];
+                    try
+                    {
+                        animationDuration = float.Parse(args[1], new NumberFormatInfo(){NumberDecimalSeparator = "," });
+                    }
+                    catch
+                    {
+                        Debugger.LogError("в параметр with в качестве длительности анимации было передано " + args[1]);
+                    }
+                } 
+            }
         };
         #endregion
         command.Dequeue();
@@ -98,7 +115,10 @@ public class CharacterHandler : ICommandHandler
 
             try
             {
-                paramsActions[action](command.Dequeue());
+                if(action == "with")
+                    paramsActions[action](command.Dequeue() + " " + command.Dequeue());
+                else
+                    paramsActions[action](command.Dequeue());
             }
             catch
             {
@@ -108,11 +128,13 @@ public class CharacterHandler : ICommandHandler
         }
 
         DefinedCharactersNameCharControllers[charName]
-            .Show(emotion: emotionName, 
-            atHorizontal: atHorizontal, 
-            atVertical: atVertical, 
-            atDistance: atDistance, 
-            layer: layer);
+            .Show(emotion: emotionName,
+            atHorizontal: atHorizontal,
+            atVertical: atVertical,
+            atDistance: atDistance,
+            layer: layer,
+            animationDurationSeconds: animationDuration,
+            animationType: animationType);
     }
 
     /// <summary>

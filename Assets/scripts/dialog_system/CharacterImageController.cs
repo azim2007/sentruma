@@ -16,7 +16,7 @@ public class CharacterImageController : MonoBehaviour
     {
         set
         {
-            if(dirPath == null || dirPath == "")
+            if (dirPath == null || dirPath == "")
             {
                 dirPath = value;
             }
@@ -35,9 +35,11 @@ public class CharacterImageController : MonoBehaviour
     /// <param name="atVertical">положение по вертикали (см. api.xlsx)</param>
     /// <param name="atDistance">положение по дальности от камеры (см. api.xlsx)</param>
     /// <param name="layer">default order in layer</param>
-    public void Show(string emotion, string atHorizontal = "middle", string atVertical = "middle", string atDistance = "middle", int layer = 0)
+    public void Show(string emotion, string atHorizontal = "middle", string atVertical = "middle",
+        string atDistance = "middle", int layer = 0, float animationDurationSeconds = 0, string animationType = "")
     {
         animator = GetComponent<Animator>();
+        var animationName = "";
         if (!atHorizontalPositionNameImagePosition.ContainsKey(atHorizontal))
         {
             Debugger.LogError("нет горизонтального положения " + atHorizontal);
@@ -56,6 +58,12 @@ public class CharacterImageController : MonoBehaviour
             return;
         }
 
+        if(animationDurationSeconds == 0 && animationType != "") 
+        {
+            Debugger.LogError("параметр длительность анимации не может быть равен 0 при какой-либо анимации");
+            return;
+        }
+
         try
         {
             characterImage = GetComponent<Image>();
@@ -63,10 +71,25 @@ public class CharacterImageController : MonoBehaviour
         }
         catch
         {
-            Debugger.Log("нет эмоции " + emotion + " путь до файла " + CharacterHandler.GetFolderName(dirPath + "/" + emotion));
+            Debugger.LogError("нет эмоции " + emotion + " путь до файла " + CharacterHandler.GetFolderName(dirPath + "/" + emotion));
+            return;
         }
 
-        animator.Play("FadeUp");
+        try
+        {
+            animator.speed = 1 / animationDurationSeconds;
+            animationName = GetAnimationName(animationType: animationType, isOnShow: true);
+        }
+        catch (Exception e)
+        {
+            Debugger.LogError(e.Message);
+            return;
+        }
+
+        Debugger.Log("animationName: " + animationName + " duration: " + animator.speed + " " + 1 / animationDurationSeconds);
+
+        if (animationName != "")
+            animator.Play(animationName);
 
         var orderInLayerChanger = this.transform.GetComponent<Canvas>();
         orderInLayerChanger.overrideSorting = true;
@@ -78,6 +101,19 @@ public class CharacterImageController : MonoBehaviour
 
         var scale = atDistancePositionNameImagePosition[atDistance];
         transform.localScale = new Vector3(scale, scale, 1f);
+    }
+
+    /// <summary>
+    /// функция для получения имени нужной нам анимации
+    /// </summary>
+    /// <param name="animationType">параметр из animationType в функции Show()</param>
+    /// <param name="isOnShow">применяется ли эта анимация на показе персонажа</param>
+    /// <returns>имя анимации, которое можно пихать в Animator.Play()</returns>
+    private string GetAnimationName(string animationType, bool isOnShow)
+    {
+        if (!animationTypes.ContainsKey(animationType))
+            throw new InvalidOperationException("нет анимации " + animationType);
+        return animationTypes[animationType] + (isOnShow ? "Up" : "Down");
     }
 
     private Dictionary<string, float> atHorizontalPositionNameImagePosition = new Dictionary<string, float>()
@@ -105,5 +141,11 @@ public class CharacterImageController : MonoBehaviour
         { "middle", 1.2f },
         { "midfront", 1.6f },
         { "front", 2 },
+    };
+
+    private Dictionary<string, string> animationTypes = new Dictionary<string, string>()
+    {
+        { "", "" },
+        { "fade", "Fade" }
     };
 }

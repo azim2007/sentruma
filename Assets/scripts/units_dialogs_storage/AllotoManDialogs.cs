@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections.Generic;
 
 public static class AllotoManDialogs
 {
@@ -32,9 +29,9 @@ public static class AllotoManDialogs
                 Replic.ServiceReplic("bg bg bg-color 0 255 0 fg-color 0 10 150 200"),
                 new Replic(UnitsIds.al_man, "Заодно и посмотрим как быстро у тебя голова после амнезии прояснится."),
                 Replic.ServiceReplic("bg bg1"),
-                Replic.ServiceReplic("show char norm atDistance front atHorizontal left layer 2 atVertical midbottom"),
-                Replic.ServiceReplic("show char1 smile atHorizontal right layer 1"),
-                Replic.ServiceReplic("show char2 rage atDistance back atHorizontal middle layer 1"),
+                Replic.ServiceReplic("show char norm atDistance front atHorizontal left layer 2 atVertical midbottom with fade 1"),
+                Replic.ServiceReplic("show char1 smile atHorizontal right layer 1 with fade 0,5"),
+                Replic.ServiceReplic("show char2 rage atDistance back atHorizontal middle layer 1 with fade 2"),
                 Replic.ServiceReplic("i love you too"),
                 new Replic(UnitsIds.pl, "Ну...<div> ладно"),
                 Replic.ServiceReplic("show char smile layer 0"),
@@ -55,10 +52,11 @@ public static class AllotoManDialogs
         )
     );
 
-    public static UnitsDialogs Dialogs { 
-        get 
+    public static UnitsDialogs Dialogs
+    {
+        get
         {
-            return dialogs; 
-        } 
+            return dialogs;
+        }
     }
 }

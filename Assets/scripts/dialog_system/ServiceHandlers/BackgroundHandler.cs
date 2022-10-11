@@ -46,7 +46,7 @@ public class BackgroundHandler : ICommandHandler
         }
 
         string action;
-        while(command.TryDequeue(out action))
+        while (command.TryDequeue(out action))
         {
             if (action == "bg-color")
             {
