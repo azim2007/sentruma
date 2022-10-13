@@ -14,6 +14,7 @@ public class DialogController : MonoBehaviour
     private Image Foreground { get; set; }
     private GameObject ReplicView { get; set; }
     private GameObject SelectingView { get; set; }
+    private GameObject PreviousReplicsView { get; set; }
 
     private Dialog thisDialog;
     public Dialog ThisDialog
@@ -39,7 +40,6 @@ public class DialogController : MonoBehaviour
         CommandHandler.HandleCommand(command);
     }
 
-
     private void GameObjectSetting()
     {
         Background = this.transform.GetChild(0).GetChild(0).GetComponent<Image>();
@@ -49,7 +49,9 @@ public class DialogController : MonoBehaviour
         Foreground = this.transform.GetChild(0).GetChild(1).GetComponent<Image>();
         ReplicView = this.transform.GetChild(0).GetChild(2).gameObject;
         SelectingView = this.transform.GetChild(0).GetChild(3).gameObject;
+        PreviousReplicsView = this.transform.GetChild(0).GetChild(4).gameObject;
         SelectingView.SetActive(false);
+        PreviousReplicsView.SetActive(false);
         ReplicView.SetActive(true);
     }
 
@@ -73,7 +75,7 @@ public class DialogController : MonoBehaviour
 
     private IEnumerator ShowDialog()
     {
-        if(ThisDialog == null)
+        if (ThisDialog == null)
         {
             thisDialog = new Dialog(
                 new List<Replic>(),
@@ -84,10 +86,21 @@ public class DialogController : MonoBehaviour
             );
         }
 
-        Text sender = ReplicView.transform.GetChild(0).GetComponent<Text>();
-        Text message = ReplicView.transform.GetChild(1).GetComponent<Text>();
+        var nextReplicButton = ReplicView.transform.GetChild(2).GetComponent<Button>();
+        var previousReplicsButton = ReplicView.transform.GetChild(3).GetComponent<Button>();
+
+        var sender = ReplicView.transform.GetChild(0).GetComponent<Text>();
+        var message = ReplicView.transform.GetChild(1).GetComponent<Text>();
+
         bool canChange = true;
-        ReplicView.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => canChange = true);
+        bool openPreviousReplics = false;
+
+        nextReplicButton.onClick.AddListener(() => canChange = true);
+        previousReplicsButton.onClick.AddListener(() => 
+        { 
+            openPreviousReplics = true; 
+            PreviousReplicsView.SetActive(true); 
+        });
 
         foreach(var replic in ThisDialog.GetReplic())
         {
@@ -99,7 +112,7 @@ public class DialogController : MonoBehaviour
                     command += _operator + " ";
                 }
 
-                ServiceHandler(command);
+                ServiceHandler(command.Trim(new[] { ' ' }));
                 continue;
             }
 
@@ -115,11 +128,11 @@ public class DialogController : MonoBehaviour
                     if(!skip)
                         yield return new WaitForSeconds(textSpeed * 0.04f);
 
-                    skip = canChange;
+                    skip = CanChange();
                 }
 
                 canChange = false;
-                while (!canChange)
+                while (!CanChange())
                 {
                     yield return null;
                 }
@@ -143,6 +156,8 @@ public class DialogController : MonoBehaviour
             GameObjectSetting();
             StartCoroutine(ShowDialog());
         }
+
+        bool CanChange() => (canChange || Input.GetMouseButtonUp(0)) && (!openPreviousReplics);
     }
 }
 

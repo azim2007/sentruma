@@ -16,6 +16,36 @@ public static class AllotoManDialogs
         "bg1"
     );
 
+    private static Dialog vskrytsa = new Dialog(
+        new List<Replic>()
+        {
+            new Replic(UnitsIds.pl, "Я вскроюсть"),
+            Replic.ServiceReplic("show char1 rage"),
+            new Replic("*и вскрылся*")
+        },
+
+        null,
+        () => true,
+        () => { Debugger.Log("on end игрок вскрылся"); },
+        "bg1"
+    );
+
+    private static Dialog smiritsa = new Dialog(
+        new List<Replic>()
+        {
+            new Replic("*ладно<div> видно мне придется просто смириться*"),
+            Replic.ServiceReplic("bg bg"),
+            new Replic("*и жить дальше*"),
+            Replic.ServiceReplic("show char rage"),
+            new Replic(UnitsIds.pl, "лады")
+        },
+
+        null,
+        () => true,
+        () => { Debugger.Log("on end игрок смирился"); },
+        "bg1"
+    );
+
     private static UnitsDialogs dialogs = new UnitsDialogs(
         new List<Dialog>(),
 
@@ -42,8 +72,8 @@ public static class AllotoManDialogs
             new List<System.Tuple<string, Dialog>>()
             {
                 new System.Tuple<string, Dialog>("повеситься", povesitsa),
-                new System.Tuple<string, Dialog>("вскрыться", null),
-                new System.Tuple<string, Dialog>("смириться и жить дальше", null)
+                new System.Tuple<string, Dialog>("вскрыться", vskrytsa),
+                new System.Tuple<string, Dialog>("смириться и жить дальше", smiritsa)
             },
 
             () => true,

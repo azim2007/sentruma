@@ -106,7 +106,6 @@ public class CharacterHandler : ICommandHandler
         string action;
         while (command.TryDequeue(out action))
         {
-            if (action == "") continue;
             if (!paramsActions.ContainsKey(action))
             {
                 Debugger.LogError("некорректный параметр " + action);
