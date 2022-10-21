@@ -58,7 +58,7 @@ public class CharacterImageController : MonoBehaviour
             return;
         }
 
-        if(animationDurationSeconds == 0 && animationType != "") 
+        if (animationDurationSeconds == 0 && animationType != "")
         {
             Debugger.LogError("параметр длительность анимации не может быть равен 0 при какой-либо анимации");
             return;
@@ -71,7 +71,8 @@ public class CharacterImageController : MonoBehaviour
         }
         catch
         {
-            Debugger.LogError("нет эмоции " + emotion + " путь до файла " + CharacterHandler.GetFolderName(dirPath + "/" + emotion));
+            Debugger.LogError("нет эмоции " + emotion + " путь до файла " +
+                CharacterHandler.GetFolderName(dirPath + "/" + emotion));
             return;
         }
 
@@ -86,9 +87,7 @@ public class CharacterImageController : MonoBehaviour
             return;
         }
 
-        Debugger.Log("animationName: " + animationName + " duration: " + animator.speed + " " + 1 / animationDurationSeconds);
-
-        if (animationName != "")
+        if (animationType != "" && animationDurationSeconds > 0)
             animator.Play(animationName);
 
         var orderInLayerChanger = this.transform.GetComponent<Canvas>();

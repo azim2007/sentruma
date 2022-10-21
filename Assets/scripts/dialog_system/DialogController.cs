@@ -14,7 +14,7 @@ public class DialogController : MonoBehaviour
     private Image Foreground { get; set; }
     private GameObject ReplicView { get; set; }
     private GameObject SelectingView { get; set; }
-    private GameObject PreviousReplicsView { get; set; }
+    private PreviousReplicManager PreviousReplicsView { get; set; }
 
     private Dialog thisDialog;
     public Dialog ThisDialog
@@ -23,14 +23,15 @@ public class DialogController : MonoBehaviour
 
         set
         {
-            if(thisDialog == null)
+            if (thisDialog == null)
             {
                 thisDialog = value;
             }
 
             else
             {
-                throw new System.InvalidOperationException("thisDialog isnt empty. You cannot change its value");
+                throw new System.InvalidOperationException
+                    ("thisDialog isnt empty. You cannot change its value");
             }
         }
     }
@@ -49,15 +50,14 @@ public class DialogController : MonoBehaviour
         Foreground = this.transform.GetChild(0).GetChild(1).GetComponent<Image>();
         ReplicView = this.transform.GetChild(0).GetChild(2).gameObject;
         SelectingView = this.transform.GetChild(0).GetChild(3).gameObject;
-        PreviousReplicsView = this.transform.GetChild(0).GetChild(4).gameObject;
+        PreviousReplicsView = this.transform.GetChild(0).GetChild(4).GetComponent<PreviousReplicManager>();
         SelectingView.SetActive(false);
-        PreviousReplicsView.SetActive(false);
         ReplicView.SetActive(true);
     }
 
     private void Start()
     {
-        this.GetComponent<Canvas>().worldCamera = 
+        this.GetComponent<Canvas>().worldCamera =
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
         GameObjectSetting();
@@ -93,21 +93,16 @@ public class DialogController : MonoBehaviour
         var message = ReplicView.transform.GetChild(1).GetComponent<Text>();
 
         bool canChange = true;
-        bool openPreviousReplics = false;
 
         nextReplicButton.onClick.AddListener(() => canChange = true);
-        previousReplicsButton.onClick.AddListener(() => 
-        { 
-            openPreviousReplics = true; 
-            PreviousReplicsView.SetActive(true); 
-        });
+        previousReplicsButton.onClick.AddListener(() => PreviousReplicsView.Show());
 
-        foreach(var replic in ThisDialog.GetReplic())
+        foreach (var replic in ThisDialog.GetReplic())
         {
             if (replic.IsService)
             {
                 string command = "";
-                foreach(var _operator in replic.GetText())
+                foreach (var _operator in replic.GetText())
                 {
                     command += _operator + " ";
                 }
@@ -118,25 +113,29 @@ public class DialogController : MonoBehaviour
 
             sender.text = replic.Sender;
             message.text = "";
-            foreach(var sentence in replic.GetText())
+            foreach (var sentence in replic.GetText())
             {
                 canChange = false;
                 bool skip = false;
                 foreach (var e in sentence)
                 {
                     message.text += e.ToString();
-                    if(!skip)
+                    if (!skip)
+                    {
                         yield return new WaitForSeconds(textSpeed * 0.04f);
-
-                    skip = CanChange();
+                        skip = canChange || Input.GetMouseButton(0);
+                    }                    
                 }
 
+                yield return new WaitForSeconds(0.2f);
                 canChange = false;
                 while (!CanChange())
                 {
                     yield return null;
                 }
             }
+
+            PreviousReplicsView.AddReplicToList(replic);
         }
 
         Debugger.Log("dialog has answers " + ThisDialog.HasAnswers);
@@ -157,7 +156,7 @@ public class DialogController : MonoBehaviour
             StartCoroutine(ShowDialog());
         }
 
-        bool CanChange() => (canChange || Input.GetMouseButtonUp(0)) && (!openPreviousReplics);
+        bool CanChange() => (canChange || Input.GetMouseButtonUp(0)) && (!PreviousReplicsView.IsActive);
     }
 }
 
@@ -175,7 +174,7 @@ public class VariantManager
         SelectingView.SetActive(true);
         var dialogFactory = new DialogFactory();
 
-        foreach(var e in Variants)
+        foreach (var e in Variants)
         {
             var answer = new Tuple<string, Dialog>(e.Item1, e.Item2);
             var variant = dialogFactory.Instantiate("vrntVw");
