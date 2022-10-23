@@ -63,7 +63,7 @@ public class UnitController : MonoBehaviour
                 yield return null;
             }
 
-            if (player.IsRage)
+            if (player.PlayerData.IsRage)
             {
                 Debugger.Log($"{UnitName} dead");
             }

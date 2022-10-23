@@ -12,7 +12,7 @@ public class MainMenuManager : MonoBehaviour
     {
         buttons = new List<Button>();
         var canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
-        for(int index = 0; index < canvas.childCount; index++)
+        for (int index = 0; index < canvas.childCount; index++)
         {
             buttons.Add(canvas.GetChild(index).gameObject.GetComponent<Button>());
         }
@@ -31,16 +31,15 @@ public class MainMenuManager : MonoBehaviour
     {
         CurrentProgress.currentProgress.CurrentWorld = Worlds.alloto;
 
-        CurrentProgress.currentProgress.SetPlayer(
-           new PlayerData(speed: 2, 
-                maxHealth: 10, 
-                currentHealth: 1, 
+        CurrentProgress.currentProgress.Player =
+           new PlayerData(speed: 2,
+                maxHealth: 10,
+                currentHealth: 1,
                 rbPlayer: new Vector2(0f, 0f),
                 harisma: 1,
                 forse: 1,
                 isRage: false
-            )
-        );
+            );
         CurrentProgress.currentProgress.GenerateName();
         CurrentProgress.currentProgress.LoadGame();
     }
@@ -52,7 +51,7 @@ public class MainMenuManager : MonoBehaviour
     }
 
     private void AboutUs() => Debugger.Log("AboutUs");
-    private void Saves() 
+    private void Saves()
     {
         Debugger.Log("Saves");
         SceneLoader.LoadScene("saves_menu", "Открываем загрузки");

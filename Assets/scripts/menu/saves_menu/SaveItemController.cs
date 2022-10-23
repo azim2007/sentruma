@@ -15,7 +15,7 @@ public class SaveItemController : MonoBehaviour
     public DateTime Date { get; set; }
     public Worlds CurrentWorld { get; set; }
     public bool IsEmpty { get { return Name == ""; } }
-    public bool IsProgressEmpty { get { return CurrentProgress.currentProgress.GetPlayer().MaxHealth == 0; } }
+    public bool IsProgressEmpty { get { return CurrentProgress.currentProgress.Player == null; } }
 
     void Start()
     {

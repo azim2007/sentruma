@@ -11,8 +11,9 @@ public class AllotoSceneManager : MonoBehaviour
         var playerFactory = new PlayerFactory();
 
         player = playerFactory.Instantiate(UnitsIds.pl, new Vector2(0f, 0f)).GetComponent<Player>();
-        player.LoadPlayer(CurrentProgress.currentProgress.GetPlayer());
-        Debugger.Log(player.MaxHealth + " " + player.SetDamage);
+        player.PlayerData = CurrentProgress.currentProgress.Player;
+        Debugger.Log("MaxHealth: " + player.PlayerData.MaxHealth + " CurrentHealth: " + player.PlayerData.CurrentHealth);
+        Debugger.Log("isRage: " + player.PlayerData.IsRage);
 
         var dialogFactory = new DialogFactory();
         dialogFactory.Instantiate("dlgMng");
@@ -25,14 +26,15 @@ public class AllotoSceneManager : MonoBehaviour
 
     public void WriteProgress()
     {
-        CurrentProgress.currentProgress.SetPlayer(new PlayerData(player));
+        CurrentProgress.currentProgress.Player = new PlayerData(player);
         SceneLoader.LoadScene("saves_menu", "Открываем загрузки");
     }
 
     public void LoadProgress()
     {
         Saver.Load("0").ToProgress();
-        Debugger.Log("position " + CurrentProgress.currentProgress.GetPlayer().PositionX + " " + CurrentProgress.currentProgress.GetPlayer().PositionY);
+        Debugger.Log("position " + CurrentProgress.currentProgress.Player.PositionX + " " + 
+            CurrentProgress.currentProgress.Player.PositionY);
         SceneManager.LoadScene("alloto_main");
     }
 }

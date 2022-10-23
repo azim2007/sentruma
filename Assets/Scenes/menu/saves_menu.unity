@@ -1592,8 +1592,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.5}
-  m_SizeDelta: {x: -20, y: -13}
+  m_AnchoredPosition: {x: -0.099998474, y: 1.4924002}
+  m_SizeDelta: {x: -12.221878, y: -9.015224}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1332545549
 MonoBehaviour:
@@ -1615,7 +1615,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 0bb5767d308225e428c492ecb5636e8a, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -1701,7 +1701,7 @@ RectTransform:
   m_GameObject: {fileID: 1347236814}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0.0222093, y: 0.0222093, z: 0.0222093}
+  m_LocalScale: {x: 0.022209296, y: 0.022209296, z: 0.022209296}
   m_Children:
   - {fileID: 1492476592}
   - {fileID: 159801539}
@@ -1717,7 +1717,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -13758.482, y: 3342.3662}
+  m_AnchoredPosition: {x: -10645.549, y: 3342.3914}
   m_SizeDelta: {x: 468.667, y: 126.94046}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1347236818
@@ -2076,8 +2076,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.5}
-  m_SizeDelta: {x: -20, y: -13}
+  m_AnchoredPosition: {x: -1.9899979, y: 1.4924}
+  m_SizeDelta: {x: -16.010406, y: -9.015223}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1510044040
 MonoBehaviour:
@@ -2092,14 +2092,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.5}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.5529412}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 0bb5767d308225e428c492ecb5636e8a, type: 3}
     m_FontSize: 14
     m_FontStyle: 2
     m_BestFit: 0

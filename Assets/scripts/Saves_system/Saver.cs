@@ -17,7 +17,7 @@ public static class Saver
         var path = Application.persistentDataPath + "/saves/" + fileName + ".sav";
         var stream = new FileStream(path, FileMode.Create);
 
-        Debugger.Log("position on save: " + save.GetPlayer().PositionX + " " + save.GetPlayer().PositionY);
+        Debugger.Log("position on save: " + save.Player.PositionX + " " + save.Player.PositionY);
         Debugger.Log("saved at path: " + path);
         formatter.Serialize(stream, save);
         stream.Close();
