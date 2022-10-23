@@ -40,12 +40,6 @@ public class ControlItemController : MonoBehaviour
         setKey.onClick.AddListener(() => SceneManager.SetKey(this));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetLoadingText()
     {
         keyName.text = "<color=#EB4747FF>нажмите на клавишу...</color>";

@@ -6,22 +6,16 @@ using UnityEngine;
 public class ControlMenuManager : MonoBehaviour
 {
     private GameObject content;
-    private GameObject itemPrefab;
     private BackButtonManager backButtonManager;
+    private MenuFactory menuFactory;
     void Start()
     {
         backButtonManager = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(1).gameObject.AddComponent<BackButtonManager>();
 
         content = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
-        itemPrefab = GameObject.FindGameObjectWithTag("SaveItem");
+        menuFactory = new MenuFactory();
 
         CreateControlsItemsList();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void CreateControlsItemsList()
@@ -34,10 +28,11 @@ public class ControlMenuManager : MonoBehaviour
 
     private void CreateControlItem(Tuple<string, Tuple<string, KeyCode>> value)
     {
-        var item = Instantiate(itemPrefab).AddComponent<ControlItemController>();
+        var item = menuFactory.Instantiate("cntrlItm").GetComponent<ControlItemController>();
         item.transform.SetParent(content.transform);
         item.SceneManager = this;
         item.Value = value;
+        item.transform.localScale = new Vector3(1f, 1f, 1f);
     }
 
     public void SetKey(ControlItemController sender)

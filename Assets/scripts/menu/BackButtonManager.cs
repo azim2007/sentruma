@@ -7,7 +7,8 @@ public class BackButtonManager : MonoBehaviour
 {
     void Start()
     {
-        transform.GetChild(0).GetComponent<Text>().text = "Назад (" + InputManager.Manager.GetKeyName("back") + ")";
+        transform.GetChild(0).GetComponent<Text>().text = "Назад (" + 
+            InputManager.Manager.GetKeyName("back") + ")";
         GetComponent<Button>().onClick.AddListener(() => SceneLoader.LoadPreviousScene("Подождите"));
     }
 

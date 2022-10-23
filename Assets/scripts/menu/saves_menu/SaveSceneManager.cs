@@ -6,22 +6,17 @@ using System;
 
 public class SaveSceneManager : MonoBehaviour
 {
-    private GameObject savePanelPrefab;
-
-    private List<GameObject> savePanels;
-    private List<SaveItemController> saveControllers;
+    private MenuFactory menuFactory;
     private GameObject content;
 
     private int saveItemsCount = 100;
     
     void Start()
     {
-        savePanelPrefab = GameObject.FindGameObjectWithTag("SaveItem");
-        content = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).gameObject;
+        menuFactory = new MenuFactory();
+        content = GameObject.FindGameObjectWithTag("Canvas").
+            transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).gameObject;
         Debugger.Log("content name: " + content);
-
-        savePanels = new List<GameObject>();
-        saveControllers = new List<SaveItemController>();
 
         for(int i = 0; i < saveItemsCount; i++)
         {
@@ -38,7 +33,8 @@ public class SaveSceneManager : MonoBehaviour
             if(i % 10 == 9) GC.Collect();
         }
 
-        GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(2).gameObject.AddComponent<BackButtonManager>();
+        GameObject.FindGameObjectWithTag("Canvas").
+            transform.GetChild(2).gameObject.AddComponent<BackButtonManager>();
     }
 
     void Update()
@@ -46,25 +42,24 @@ public class SaveSceneManager : MonoBehaviour
         
     }
 
-    private void CreateSavePanel(int id, Save value)
+    private SaveItemController CreateSavePanel(int id, Save value)
     {
-        savePanels.Add(Instantiate(savePanelPrefab));
-        savePanels[savePanels.Count - 1].transform.SetParent(content.transform);
-
-        saveControllers.Add(savePanels[savePanels.Count - 1].GetComponent<SaveItemController>());
-        saveControllers[saveControllers.Count - 1].Id = id;
-        saveControllers[saveControllers.Count - 1].Name = value.Name;
-        saveControllers[saveControllers.Count - 1].Date = value.Date;
-        saveControllers[saveControllers.Count - 1].CurrentWorld = value.CurrentWorld;
+        var panel = CreateSavePanel(id);
+        
+        panel.Name = value.Name;
+        panel.Date = value.Date;
+        panel.CurrentWorld = value.CurrentWorld;
+        return panel;
     }
 
-    private void CreateSavePanel(int id)
+    private SaveItemController CreateSavePanel(int id)
     {
-        savePanels.Add(Instantiate(savePanelPrefab));
-        savePanels[savePanels.Count - 1].transform.SetParent(content.transform);
+        var panel = menuFactory.Instantiate("svItm").GetComponent<SaveItemController>();
+        panel.transform.SetParent(content.transform);
+        panel.transform.localScale = new Vector3(1f, 1f, 1f);
 
-        saveControllers.Add(savePanels[savePanels.Count - 1].GetComponent<SaveItemController>());
-        saveControllers[saveControllers.Count - 1].Id = id;
-        saveControllers[saveControllers.Count - 1].Name = "";
+        panel.Id = id;
+        panel.Name = "";
+        return panel;
     }
 }
