@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -87,8 +88,14 @@ public class CharacterImageController : MonoBehaviour
             return;
         }
 
-        if (animationType != "" && animationDurationSeconds > 0)
+        if(animationType == "")
+        {
+            animator.speed = 1;
+            animator.Play("DefaultState");
+        }   
+        else if (animationType != "" && animationDurationSeconds > 0)
             animator.Play(animationName);
+
 
         var orderInLayerChanger = this.transform.GetComponent<Canvas>();
         orderInLayerChanger.overrideSorting = true;
@@ -100,6 +107,44 @@ public class CharacterImageController : MonoBehaviour
 
         var scale = atDistancePositionNameImagePosition[atDistance];
         transform.localScale = new Vector3(scale, scale, 1f);
+    }
+
+    public void Hide(float animationDurationSeconds = 0, string animationType = "")
+    {
+        animator = GetComponent<Animator>();
+        var animationName = "";
+        if (animationDurationSeconds == 0 && animationType != "")
+        {
+            Debugger.LogError("параметр длительность анимации не может быть равен 0 при какой-либо анимации");
+            return;
+        }
+
+        try
+        {
+            animator.speed = 1 / animationDurationSeconds;
+            animationName = GetAnimationName(animationType: animationType, isOnShow: false);
+        }
+        catch (Exception e)
+        {
+            Debugger.LogError(e.Message);
+            return;
+        }
+
+        if (animationType != "" && animationDurationSeconds > 0)
+            animator.Play(animationName);
+
+        StartCoroutine(WaitingForAnimation());
+
+        IEnumerator WaitingForAnimation()
+        {
+            Debugger.Log(animationName);
+            Debugger.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+            yield return null;
+            yield return new WaitWhile(() => animator.GetCurrentAnimatorClipInfo(0)[0].clip.name
+                .Equals(animationName));
+
+            this.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>

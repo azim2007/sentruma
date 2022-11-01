@@ -104,21 +104,23 @@ public static class AllotoManDialogs
         new Dialog(
             new List<Replic>()
             {
-                Replic.ServiceReplic("define char examp"),
+                Replic.ServiceReplic("define char microchel"),
                 Replic.ServiceReplic("define char1 examp"),
                 Replic.ServiceReplic("define char2 examp"),
                 new Replic(UnitsIds.al_man, "Значит так, <b>Меченый</b><div>, я тебя спас, и в благородство играть не буду<div>, выполнишь для меня пару заданий и мы в расчете."),
                 Replic.ServiceReplic("bg bg bg-color 0 255 0 fg-color 0 10 150 200"),
                 new Replic(UnitsIds.al_man, "Заодно и посмотрим как быстро у тебя голова после амнезии прояснится."),
                 Replic.ServiceReplic("bg bg1"),
-                Replic.ServiceReplic("show char norm atDistance front atHorizontal left layer 2 atVertical midbottom with fade 1"),
+                Replic.ServiceReplic("show char norm atDistance front atHorizontal left layer 2 atVertical midbottom"),
                 Replic.ServiceReplic("show char1 smile atHorizontal right layer 1 with fade 0,5"),
                 Replic.ServiceReplic("show char2 rage atDistance back atHorizontal middle layer 1 with fade 2"),
                 Replic.ServiceReplic("i love you too"),
                 new Replic(UnitsIds.pl, "Ну...<div> ладно"),
-                Replic.ServiceReplic("show char smile layer 0"),
+                Replic.ServiceReplic("hide char with fade 1,5"),
+                //Replic.ServiceReplic("hide char1"),
                 Replic.ServiceReplic("bg bg bg-color 0 255 0"),
                 new Replic("*Ага, буду я для него выполнять ерунду всякую*"),
+                Replic.ServiceReplic("show char rage atDistance midback atHorizontal midright layer 1"),
             },
 
             new List<System.Tuple<string, Dialog>>()

@@ -9,10 +9,17 @@ using UnityEngine.UI;
 /// </summary>
 public class CharacterHandler : ICommandHandler
 {
-    public static string GetFolderName(string name) => "charactersImages/" + name; // в этой папке хранятся все спрайты, используемые в диалогах
+    // в этой папке хранятся все спрайты, используемые в диалогах
+    public static string GetFolderName(string name) => "charactersImages/" + name; 
+
     private Dictionary<string, Action<Queue<string>>> CommandAction { get; set; }
+
     private Image Background { get; set; }
-    private static Dictionary<string, CharacterImageController> DefinedCharactersNameCharControllers { get; set; } // словарь для дефайна персонажа на какую-то переменную
+
+    // словарь для дефайна персонажа на какую-то переменную
+    private static Dictionary<string, CharacterImageController> DefinedCharactersNameCharControllers 
+    { get; set; } 
+
     public CharacterHandler(Image background)
     {
         Background = background;
@@ -22,6 +29,7 @@ public class CharacterHandler : ICommandHandler
             {"define", (Queue<string> command) => DefineCharacter(command) },
             {"destroy", (Queue<string> command) => DestroyCharacter(command) },
             {"show", (Queue<string> command) => ShowCharacter(command) },
+            {"hide", (Queue<string> command) => HideCharacter(command) },
         };
     }
 
@@ -83,7 +91,7 @@ public class CharacterHandler : ICommandHandler
                 } 
             }
         };
-        #endregion
+#endregion
         command.Dequeue();
         try
         {
@@ -133,6 +141,70 @@ public class CharacterHandler : ICommandHandler
             atDistance: atDistance,
             layer: layer,
             animationDurationSeconds: animationDuration,
+            animationType: animationType);
+    }
+
+    /// <summary>
+    /// скрывает персонажа с экрана
+    /// </summary>
+    /// <param name="command"></param>
+    private void HideCharacter(Queue<string> command)
+    {
+        #region ParametersSetting
+        string animationType = "";
+        float animationDuration = 0;
+        var paramsActions = new Dictionary<string, Action<string>>()
+        {
+            {"with", (param) =>
+                {
+                    var args = param.Split(' ');
+                    animationType = args[0];
+                    try
+                    {
+                        animationDuration = float.Parse(args[1], new NumberFormatInfo(){NumberDecimalSeparator = "," });
+                    }
+                    catch
+                    {
+                        Debugger.LogError("в параметр with в качестве длительности анимации было передано " + args[1]);
+                    }
+                } 
+            }
+        };
+        #endregion
+
+        command.Dequeue();
+        var characterName = command.Dequeue();
+        if (!DefinedCharactersNameCharControllers.ContainsKey(characterName))
+        {
+            Debugger.LogError("нет переменной с именем " + characterName);
+            return;
+        }
+
+        string action;
+        while(command.TryDequeue(out action))
+        {
+            if (!paramsActions.ContainsKey(action))
+            {
+                Debugger.LogError("некорректный параметр " + action);
+                return;
+            }
+
+            try
+            {
+                if (action == "with")
+                    paramsActions[action](command.Dequeue() + " " + command.Dequeue());
+                else
+                    paramsActions[action](command.Dequeue());
+            }
+            catch
+            {
+                Debugger.LogError("недостаточное кол во аргументов у параметра " + action);
+                return;
+            }
+        }
+
+        DefinedCharactersNameCharControllers[characterName]
+            .Hide(animationDurationSeconds: animationDuration,
             animationType: animationType);
     }
 
