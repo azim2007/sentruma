@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 using System;
 
 public class DialogController : MonoBehaviour
@@ -15,6 +14,7 @@ public class DialogController : MonoBehaviour
     private GameObject ReplicView { get; set; }
     private GameObject SelectingView { get; set; }
     private PreviousReplicManager PreviousReplicsView { get; set; }
+    private Waiter Waiter { get; set; }
 
     private Dialog thisDialog;
     public Dialog ThisDialog
@@ -62,11 +62,14 @@ public class DialogController : MonoBehaviour
 
         GameObjectSetting();
 
+        Waiter = new Waiter();
+
         CommandHandler = new CommandHandler(
             new List<ICommandHandler>()
             {
                 new BackgroundHandler(Background, Foreground),
-                new CharacterHandler(Background)
+                new CharacterHandler(Background),
+                new WaitHandler(Waiter),
             }
         );
 
@@ -99,6 +102,7 @@ public class DialogController : MonoBehaviour
 
         foreach (var replic in ThisDialog.GetReplic())
         {
+            yield return Waiter.Call();
             if (replic.IsService)
             {
                 string command = "";
@@ -185,5 +189,38 @@ public class VariantManager
 
             variant.GetComponent<Button>().onClick.AddListener(() => { SelectedDialog = answer.Item2; });
         }
+    }
+}
+
+/// <summary>
+/// класс, осуществляющий ожидание во время диалога в DialogController
+/// </summary>
+public class Waiter
+{
+    private YieldInstruction timeMeasure;
+
+    public Waiter()
+    {
+        timeMeasure = null;
+    }
+
+    /// <summary>
+    /// надо вызывать каждый раз в начале foreach в ShowDialog() корутине
+    /// </summary>
+    /// <returns>либо ожидание, либо null</returns>
+    public YieldInstruction Call()
+    {
+        YieldInstruction result = timeMeasure;
+        timeMeasure = null;
+        return result;
+    }
+
+    /// <summary>
+    /// задает время ожидания при следующем вызове Call
+    /// </summary>
+    /// <param name="measure">WaitForSeconds or smth idk</param>
+    public void SetTimeMeasure(YieldInstruction measure)
+    {
+        timeMeasure = measure;
     }
 }

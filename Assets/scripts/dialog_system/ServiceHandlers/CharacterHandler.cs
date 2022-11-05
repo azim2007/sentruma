@@ -82,11 +82,13 @@ public class CharacterHandler : ICommandHandler
                     animationType = args[0];
                     try
                     {
-                        animationDuration = float.Parse(args[1], new NumberFormatInfo(){NumberDecimalSeparator = "," });
+                        animationDuration = float.Parse(args[1], 
+                            new NumberFormatInfo(){NumberDecimalSeparator = "," });
                     }
                     catch
                     {
-                        Debugger.LogError("в параметр with в качестве длительности анимации было передано " + args[1]);
+                        Debugger.LogError("в параметр with в качестве длительности анимации было передано " 
+                            + args[1]);
                     }
                 } 
             }

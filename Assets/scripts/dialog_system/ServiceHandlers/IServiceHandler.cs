@@ -47,13 +47,9 @@ public class CommandHandler
     public void HandleCommand(string command)
     {
         var name = command.Split(' ')[0];
-        try
-        {
+        if(CommandHandlerId.ContainsKey(name))
             CommandHandlerId[name].HandleCommand(command);
-        }
-        catch
-        {
+        else
             Debugger.LogError("нет команды " + command);
-        }
     }
 }
