@@ -32,6 +32,44 @@ public class BackgroundHandler : ICommandHandler
 
     private void ChangeBackground(Queue<string> command)
     {
+        #region parameters setting
+        var paramsActions = new Dictionary<string, Action<Queue<string>>>()
+        {
+            { "bg-color", (queue) => 
+                {
+                    try
+                    {
+                        ChangeBGColor(command.Dequeue(), command.Dequeue(), command.Dequeue());
+                    }
+                    catch
+                    {
+                        Debugger.LogError("bg: в параметр bg-color было передано неправильное кол-во аргументов");
+                    }
+                } },
+            { "fg-color", (queue) =>
+                {
+                    try
+                    {
+                        ChangeFGColor(command.Dequeue(), command.Dequeue(),
+                            command.Dequeue(), command.Dequeue());
+                    }
+                    catch
+                    {
+                        Debugger.LogError("bg: в параметр fg-color было передано неправильное кол-во аргументов");
+                    }
+                } },
+            { "duration", (queue) => {
+                try
+                {
+                    SetDuration(command.Dequeue(), command.Dequeue(), command.Dequeue());
+                }
+                catch
+                {
+                    Debugger.LogError("bg: в параметр duration было передано неправильное кол-во аргументов");
+                } 
+            } },
+        };
+        #endregion
         command.Dequeue();
         try
         {
@@ -50,18 +88,25 @@ public class BackgroundHandler : ICommandHandler
         {
             if (action == "bg-color")
             {
-                if (!TryChangeBGColor(command.Dequeue(), command.Dequeue(), command.Dequeue()))
-                    return;
+                ChangeBGColor(command.Dequeue(), command.Dequeue(), command.Dequeue());
             }
             else if (action == "fg-color")
             {
-                if (!TryChangeFGColor(command.Dequeue(), command.Dequeue(), command.Dequeue(), command.Dequeue()))
-                    return;
+                ChangeFGColor(command.Dequeue(), command.Dequeue(), command.Dequeue(), command.Dequeue());
+            }
+            else
+            {
+                Debugger.LogError("у bg нет параметра " + action);
+                return;
             }
         }
     }
 
-    private bool TryChangeFGColor(string r, string g, string b, string a)
+    private void SetDuration(string bgDuration, string bgcolDuration, string fgcolDuration)
+    {
+
+    }
+    private void ChangeFGColor(string r, string g, string b, string a)
     {
         try
         {
@@ -71,16 +116,14 @@ public class BackgroundHandler : ICommandHandler
                 ConvertToFloat(b),
                 ConvertToFloat(a)
             );
-            return true;
         }
         catch
         {
             Debugger.LogError("некорректный формат цвета");
-            return false;
         }
     }
 
-    private bool TryChangeBGColor(string r, string g, string b)
+    private void ChangeBGColor(string r, string g, string b)
     {
         try
         {
@@ -89,12 +132,10 @@ public class BackgroundHandler : ICommandHandler
                 ConvertToFloat(g),
                 ConvertToFloat(b)
             );
-            return true;
         }
         catch
         {
             Debugger.LogError("некорректный формат цвета");
-            return false;
         }
     }
 
