@@ -2,19 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Globalization;
 
 public class BackgroundHandler : ICommandHandler
 {
-    private Image Background { get; set; }
-    private Image Foreground { get; set; }
-    private Dictionary<string, Action<Queue<string>>> CommandAction { get; set; }
+    private Image background;
+    private BackgroundController BackgroundController
+    {
+        get
+        {
+            return background.gameObject.GetComponent<BackgroundController>();
+        }
+    }
+
+    private Image foreground;
+    private ForegroundController ForegroundController
+    {
+        get
+        {
+            return foreground.gameObject.GetComponent<ForegroundController>();
+        }
+    }
+    private Dictionary<string, Action<Queue<string>>> commandAction;
     public BackgroundHandler(Image background, Image foreground)
     {
-        Background = background;
-        Foreground = foreground;
-        CommandAction = new Dictionary<string, Action<Queue<string>>>
+        this.background = background;
+        this.foreground = foreground;
+        commandAction = new Dictionary<string, Action<Queue<string>>>
         {
-            { "bg", (Queue<string> command) => ChangeBackground(command) }
+            { "bg", (Queue<string> command) => ShowBackground(command) }
         };
     }
 
@@ -27,19 +43,22 @@ public class BackgroundHandler : ICommandHandler
     {
         var listCommand = command.Split(' ');
         Queue<string> commandQueue = new Queue<string>(listCommand);
-        CommandAction[listCommand[0]].Invoke(commandQueue);
+        commandAction[listCommand[0]].Invoke(commandQueue);
     }
 
-    private void ChangeBackground(Queue<string> command)
+    private void ShowBackground(Queue<string> command)
     {
         #region parameters setting
+        Sprite sprite = null;
+        Color bgColor = Color.white, fgColor = new Color(1, 1, 1, 0);
+        float bgDuration = 0f, bgColorDuration = 0f, fgColorDuration = 0f;
         var paramsActions = new Dictionary<string, Action<Queue<string>>>()
         {
-            { "bg-color", (queue) => 
+            { "bg-color", (queue) =>
                 {
                     try
                     {
-                        ChangeBGColor(command.Dequeue(), command.Dequeue(), command.Dequeue());
+                        bgColor = GetBGColor(command.Dequeue(), command.Dequeue(), command.Dequeue());
                     }
                     catch
                     {
@@ -50,7 +69,7 @@ public class BackgroundHandler : ICommandHandler
                 {
                     try
                     {
-                        ChangeFGColor(command.Dequeue(), command.Dequeue(),
+                        fgColor = GetFGColor(command.Dequeue(), command.Dequeue(),
                             command.Dequeue(), command.Dequeue());
                     }
                     catch
@@ -61,56 +80,50 @@ public class BackgroundHandler : ICommandHandler
             { "duration", (queue) => {
                 try
                 {
-                    SetDuration(command.Dequeue(), command.Dequeue(), command.Dequeue());
+                    bgDuration = Parser.FloatParse(queue.Dequeue());
+                    bgColorDuration = Parser.FloatParse(queue.Dequeue());
+                    fgColorDuration = Parser.FloatParse(queue.Dequeue());
                 }
                 catch
                 {
                     Debugger.LogError("bg: в параметр duration было передано неправильное кол-во аргументов");
-                } 
+                }
             } },
         };
         #endregion
         command.Dequeue();
+        string bgName = "";
         try
         {
-            Background.sprite = Resources.Load<Sprite>("backgrounds/" + command.Dequeue());
-            Background.color = Color.white;
-            Foreground.color = new Color(0, 0, 0, 0);
+            bgName = command.Dequeue();
+            sprite = Resources.Load<Sprite>("backgrounds/" + bgName);
         }
         catch
         {
-            Debugger.LogError("нет такого фона");
+            Debugger.LogError("bg: нет такого фона " + bgName);
             return;
         }
 
         string action;
         while (command.TryDequeue(out action))
         {
-            if (action == "bg-color")
+            if (!paramsActions.ContainsKey(action))
             {
-                ChangeBGColor(command.Dequeue(), command.Dequeue(), command.Dequeue());
+                Debugger.LogError("bg: нет параметра " + action);
             }
-            else if (action == "fg-color")
-            {
-                ChangeFGColor(command.Dequeue(), command.Dequeue(), command.Dequeue(), command.Dequeue());
-            }
-            else
-            {
-                Debugger.LogError("у bg нет параметра " + action);
-                return;
-            }
+
+            paramsActions[action](command);
         }
+
+        //BackgroundController
+        //ForeGroundController
     }
 
-    private void SetDuration(string bgDuration, string bgcolDuration, string fgcolDuration)
-    {
-
-    }
-    private void ChangeFGColor(string r, string g, string b, string a)
+    private Color GetFGColor(string r, string g, string b, string a)
     {
         try
         {
-            Foreground.color = new Color(
+            return new Color(
                 ConvertToFloat(r),
                 ConvertToFloat(g),
                 ConvertToFloat(b),
@@ -119,15 +132,16 @@ public class BackgroundHandler : ICommandHandler
         }
         catch
         {
-            Debugger.LogError("некорректный формат цвета");
+            Debugger.LogError("bg: некорректный формат цвета");
+            return new Color(1, 1, 1, 0);
         }
     }
 
-    private void ChangeBGColor(string r, string g, string b)
+    private Color GetBGColor(string r, string g, string b)
     {
         try
         {
-            Background.color = new Color(
+            return new Color(
                 ConvertToFloat(r),
                 ConvertToFloat(g),
                 ConvertToFloat(b)
@@ -135,7 +149,8 @@ public class BackgroundHandler : ICommandHandler
         }
         catch
         {
-            Debugger.LogError("некорректный формат цвета");
+            Debugger.LogError("bg: некорректный формат цвета");
+            return Color.white;
         }
     }
 

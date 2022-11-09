@@ -10,21 +10,20 @@ using UnityEngine.UI;
 public class CharacterHandler : ICommandHandler
 {
     // в этой папке хранятся все спрайты, используемые в диалогах
-    public static string GetFolderName(string name) => "charactersImages/" + name; 
+    public static string GetFolderName(string name) => "charactersImages/" + name;
 
-    private Dictionary<string, Action<Queue<string>>> CommandAction { get; set; }
+    private Dictionary<string, Action<Queue<string>>> commandAction;
 
-    private Image Background { get; set; }
+    private Image background;
 
     // словарь для дефайна персонажа на какую-то переменную
-    private static Dictionary<string, CharacterImageController> DefinedCharactersNameCharControllers 
-    { get; set; } 
+    private static Dictionary<string, CharacterImageController> definedCharactersNameCharControllers;
 
     public CharacterHandler(Image background)
     {
-        Background = background;
-        DefinedCharactersNameCharControllers = new Dictionary<string, CharacterImageController>();
-        CommandAction = new Dictionary<string, Action<Queue<string>>>()
+        this.background = background;
+        definedCharactersNameCharControllers = new Dictionary<string, CharacterImageController>();
+        commandAction = new Dictionary<string, Action<Queue<string>>>()
         {
             {"define", (Queue<string> command) => DefineCharacter(command) },
             {"destroy", (Queue<string> command) => DestroyCharacter(command) },
@@ -45,7 +44,7 @@ public class CharacterHandler : ICommandHandler
     {
         var listCommand = command.Split(' ');
         Queue<string> commandQueue = new Queue<string>(listCommand);
-        CommandAction[listCommand[0]].Invoke(commandQueue);
+        commandAction[listCommand[0]].Invoke(commandQueue);
     }
 
     /// <summary>
@@ -82,8 +81,7 @@ public class CharacterHandler : ICommandHandler
                     animationType = args[0];
                     try
                     {
-                        animationDuration = float.Parse(args[1], 
-                            new NumberFormatInfo(){NumberDecimalSeparator = "," });
+                        animationDuration = Parser.FloatParse(args[1]);
                     }
                     catch
                     {
@@ -98,13 +96,13 @@ public class CharacterHandler : ICommandHandler
         try
         {
             charName = command.Dequeue();
-            if (!DefinedCharactersNameCharControllers.ContainsKey(charName))
+            if (!definedCharactersNameCharControllers.ContainsKey(charName))
             {
                 Debugger.LogError("нет переменной с именем " + charName);
                 return;
             }
 
-            DefinedCharactersNameCharControllers[charName].gameObject.SetActive(true);
+            definedCharactersNameCharControllers[charName].gameObject.SetActive(true);
             emotionName = command.Dequeue();
         }
         catch
@@ -118,7 +116,7 @@ public class CharacterHandler : ICommandHandler
         {
             if (!paramsActions.ContainsKey(action))
             {
-                Debugger.LogError("некорректный параметр " + action);
+                Debugger.LogError("show: некорректный параметр " + action);
                 return;
             }
 
@@ -136,7 +134,7 @@ public class CharacterHandler : ICommandHandler
             }
         }
 
-        DefinedCharactersNameCharControllers[charName]
+        definedCharactersNameCharControllers[charName]
             .Show(emotion: emotionName,
             atHorizontal: atHorizontal,
             atVertical: atVertical,
@@ -163,11 +161,12 @@ public class CharacterHandler : ICommandHandler
                     animationType = args[0];
                     try
                     {
-                        animationDuration = float.Parse(args[1], new NumberFormatInfo(){NumberDecimalSeparator = "," });
+                        animationDuration = Parser.FloatParse(args[1]);
                     }
                     catch
                     {
-                        Debugger.LogError("в параметр with в качестве длительности анимации было передано " + args[1]);
+                        Debugger.LogError(
+                            "hide: в параметр with в качестве длительности анимации было передано " + args[1]);
                     }
                 } 
             }
@@ -176,9 +175,9 @@ public class CharacterHandler : ICommandHandler
 
         command.Dequeue();
         var characterName = command.Dequeue();
-        if (!DefinedCharactersNameCharControllers.ContainsKey(characterName))
+        if (!definedCharactersNameCharControllers.ContainsKey(characterName))
         {
-            Debugger.LogError("нет переменной с именем " + characterName);
+            Debugger.LogError("hide: нет переменной с именем " + characterName);
             return;
         }
 
@@ -205,7 +204,7 @@ public class CharacterHandler : ICommandHandler
             }
         }
 
-        DefinedCharactersNameCharControllers[characterName]
+        definedCharactersNameCharControllers[characterName]
             .Hide(animationDurationSeconds: animationDuration,
             animationType: animationType);
     }
@@ -228,7 +227,7 @@ public class CharacterHandler : ICommandHandler
             return;
         }
 
-        if (DefinedCharactersNameCharControllers.ContainsKey(characterName))
+        if (definedCharactersNameCharControllers.ContainsKey(characterName))
         {
             Debugger.LogError("нельзя создать несколько персонажей с одним именем");
             return;
@@ -236,11 +235,11 @@ public class CharacterHandler : ICommandHandler
 
         DialogFactory dialogFactory = new DialogFactory();
         CharacterImageController character = dialogFactory.Instantiate(id: "chrctrImg").GetComponent<CharacterImageController>();
-        character.transform.SetParent(Background.transform);
+        character.transform.SetParent(background.transform);
         character.transform.localScale = new Vector3(1f, 1f, 1f);
         character.DirPath = command.Dequeue();
         character.gameObject.SetActive(false);
-        DefinedCharactersNameCharControllers.Add(characterName, character);
+        definedCharactersNameCharControllers.Add(characterName, character);
     }
 
     /// <summary>
@@ -253,14 +252,14 @@ public class CharacterHandler : ICommandHandler
         try
         {
             string characterName = command.Dequeue();
-            if (!DefinedCharactersNameCharControllers.ContainsKey(characterName))
+            if (!definedCharactersNameCharControllers.ContainsKey(characterName))
             {
                 Debugger.LogError("нет переменной с именем " + characterName);
                 return;
             }
 
-            GameObject.Destroy(DefinedCharactersNameCharControllers[characterName].gameObject);
-            DefinedCharactersNameCharControllers.Remove(characterName);
+            GameObject.Destroy(definedCharactersNameCharControllers[characterName].gameObject);
+            definedCharactersNameCharControllers.Remove(characterName);
         }
         catch
         {

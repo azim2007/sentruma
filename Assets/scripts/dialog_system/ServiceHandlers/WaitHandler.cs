@@ -9,12 +9,12 @@ using UnityEngine;
 public class WaitHandler : ICommandHandler
 {
     private Waiter waiter;
-    private Dictionary<string, Action<Queue<string>>> CommandAction { get; set; }
+    private Dictionary<string, Action<Queue<string>>> commandAction;
 
     public WaitHandler(Waiter waiter)
     {
         this.waiter = waiter;
-        CommandAction = new Dictionary<string, Action<Queue<string>>>
+        commandAction = new Dictionary<string, Action<Queue<string>>>
         {
             { "wait", (Queue<string> command) => Wait(command) }
         };
@@ -29,7 +29,7 @@ public class WaitHandler : ICommandHandler
     {
         var listCommand = command.Split(' ');
         Queue<string> commandQueue = new Queue<string>(listCommand);
-        CommandAction[listCommand[0]].Invoke(commandQueue);
+        commandAction[listCommand[0]].Invoke(commandQueue);
     }
 
     /// <summary>
@@ -45,11 +45,11 @@ public class WaitHandler : ICommandHandler
             float time;
             try
             {
-                time = float.Parse(arg, new NumberFormatInfo() { NumberDecimalSeparator = "," });
+                time = Parser.FloatParse(arg);
             }
             catch
             {
-                Debugger.LogError("в качестве аргумента wait было передано " + arg);
+                Debugger.LogError("wait: в качестве аргумента wait было передано " + arg);
                 return;
             }
 
@@ -57,6 +57,6 @@ public class WaitHandler : ICommandHandler
             return;
         }
 
-        Debugger.LogError("команде wait не было передано аргументов");
+        Debugger.LogError("wait: команде wait не было передано аргументов");
     }
 }
