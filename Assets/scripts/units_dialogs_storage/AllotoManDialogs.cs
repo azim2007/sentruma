@@ -13,7 +13,7 @@ public static class AllotoManDialogs
         null,
         () => true,
         () => { Debugger.Log("on end игрок повесился"); },
-        "bg1"
+        null
     );
 
     private static Dialog vskrytsa = new Dialog(
@@ -27,14 +27,14 @@ public static class AllotoManDialogs
         null,
         () => true,
         () => { Debugger.Log("on end игрок вскрылся"); },
-        "bg1"
+        null
     );
 
     private static Dialog smiritsa = new Dialog(
         new List<Replic>()
         {
             new Replic("*ладно<div> видно мне придется просто смириться*"),
-            Replic.ServiceReplic("bg bg"),
+            Replic.ServiceReplic("bg bg duration 1 1 1"),
             new Replic("*и жить дальше*"),
             Replic.ServiceReplic("show char rage"),
             new Replic(UnitsIds.pl, "лады"),
@@ -95,7 +95,7 @@ public static class AllotoManDialogs
         null,
         () => true,
         () => { Debugger.Log("on end игрок смирился"); },
-        "bg1"
+        null
     );
 
     private static UnitsDialogs dialogs = new UnitsDialogs(
@@ -108,7 +108,7 @@ public static class AllotoManDialogs
                 Replic.ServiceReplic("define char1 examp"),
                 Replic.ServiceReplic("define char2 examp"),
                 new Replic(UnitsIds.al_man, "Значит так, <b>Меченый</b><div>, я тебя спас, и в благородство играть не буду<div>, выполнишь для меня пару заданий и мы в расчете."),
-                Replic.ServiceReplic("bg bg bg-color 0 255 0 fg-color 0 10 150 200"),
+                Replic.ServiceReplic("bg bg bg-color 39 107 211 fg-color 0 10 150 200 duration 0,1 0 1"),
                 new Replic(UnitsIds.al_man, "Заодно и посмотрим как быстро у тебя голова после амнезии прояснится."),
                 Replic.ServiceReplic("show char norm atDistance front atHorizontal left layer 2 atVertical midbottom"),
                 Replic.ServiceReplic("show char1 smile atHorizontal right layer 1 with fade 0,5"),
@@ -116,12 +116,14 @@ public static class AllotoManDialogs
                 Replic.ServiceReplic("show char2 rage atDistance back atHorizontal middle layer 1 with fade 2"),
                 Replic.ServiceReplic("i love you too"),
                 new Replic(UnitsIds.pl, "Ну...<div> ладно"),
-                Replic.ServiceReplic("bg bg1"),
+                Replic.ServiceReplic("hide-bg 1"),
+                Replic.ServiceReplic("wait 2,5"),
+                Replic.ServiceReplic("bg bg1 bg-color 200 11 118 fg-color 111 207 60 20 duration 1 3 4"),
                 Replic.ServiceReplic("hide char with fade 1,5"),
                 Replic.ServiceReplic("wait 1,5"),
                 Replic.ServiceReplic("destroy char2"),
                 //Replic.ServiceReplic("hide char1"),
-                Replic.ServiceReplic("bg bg bg-color 0 255 0"),
+                //Replic.ServiceReplic("bg bg bg-color 0 255 0"),
                 new Replic("*Ага, буду я для него выполнять ерунду всякую*"),
                 Replic.ServiceReplic("show char rage atDistance midback atHorizontal midright layer 1"),
             },

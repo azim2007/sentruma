@@ -6,37 +6,24 @@ using System.Globalization;
 
 public class BackgroundHandler : ICommandHandler
 {
-    private Image background;
-    private BackgroundController BackgroundController
-    {
-        get
-        {
-            return background.gameObject.GetComponent<BackgroundController>();
-        }
-    }
-
-    private Image foreground;
-    private ForegroundController ForegroundController
-    {
-        get
-        {
-            return foreground.gameObject.GetComponent<ForegroundController>();
-        }
-    }
+    private BackgroundController background;
+    private ForegroundController foreground;
     private Dictionary<string, Action<Queue<string>>> commandAction;
-    public BackgroundHandler(Image background, Image foreground)
+    public BackgroundHandler(BackgroundController background, ForegroundController foreground)
     {
         this.background = background;
         this.foreground = foreground;
         commandAction = new Dictionary<string, Action<Queue<string>>>
         {
-            { "bg", (Queue<string> command) => ShowBackground(command) }
+            { "bg", (Queue<string> command) => ShowBackground(command) },
+            { "hide-bg", (Queue<string> command) => HideBackground(command) },
         };
     }
 
     public IEnumerable<string> GetCommands()
     {
         yield return "bg";
+        yield return "hide-bg";
     }
 
     public void HandleCommand(string command)
@@ -44,6 +31,23 @@ public class BackgroundHandler : ICommandHandler
         var listCommand = command.Split(' ');
         Queue<string> commandQueue = new Queue<string>(listCommand);
         commandAction[listCommand[0]].Invoke(commandQueue);
+    }
+
+    private void HideBackground(Queue<string> command)
+    {
+        float duration = 0f;
+        command.Dequeue();
+        try
+        {
+            duration = Parser.FloatParse(command.Dequeue());
+        }
+        catch
+        {
+            Debugger.LogError("hide-bg: в качестве аргумента было передано не число или аргумента не было передано");
+            return;
+        }
+
+        background.HideBackground(duration);
     }
 
     private void ShowBackground(Queue<string> command)
@@ -115,8 +119,8 @@ public class BackgroundHandler : ICommandHandler
             paramsActions[action](command);
         }
 
-        //BackgroundController
-        //ForeGroundController
+        background.SetBackground(sprite, bgColor, bgDuration, bgColorDuration);
+        foreground.SetForegroundColor(fgColor, fgColorDuration);
     }
 
     private Color GetFGColor(string r, string g, string b, string a)

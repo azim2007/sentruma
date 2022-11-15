@@ -8,13 +8,13 @@ public class DialogController : MonoBehaviour
 {
     private static float textSpeed = 1.1f - 0.7f;
 
-    private CommandHandler CommandHandler { get; set; }
-    private Image Background { get; set; }
-    private Image Foreground { get; set; }
-    private GameObject ReplicView { get; set; }
-    private GameObject SelectingView { get; set; }
-    private PreviousReplicManager PreviousReplicsView { get; set; }
-    private Waiter Waiter { get; set; }
+    private CommandHandler commandHandler;
+    private Image background;
+    private Image foreground;
+    private GameObject replicView;
+    private GameObject selectingView;
+    private PreviousReplicManager previousReplicsView;
+    private Waiter waiter;
 
     private Dialog thisDialog;
     public Dialog ThisDialog
@@ -38,21 +38,22 @@ public class DialogController : MonoBehaviour
 
     private void ServiceHandler(string command)
     {
-        CommandHandler.HandleCommand(command);
+        commandHandler.HandleCommand(command);
     }
 
     private void GameObjectSetting()
     {
-        Background = this.transform.GetChild(0).GetChild(0).GetComponent<Image>();
-        Background.sprite = Resources.Load<Sprite>("backgrounds/" + ThisDialog.BackgroundName);
-        Background.color = Color.white;
+        background = this.transform.GetChild(0).GetChild(0).GetComponent<Image>();
+        background.sprite = ThisDialog.BackgroundName != null ?
+            Resources.Load<Sprite>("backgrounds/" + ThisDialog.BackgroundName) :
+            background.sprite;
 
-        Foreground = this.transform.GetChild(0).GetChild(1).GetComponent<Image>();
-        ReplicView = this.transform.GetChild(0).GetChild(2).gameObject;
-        SelectingView = this.transform.GetChild(0).GetChild(3).gameObject;
-        PreviousReplicsView = this.transform.GetChild(0).GetChild(4).GetComponent<PreviousReplicManager>();
-        SelectingView.SetActive(false);
-        ReplicView.SetActive(true);
+        foreground = this.transform.GetChild(0).GetChild(1).GetComponent<Image>();
+        replicView = this.transform.GetChild(0).GetChild(2).gameObject;
+        selectingView = this.transform.GetChild(0).GetChild(3).gameObject;
+        previousReplicsView = this.transform.GetChild(0).GetChild(4).GetComponent<PreviousReplicManager>();
+        selectingView.SetActive(false);
+        replicView.SetActive(true);
     }
 
     private void Start()
@@ -62,14 +63,15 @@ public class DialogController : MonoBehaviour
 
         GameObjectSetting();
 
-        Waiter = new Waiter();
+        waiter = new Waiter();
 
-        CommandHandler = new CommandHandler(
+        commandHandler = new CommandHandler(
             new List<ICommandHandler>()
             {
-                new BackgroundHandler(Background, Foreground),
-                new CharacterHandler(Background),
-                new WaitHandler(Waiter),
+                new BackgroundHandler(background.GetComponent<BackgroundController>(), 
+                    foreground.GetComponent<ForegroundController>()),
+                new CharacterHandler(background),
+                new WaitHandler(waiter),
             }
         );
 
@@ -89,20 +91,20 @@ public class DialogController : MonoBehaviour
             );
         }
 
-        var nextReplicButton = ReplicView.transform.GetChild(2).GetComponent<Button>();
-        var previousReplicsButton = ReplicView.transform.GetChild(3).GetComponent<Button>();
+        var nextReplicButton = replicView.transform.GetChild(2).GetComponent<Button>();
+        var previousReplicsButton = replicView.transform.GetChild(3).GetComponent<Button>();
 
-        var sender = ReplicView.transform.GetChild(0).GetComponent<Text>();
-        var message = ReplicView.transform.GetChild(1).GetComponent<Text>();
+        var sender = replicView.transform.GetChild(0).GetComponent<Text>();
+        var message = replicView.transform.GetChild(1).GetComponent<Text>();
 
         bool canChange = true;
 
         nextReplicButton.onClick.AddListener(() => canChange = true);
-        previousReplicsButton.onClick.AddListener(() => PreviousReplicsView.Show());
+        previousReplicsButton.onClick.AddListener(() => previousReplicsView.Show());
 
         foreach (var replic in ThisDialog.GetReplic())
         {
-            yield return Waiter.Call();
+            yield return waiter.Call();
             if (replic.IsService)
             {
                 string command = "";
@@ -139,7 +141,7 @@ public class DialogController : MonoBehaviour
                 }
             }
 
-            PreviousReplicsView.AddReplicToList(replic);
+            previousReplicsView.AddReplicToList(replic);
         }
 
         Debugger.Log("dialog has answers " + ThisDialog.HasAnswers);
@@ -147,8 +149,8 @@ public class DialogController : MonoBehaviour
 
         if (ThisDialog.HasAnswers)
         {
-            ReplicView.SetActive(false);
-            var VM = new VariantManager(ThisDialog.AnswersAndNextDialogs, SelectingView);
+            replicView.SetActive(false);
+            var VM = new VariantManager(ThisDialog.AnswersAndNextDialogs, selectingView);
 
             while (VM.SelectedDialog == null)
             {
@@ -160,7 +162,7 @@ public class DialogController : MonoBehaviour
             StartCoroutine(ShowDialog());
         }
 
-        bool CanChange() => (canChange || Input.GetMouseButtonUp(0)) && (!PreviousReplicsView.IsActive);
+        bool CanChange() => (canChange || Input.GetMouseButtonUp(0)) && (!previousReplicsView.IsActive);
     }
 }
 
