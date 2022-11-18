@@ -16,7 +16,7 @@ public class WaitHandler : ICommandHandler
         this.waiter = waiter;
         commandAction = new Dictionary<string, Action<Queue<string>>>
         {
-            { "wait", (Queue<string> command) => Wait(command) }
+            { "wait", Wait }
         };
     }
 

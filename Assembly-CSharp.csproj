@@ -66,6 +66,7 @@
     <Compile Include="Assets\scripts\develope_staff\Debugger.cs" />
     <Compile Include="Assets\scripts\dialog_system\Dialog.cs" />
     <Compile Include="Assets\scripts\dialog_system\DialogManager.cs" />
+    <Compile Include="Assets\scripts\dialog_system\DialogViewController\AudioSourceController.cs" />
     <Compile Include="Assets\scripts\dialog_system\DialogViewController\BackgroundController.cs" />
     <Compile Include="Assets\scripts\dialog_system\DialogViewController\CharacterImageController.cs" />
     <Compile Include="Assets\scripts\dialog_system\DialogViewController\DialogController.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Assets\scripts\dialog_system\DialogViewController\PreviousReplicManager.cs" />
     <Compile Include="Assets\scripts\dialog_system\Replic.cs" />
     <Compile Include="Assets\scripts\dialog_system\SendersList.cs" />
+    <Compile Include="Assets\scripts\dialog_system\ServiceHandlers\AudioHandler.cs" />
     <Compile Include="Assets\scripts\dialog_system\ServiceHandlers\BackgroundHandler.cs" />
     <Compile Include="Assets\scripts\dialog_system\ServiceHandlers\CharacterHandler.cs" />
     <Compile Include="Assets\scripts\dialog_system\ServiceHandlers\IServiceHandler.cs" />

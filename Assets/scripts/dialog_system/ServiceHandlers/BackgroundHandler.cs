@@ -15,8 +15,8 @@ public class BackgroundHandler : ICommandHandler
         this.foreground = foreground;
         commandAction = new Dictionary<string, Action<Queue<string>>>
         {
-            { "bg", (Queue<string> command) => ShowBackground(command) },
-            { "hide-bg", (Queue<string> command) => HideBackground(command) },
+            { "bg", ShowBackground },
+            { "hide-bg", HideBackground },
         };
     }
 

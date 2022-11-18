@@ -25,10 +25,10 @@ public class CharacterHandler : ICommandHandler
         definedCharactersNameCharControllers = new Dictionary<string, CharacterImageController>();
         commandAction = new Dictionary<string, Action<Queue<string>>>()
         {
-            {"define", (Queue<string> command) => DefineCharacter(command) },
-            {"destroy", (Queue<string> command) => DestroyCharacter(command) },
-            {"show", (Queue<string> command) => ShowCharacter(command) },
-            {"hide", (Queue<string> command) => HideCharacter(command) },
+            {"define", DefineCharacter },
+            {"destroy", DestroyCharacter },
+            {"show", ShowCharacter },
+            {"hide", HideCharacter },
         };
     }
 
