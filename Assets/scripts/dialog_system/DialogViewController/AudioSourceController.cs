@@ -19,6 +19,7 @@ public class AudioSourceController : MonoBehaviour
     /// <param name="isLoop">надо ли зацикливать</param>
     public void Play(AudioClip clip, float volume, bool isLoop)
     {
+        audioSource = GetComponent<AudioSource>();
         audioSource.clip = clip;
         audioSource.volume = volume;
         audioSource.loop = isLoop;

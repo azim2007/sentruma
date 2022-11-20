@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class AllotoSceneManager : MonoBehaviour
@@ -12,8 +10,6 @@ public class AllotoSceneManager : MonoBehaviour
 
         player = playerFactory.Instantiate(UnitsIds.pl, new Vector2(0f, 0f)).GetComponent<Player>();
         player.PlayerData = CurrentProgress.currentProgress.Player;
-        Debugger.Log("MaxHealth: " + player.PlayerData.MaxHealth + " CurrentHealth: " + player.PlayerData.CurrentHealth);
-        Debugger.Log("isRage: " + player.PlayerData.IsRage);
 
         var dialogFactory = new DialogFactory();
         dialogFactory.Instantiate("dlgMng");

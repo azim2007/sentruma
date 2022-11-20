@@ -7,6 +7,8 @@ public class AudioHandler : ICommandHandler
 {
     private Dictionary<string, Action<Queue<string>>> commandAction;
     private Dictionary<string, AudioSourceController> definedAudioSources;
+    private DialogFactory dialogFactory;
+    private GameObject audioSourcesParent;
     private string GetFolder(string path) => "sounds/" + path;
 
     public IEnumerable<string> GetCommands()
@@ -23,8 +25,10 @@ public class AudioHandler : ICommandHandler
         commandAction[listCommand[0]].Invoke(commandQueue);
     }
 
-    public AudioHandler()
+    public AudioHandler(GameObject audioSourcesParent)
     {
+        this.audioSourcesParent = audioSourcesParent;
+        dialogFactory = new DialogFactory();
         definedAudioSources = new Dictionary<string, AudioSourceController>();
         commandAction = new Dictionary<string, Action<Queue<string>>>
         {
@@ -37,7 +41,7 @@ public class AudioHandler : ICommandHandler
     public void Play(Queue<string> command)
     {
         #region parameters settings
-        AudioClip clip;
+        AudioClip clip = null;
         float volume = 1;
         bool isLoop = false;
         var paramsActions = new Dictionary<string, Action<Queue<string>>>()
@@ -73,17 +77,91 @@ public class AudioHandler : ICommandHandler
             return;
         }
 
-        //TODO: парс аудио клип из папки Resources, конверт переменных, создание (если надо аудио сорс),
-        //и обработка доп аргуметов
+        try
+        {
+            clip = Resources.Load<AudioClip>(GetFolder(clipName));
+        }
+        catch
+        {
+            Debugger.LogError("play: нет композиции " + clipName);
+        }
+
+        if (!definedAudioSources.ContainsKey(sourceName))
+        {
+            definedAudioSources.Add(sourceName, dialogFactory.Instantiate("audioSrc")
+                .GetComponent<AudioSourceController>());
+            definedAudioSources[sourceName].transform.SetParent(audioSourcesParent.transform);
+        }
+
+        string action;
+        while (command.TryDequeue(out action))
+        {
+            if (!paramsActions.ContainsKey(action))
+            {
+                Debugger.LogError("play: нет параметра " + action);
+            }
+
+            paramsActions[action](command);
+        }
+
+        definedAudioSources[sourceName].Play(clip, volume, isLoop);
     }
 
     public void ChangeVolume(Queue<string> command)
     {
-        //TODO: changing volume
+        string sourceName, newVolume;
+        float newVolumeValue;
+        command.Dequeue();
+        try
+        {
+            sourceName = command.Dequeue();
+            newVolume = command.Dequeue();
+        }
+        catch
+        {
+            Debugger.LogError("change-volume: было передано недостаточно параметров");
+            return;
+        }
+
+        try
+        {
+            newVolumeValue = Parser.FloatParse(newVolume) / 100f;
+        }
+        catch
+        {
+            Debugger.LogError("change-volume: в качестве volume было передано не число, а " + newVolume);
+            return;
+        }
+
+        if (!definedAudioSources.ContainsKey(sourceName))
+        {
+            Debugger.LogError("change-colume: нет источника звука " + sourceName);
+            return;
+        }
+
+        definedAudioSources[sourceName].ChangeVolume(newVolumeValue);
     }
 
     public void Stop(Queue<string> command)
     {
-        //TODO: stop playing
+        string sourceName;
+        command.Dequeue();
+        try
+        {
+            sourceName = command.Dequeue();
+        }
+        catch
+        {
+            Debugger.LogError("stop: было передано недостаточно параметров");
+            return;
+        }
+
+        if (!definedAudioSources.ContainsKey(sourceName))
+        {
+            Debugger.LogError("stop: нет источника звука " + sourceName);
+            return;
+        }
+
+        definedAudioSources[sourceName].Stop();
     }
 }

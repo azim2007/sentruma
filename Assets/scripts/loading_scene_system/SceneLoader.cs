@@ -33,13 +33,6 @@ public static class SceneLoader
         SceneName = sceneName;
         LoadingText = loadingText;
         PreviousSceneName = SceneManager.GetActiveScene().name;
-        var debug = "previous scene names: ";
-        foreach(var e in previousScenesNames)
-        {
-            debug += e + " ";
-        }
-        Debugger.Log("from " + PreviousSceneName + " to " + sceneName);
-        Debugger.Log(debug);
         SceneManager.LoadScene("loading_scene");
     }
 

@@ -71,6 +71,7 @@ public class UnitController : MonoBehaviour
             {
                 Debugger.Log($"{UnitName} speak");
                 dialogManager.StartDialog(CurrentDialog);
+                break;
             }
 
             yield return null;

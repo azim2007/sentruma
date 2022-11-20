@@ -13,6 +13,7 @@ public class DialogController : MonoBehaviour
     private Image foreground;
     private GameObject replicView;
     private GameObject selectingView;
+    private GameObject audioSourcesParent;
     private PreviousReplicManager previousReplicsView;
     private Waiter waiter;
 
@@ -52,6 +53,7 @@ public class DialogController : MonoBehaviour
         replicView = this.transform.GetChild(0).GetChild(2).gameObject;
         selectingView = this.transform.GetChild(0).GetChild(3).gameObject;
         previousReplicsView = this.transform.GetChild(0).GetChild(4).GetComponent<PreviousReplicManager>();
+        audioSourcesParent = this.transform.GetChild(0).GetChild(6).gameObject;
         selectingView.SetActive(false);
         replicView.SetActive(true);
     }
@@ -72,6 +74,7 @@ public class DialogController : MonoBehaviour
                     foreground.GetComponent<ForegroundController>()),
                 new CharacterHandler(background),
                 new WaitHandler(waiter),
+                new AudioHandler(audioSourcesParent),
             }
         );
 
