@@ -56,37 +56,55 @@ public class CharacterHandler : ICommandHandler
         #region parametrs settings
         string atDistance = "middle", atVertical = "middle", atHorizontal = "middle", animationType = "", charName, emotionName;
         int layer = 0;
-        float animationDuration = 0;
-        var paramsActions = new Dictionary<string, Action<string>>()
+        float animationDuration = 0, movingDuration = 0;
+        var paramsActions = new Dictionary<string, Action<Queue<string>>>()
         {
-            {"atHorizontal", (param) => atHorizontal = param },
-            {"atVertical", (param) => atVertical = param },
-            {"atDistance", (param) => atDistance = param },
+            {"atHorizontal", (param) => atHorizontal = param.Dequeue() },
+            {"atVertical", (param) => atVertical = param.Dequeue() },
+            {"atDistance", (param) => atDistance = param.Dequeue() },
             {"layer", (param) =>
                 {
+                    var arg = param.Dequeue();
                     try
                     {
-                        layer = int.Parse(param);
+                        layer = int.Parse(arg);
                     }
                     catch
                     {
-                        Debugger.LogError("в параметр layer было передано " + param);
+                        Debugger.LogError("show: в параметр layer было передано " + arg);
                     }
                 }
             },
 
             {"with", (param) =>
                 {
-                    var args = param.Split(' ');
-                    animationType = args[0];
+                    animationType = param.Dequeue();
+                    var arg = param.Dequeue();
                     try
                     {
-                        animationDuration = Parser.FloatParse(args[1]);
+                        animationDuration = Parser.FloatParse(arg);
                     }
                     catch
                     {
-                        Debugger.LogError("в параметр with в качестве длительности анимации было передано " 
-                            + args[1]);
+                        Debugger.LogError(
+                            "show: в параметр with в качестве длительности анимации было передано " 
+                            + arg);
+                    }
+                } 
+            },
+
+            {"moving",  (param) => 
+                {
+                    var arg = param.Dequeue();
+                    try
+                    {
+                        movingDuration = Parser.FloatParse(arg);
+                    }
+                    catch
+                    {
+                        Debugger.LogError(
+                            "show: в параметр moving в качестве длительности анимации было передано "
+                            + arg);
                     }
                 } 
             }
@@ -122,10 +140,7 @@ public class CharacterHandler : ICommandHandler
 
             try
             {
-                if(action == "with")
-                    paramsActions[action](command.Dequeue() + " " + command.Dequeue());
-                else
-                    paramsActions[action](command.Dequeue());
+                paramsActions[action](command);
             }
             catch
             {
@@ -141,7 +156,8 @@ public class CharacterHandler : ICommandHandler
             atDistance: atDistance,
             layer: layer,
             animationDurationSeconds: animationDuration,
-            animationType: animationType);
+            animationType: animationType,
+            movingDurationSeconds: movingDuration);
     }
 
     /// <summary>

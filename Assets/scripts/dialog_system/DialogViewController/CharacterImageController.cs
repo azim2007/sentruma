@@ -37,31 +37,32 @@ public class CharacterImageController : MonoBehaviour
     /// <param name="atDistance">положение по дальности от камеры (см. api.xlsx)</param>
     /// <param name="layer">default order in layer</param>
     public void Show(string emotion, string atHorizontal = "middle", string atVertical = "middle",
-        string atDistance = "middle", int layer = 0, float animationDurationSeconds = 0, string animationType = "")
+        string atDistance = "middle", int layer = 0, float animationDurationSeconds = 0, 
+        string animationType = "", float movingDurationSeconds = 0)
     {
         animator = GetComponent<Animator>();
         var animationName = "";
         if (!atHorizontalPositionNameImagePosition.ContainsKey(atHorizontal))
         {
-            Debugger.LogError("нет горизонтального положения " + atHorizontal);
+            Debugger.LogError("show: нет горизонтального положения " + atHorizontal);
             return;
         }
 
         if (!atVerticalPositionNameImagePosition.ContainsKey(atVertical))
         {
-            Debugger.LogError("нет вертикального положения " + atVertical);
+            Debugger.LogError("show: нет вертикального положения " + atVertical);
             return;
         }
 
         if (!atDistancePositionNameImagePosition.ContainsKey(atDistance))
         {
-            Debugger.LogError("нет дистанции " + atDistance);
+            Debugger.LogError("show: нет дистанции " + atDistance);
             return;
         }
 
         if (animationDurationSeconds == 0 && animationType != "")
         {
-            Debugger.LogError("параметр длительность анимации не может быть равен 0 при какой-либо анимации");
+            Debugger.LogError("show: параметр длительность анимации не может быть равен 0 при какой-либо анимации");
             return;
         }
 
@@ -72,7 +73,7 @@ public class CharacterImageController : MonoBehaviour
         }
         catch
         {
-            Debugger.LogError("нет эмоции " + emotion + " путь до файла " +
+            Debugger.LogError("show: нет эмоции " + emotion + " путь до файла " +
                 CharacterHandler.GetFolderName(dirPath + "/" + emotion));
             return;
         }
@@ -101,12 +102,12 @@ public class CharacterImageController : MonoBehaviour
         orderInLayerChanger.overrideSorting = true;
         orderInLayerChanger.sortingOrder = deltaOrderInLayer + layer;
 
-        var xPos = atHorizontalPositionNameImagePosition[atHorizontal];
-        var yPos = atVerticalPositionNameImagePosition[atVertical];
-        transform.position = new Vector3(xPos, yPos, 0f);
-
-        var scale = atDistancePositionNameImagePosition[atDistance];
-        transform.localScale = new Vector3(scale, scale, 1f);
+        StartCoroutine(ChangePosition(movingDurationSeconds, 
+            newPosition: new Vector3(
+                x: atHorizontalPositionNameImagePosition[atHorizontal],
+                y: atVerticalPositionNameImagePosition[atVertical],
+                z: 0),
+            newScale: atDistancePositionNameImagePosition[atDistance]));
     }
 
     public void Hide(float animationDurationSeconds = 0, string animationType = "")
@@ -158,6 +159,30 @@ public class CharacterImageController : MonoBehaviour
         if (!animationTypes.ContainsKey(animationType))
             throw new InvalidOperationException("нет анимации " + animationType);
         return animationTypes[animationType] + (isOnShow ? "Up" : "Down");
+    }
+
+    private IEnumerator ChangePosition(float duration, Vector3 newPosition, float newScale)
+    {
+        var waitingTime = 0.02f;
+        var framesCount = (int)(duration / waitingTime);
+        Vector3 currentPosition = transform.position;
+        float currentScale = transform.localScale.x;
+        if(framesCount == 0)
+        {
+            transform.position = newPosition;
+            transform.localScale = new Vector3(newScale, newScale, 1f);
+            yield break;
+        }
+
+        var toPlusInEveryFramePosition = (newPosition - currentPosition) / framesCount;
+        var toPlusInEveryFrameScale = (newScale - currentScale) / framesCount;
+        for(int i = 0; i < framesCount; i++)
+        {
+            yield return new WaitForSeconds(waitingTime);
+            transform.position += toPlusInEveryFramePosition;
+            transform.localScale += 
+                new Vector3(toPlusInEveryFrameScale, toPlusInEveryFrameScale, 1f);
+        }
     }
 
     private Dictionary<string, float> atHorizontalPositionNameImagePosition = new Dictionary<string, float>()

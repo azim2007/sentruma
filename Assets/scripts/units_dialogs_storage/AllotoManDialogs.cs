@@ -132,7 +132,7 @@ public static class AllotoManDialogs
                 //Replic.ServiceReplic("hide char1"),
                 //Replic.ServiceReplic("bg bg bg-color 0 255 0"),
                 new Replic("*Ага, буду я для него выполнять ерунду всякую*"),
-                Replic.ServiceReplic("show char rage atDistance midback atHorizontal midright layer 1"),
+                Replic.ServiceReplic("show char1 rage atDistance midback atHorizontal midright layer 1 moving 1,3"),
             },
 
             new List<System.Tuple<string, Dialog>>()
