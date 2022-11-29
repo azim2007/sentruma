@@ -12,7 +12,6 @@ public class DialogFactory : Factory<string>
         {
             "audioSrc",
             "chrctrImg",
-            "dlgMng",
             "dlgVw",
             "vrntVw"
         };

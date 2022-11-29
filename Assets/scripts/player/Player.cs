@@ -1,15 +1,20 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public PlayerData PlayerData { get; set; }
+    private PlayerData playerData;
+    public PlayerData PlayerData { get { return playerData; }}
+
+    public event Action<PlayerData> OnPlayerDataChanged;
 
     private Rigidbody2D rbPlayer;
     void Start()
     {
         rbPlayer = GetComponent<Rigidbody2D>();
+        playerData = CurrentProgress.currentProgress.Player;
         transform.position = new Vector2(CurrentProgress.currentProgress.Player.PositionX, 
             CurrentProgress.currentProgress.Player.PositionY);
     }
@@ -22,11 +27,10 @@ public class Player : MonoBehaviour
 
     private void CheckRage()
     {
-        PlayerData.IsRage = InputManager.Manager.GetKeyDown(id: "state") ? 
-            !PlayerData.IsRage : PlayerData.IsRage;
         if(InputManager.Manager.GetKeyDown(id: "state"))
         {
-            Debugger.Log("state " + PlayerData.IsRage);
+            PlayerData.IsRage = !PlayerData.IsRage;
+            OnPlayerDataChanged(playerData);
         }
     }
 

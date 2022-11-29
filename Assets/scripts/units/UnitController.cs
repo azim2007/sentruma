@@ -55,7 +55,7 @@ public class UnitController : MonoBehaviour
 
     private IEnumerator CheckAction(Player player)
     {
-        var dialogManager = GameObject.FindGameObjectWithTag("DialogManager").GetComponent<DialogManager>();
+        var dialogManager = GameObject.FindGameObjectWithTag("GameSceneManager").GetComponent<DialogManager>();
         while (true)
         {
             while (!InputManager.Manager.GetKeyDown("act"))

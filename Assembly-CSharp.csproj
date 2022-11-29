@@ -83,8 +83,11 @@
     <Compile Include="Assets\scripts\extensions\QueueExtensions.cs" />
     <Compile Include="Assets\scripts\factory\DialogFactory.cs" />
     <Compile Include="Assets\scripts\factory\Factory.cs" />
+    <Compile Include="Assets\scripts\factory\GameInfoFactory.cs" />
     <Compile Include="Assets\scripts\factory\MenuFactory.cs" />
     <Compile Include="Assets\scripts\factory\PlayerFactory.cs" />
+    <Compile Include="Assets\scripts\gameSceneUI\GameSceneUIManager.cs" />
+    <Compile Include="Assets\scripts\gameSceneUI\PlayerStansController.cs" />
     <Compile Include="Assets\scripts\input_manager\InputManager.cs" />
     <Compile Include="Assets\scripts\loading_scene_system\LoadingSceneManager.cs" />
     <Compile Include="Assets\scripts\loading_scene_system\SceneLoader.cs" />

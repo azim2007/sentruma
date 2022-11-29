@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5169826451639825716}
   - component: {fileID: 6479991748000335440}
   - component: {fileID: 6628848864952848022}
+  - component: {fileID: -7801825382243748709}
   m_Layer: 5
   m_Name: PlayerStans
   m_TagString: Untagged
@@ -100,3 +101,15 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 1
+--- !u!114 &-7801825382243748709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4163205032712291794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999feb37beb75594084e0f175531d3d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

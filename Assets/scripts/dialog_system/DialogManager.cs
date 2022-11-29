@@ -10,7 +10,6 @@ public class DialogManager : MonoBehaviour
     private void Start()
     {
         factory = new DialogFactory();
-        this.tag = "DialogManager";
     }
 
     public void StartDialog(Dialog dialog)

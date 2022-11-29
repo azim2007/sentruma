@@ -28,7 +28,7 @@ public class Save
 
     public Save(string name, Player player, Worlds currentWorld)
     {
-        Player = new PlayerData(player);
+        Player = player.PlayerData;
         Name = name;
         CurrentWorld = currentWorld;
         Date = DateTime.Now;
