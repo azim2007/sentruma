@@ -18,7 +18,6 @@ public class AllotoSceneManager : MonoBehaviour
 
     public void WriteProgress()
     {
-        CurrentProgress.currentProgress.Player = player.PlayerData;
         SceneLoader.LoadScene("saves_menu", "Открываем загрузки");
     }
 }

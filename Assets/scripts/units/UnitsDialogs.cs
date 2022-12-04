@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class UnitsDialogs
 {
-    private List<Dialog> UnitsDialogsList { get; set; }
-
-    private Dialog DefaultDialog { get; set; }
+    private List<Dialog> unitsDialogsList;
+    private Dialog defaultDialog;
 
     public UnitsDialogs(List<Dialog> unitsDialogsList, Dialog defaultDialog)
     {
-        UnitsDialogsList = unitsDialogsList;
-        DefaultDialog = defaultDialog;
+        this.unitsDialogsList = unitsDialogsList;
+        this.defaultDialog = defaultDialog;
     }
 
     public Dialog GetCurrent()
     {
-        if(UnitsDialogsList != null)
+        if (unitsDialogsList != null)
         {
-            foreach (var e in UnitsDialogsList)
+            for (int i = unitsDialogsList.Count - 1; i >= 0; i--)
             {
-                if (e.IsCurrent)
-                    return e;
+                if (unitsDialogsList[i].IsCurrent)
+                    return unitsDialogsList[i];
             }
         }
         
@@ -30,6 +29,6 @@ public class UnitsDialogs
 
     public Dialog GetCurrentOrDefault()
     {
-        return GetCurrent() ?? DefaultDialog;
+        return GetCurrent() ?? defaultDialog;
     }
 }

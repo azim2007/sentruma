@@ -9,13 +9,6 @@ public class GameSceneUIManager : MonoBehaviour
     {
         factory = new GameInfoFactory();
         playerStansController = factory.Instantiate("plyrStns").GetComponent<PlayerStansController>();
-        StartCoroutine(SetPlayerStansPlayer());
-    }
-
-    private IEnumerator SetPlayerStansPlayer()
-    {
-        while(GetComponent<AllotoSceneManager>().Player.PlayerData == null) yield return null;
-        playerStansController.SetPlayerData(GetComponent<AllotoSceneManager>().Player);
     }
 
     void Update()

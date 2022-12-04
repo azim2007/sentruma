@@ -38,58 +38,6 @@ public static class AllotoManDialogs
             new Replic("*и жить дальше*"),
             Replic.ServiceReplic("show char rage"),
             new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
-            new Replic(UnitsIds.pl, "лады"),
         },
 
         null,
@@ -98,8 +46,40 @@ public static class AllotoManDialogs
         null
     );
 
+    private static Dialog harismaticDialog = new Dialog(
+        new List<Replic>()
+        {
+            Replic.ServiceReplic("bg bg bg-color 100 50 170 duration 0,3 0,3 0"),
+            new Replic(UnitsIds.pl, "харизматичный диалог"),
+        },
+        null,
+        () => CurrentProgress.currentProgress.Player.Harisma > 3,
+        () => Debugger.Log("harismatic"),
+        null
+        );
+
+    private static Dialog nonharismaticDialog = new Dialog(
+        new List<Replic>()
+        {
+            Replic.ServiceReplic("bg bg1 bg-color 180 50 170 duration 0,3 0,8 0"),
+            new Replic(UnitsIds.pl, "не харизматичный диалог"),
+        },
+        null,
+        () => CurrentProgress.currentProgress.Player.Harisma < 3,
+        () => 
+        { 
+            CurrentProgress.currentProgress.Player.Harisma = 4;
+            Debugger.Log("nonharismatic");
+        },
+        null
+        );
+
     private static UnitsDialogs dialogs = new UnitsDialogs(
-        new List<Dialog>(),
+        new List<Dialog>()
+        {
+            nonharismaticDialog,
+            harismaticDialog,
+        },
 
         new Dialog(
             new List<Replic>()

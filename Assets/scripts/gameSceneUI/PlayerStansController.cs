@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerStansController : MonoBehaviour
 {
-    private Player player;
     void Start()
     {
         transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform);
         transform.localScale = Vector3.one;
+        SetPlayerData();
     }
 
     void Update()
@@ -16,13 +16,12 @@ public class PlayerStansController : MonoBehaviour
         
     }
 
-    public void SetPlayerData(Player player)
+    private void SetPlayerData()
     {
-        this.player = player;
-        Debugger.Log(player.PlayerData.IsRage.ToString());
-        player.OnPlayerDataChanged += (playerData) =>
+        Debugger.Log(CurrentProgress.currentProgress.Player.IsRage.ToString());
+        CurrentProgress.currentProgress.Player.onChange += () =>
         {
-            Debugger.Log("message from stans. IsRage = " + playerData.IsRage);
+            Debugger.Log("message from stans. IsRage = " + CurrentProgress.currentProgress.Player.IsRage);
         };
     }
 }

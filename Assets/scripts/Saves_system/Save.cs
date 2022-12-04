@@ -26,9 +26,8 @@ public class Save
     }
     public Save() { }
 
-    public Save(string name, Player player, Worlds currentWorld)
+    public Save(string name, Worlds currentWorld)
     {
-        Player = player.PlayerData;
         Name = name;
         CurrentWorld = currentWorld;
         Date = DateTime.Now;

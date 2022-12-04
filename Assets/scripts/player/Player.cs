@@ -5,16 +5,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private PlayerData playerData;
-    public PlayerData PlayerData { get { return playerData; }}
-
-    public event Action<PlayerData> OnPlayerDataChanged;
-
     private Rigidbody2D rbPlayer;
     void Start()
     {
         rbPlayer = GetComponent<Rigidbody2D>();
-        playerData = CurrentProgress.currentProgress.Player;
         transform.position = new Vector2(CurrentProgress.currentProgress.Player.PositionX, 
             CurrentProgress.currentProgress.Player.PositionY);
     }
@@ -29,17 +23,20 @@ public class Player : MonoBehaviour
     {
         if(InputManager.Manager.GetKeyDown(id: "state"))
         {
-            PlayerData.IsRage = !PlayerData.IsRage;
-            OnPlayerDataChanged(playerData);
+            CurrentProgress.currentProgress.Player.IsRage = 
+                !CurrentProgress.currentProgress.Player.IsRage;
         }
     }
 
     IEnumerator Move()
     {
-        float yAxis = InputManager.Manager.GetAxis("Vertical") * PlayerData.Speed;
-        float xAxis = InputManager.Manager.GetAxis("Horizontal") * PlayerData.Speed;
+        float yAxis = InputManager.Manager.GetAxis("Vertical") * 
+            CurrentProgress.currentProgress.Player.Speed;
+        float xAxis = InputManager.Manager.GetAxis("Horizontal") *
+            CurrentProgress.currentProgress.Player.Speed;
         rbPlayer.velocity = new Vector2(xAxis, yAxis);
-        PlayerData.Position = new Vector2(transform.position.x, transform.position.y);
+        CurrentProgress.currentProgress.Player.Position 
+            = new Vector2(transform.position.x, transform.position.y);
         yield return null;
     }
 }
@@ -50,49 +47,36 @@ public class PlayerData
     public PlayerData(float speed, float maxHealth, float currentHealth, Vector2 rbPlayer, 
         float harisma, float forse, bool isRage)
     {
-        Speed = speed;
-        MaxHealth = maxHealth;
+        this.speed = speed;
+        this.maxHealth = maxHealth;
         this.currentHealth = currentHealth;
-        Position = new Vector2(rbPlayer.x, rbPlayer.y);
-        Harisma = harisma;
-        Forse = forse;
-        IsRage = isRage;
+        this.Position = new Vector2(rbPlayer.x, rbPlayer.y);
+        this.harisma = harisma;
+        this.forse = forse;
+        this.isRage = isRage;
     }
 
     public PlayerData() { }
 
-    public PlayerData(PlayerData player) : this(player.Speed, player.MaxHealth, player.CurrentHealth,
-        player.Position, player.Harisma, player.Forse, player.IsRage)
-    { }
+    public event Action onChange;
 
-    public PlayerData(Player player) : this(player.PlayerData)
-    { }
+    private float speed;
+    public float Speed { get { return speed; } set { speed = value; onChange(); } }
 
-    public float Speed { get; set; }
-    public float MaxHealth { get; set; }
-    public float Harisma { get; set; }
-    public float Forse { get; set; }
-    public bool IsRage { get; set; }
+    private float maxHealth;
+    public float MaxHealth { get { return maxHealth; } set { maxHealth = value; onChange(); } }
+
+    private float harisma;
+    public float Harisma { get { return harisma; } set { harisma = value; onChange(); } }
+
+    private float forse;
+    public float Forse { get { return forse; } set { forse = value; onChange(); } }
+    
+    private bool isRage;
+    public bool IsRage { get { return isRage; } set { isRage = value; onChange(); } }
 
     private float currentHealth;
-    public float CurrentHealth
-    {
-        get
-        {
-            return currentHealth;
-        }
-    }
-    public void SetDamage(float damageValue)
-    {
-        if (damageValue >= 0)
-        {
-            currentHealth -= damageValue;
-        }
-        else
-        {
-            throw new System.Exception("damage cannot be less than zero");
-        }
-    }
+    public float CurrentHealth { get { return currentHealth; } set { currentHealth = value; onChange(); } }
 
     public float PositionX { get; set; }
 
