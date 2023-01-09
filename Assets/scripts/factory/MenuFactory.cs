@@ -11,6 +11,7 @@ public class MenuFactory : Factory<string>
         var namesList = new List<string>()
         {
             "cntrlItm",
+            "mainMnBtn",
             "svItm",
         };
 
