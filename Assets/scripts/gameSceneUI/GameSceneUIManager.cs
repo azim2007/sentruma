@@ -4,11 +4,11 @@ using System.Collections;
 public class GameSceneUIManager : MonoBehaviour
 {
     private GameInfoFactory factory;
-    private PlayerStansController playerStansController;
+    private GameInfoController playerStansController;
     void Start()
     {
         factory = new GameInfoFactory();
-        playerStansController = factory.Instantiate("plyrStns").GetComponent<PlayerStansController>();
+        playerStansController = factory.Instantiate("gameInfo").GetComponent<GameInfoController>();
     }
 
     void Update()

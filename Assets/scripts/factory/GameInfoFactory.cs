@@ -10,8 +10,7 @@ public class GameInfoFactory : Factory<string>
     {
         var namesList = new List<string>()
         {
-            "plyrStns",
-            "stnVl",
+            "gameInfo",
         };
 
         FillDictionary("prefabs/UI/gameInfo", namesList);

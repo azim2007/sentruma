@@ -34,7 +34,7 @@ public class SaveSceneManager : MonoBehaviour
         }
 
         GameObject.FindGameObjectWithTag("Canvas").
-            transform.GetChild(2).gameObject.AddComponent<BackButtonManager>();
+            transform.GetChild(1).gameObject.AddComponent<BackButtonManager>();
     }
 
     void Update()
