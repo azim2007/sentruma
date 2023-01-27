@@ -116,7 +116,7 @@ MonoBehaviour:
   m_MinSize: {x: 881, y: 492}
   m_MaxSize: {x: 18004, y: 14042}
   vertical: 0
-  controlID: 166
+  controlID: 173
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_MinSize: {x: 478, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 67
+  controlID: 60
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 342}
   m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
-  controlID: 131
+  controlID: 118
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -471,9 +471,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 843d0000
-      m_LastClickedID: 0
-      m_ExpandedIDs: d4f9ffffe0f9ffff983e0000
+      m_SelectedIDs: 0a3f0000
+      m_LastClickedID: 16138
+      m_ExpandedIDs: 10f9ffff1cf9ffff423f0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -574,20 +574,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/uiImages/gameSceneUI/hp
+    - Assets/Resources/prefabs/UI/gameInfo
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Resources/uiImages/gameSceneUI/hp
+  - Assets/Resources/prefabs/UI/gameInfo
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Unity Projects\sentruma
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 190}
-    m_SelectedIDs: 843d0000
-    m_LastClickedID: 15748
-    m_ExpandedIDs: 00000000143d0000163d0000183d00001a3d00001c3d00001e3d0000203d0000223d0000243d0000263d0000283d0000463d00007a3d000000ca9a3b
+    scrollPos: {x: 0, y: 170}
+    m_SelectedIDs: 403d0000
+    m_LastClickedID: 15680
+    m_ExpandedIDs: 00000000143d0000163d0000183d00001a3d00001c3d00001e3d0000203d0000223d0000243d0000263d0000463d0000723d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -646,18 +646,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c62300008c3c000000000000823d0000d83b0000d2400000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: gameSceneUI
-      m_OriginalName: gameSceneUI
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 15738
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_CreateAssetUtility:
@@ -823,9 +823,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 432.5633, y: 158.27045, z: -810.2102}
+    m_Target: {x: 431.87863, y: 148.51129, z: -840.4401}
     speed: 2
-    m_Value: {x: 432.5633, y: 158.27045, z: -810.2102}
+    m_Value: {x: 431.87863, y: 148.51129, z: -840.4401}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -875,9 +875,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 564.787
+    m_Target: 463.1651
     speed: 2
-    m_Value: 564.787
+    m_Value: 463.1651
   m_Ortho:
     m_Target: 1
     speed: 2

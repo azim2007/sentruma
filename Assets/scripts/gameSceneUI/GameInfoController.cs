@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameInfoController : MonoBehaviour
 {
     private Image state, hp;
+    private Text funPhrase, npcName, npcInfo;
     void Start()
     {
         transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform);
@@ -15,6 +16,7 @@ public class GameInfoController : MonoBehaviour
         rectTransform.anchoredPosition = new Vector3(0f, -145f, 1f);
         rectTransform.sizeDelta = new Vector2(0f, -290f);               //ля я хз поч эти значения, но ток так робит
         SetImageLists();
+        SetFields();
         SetPlayerData();
     }
 
@@ -25,8 +27,6 @@ public class GameInfoController : MonoBehaviour
 
     private void SetPlayerData()
     {
-        hp = transform.GetChild(0).GetComponent<Image>();
-        state = transform.GetChild(1).GetComponent<Image>();
         Debugger.Log(CurrentProgress.currentProgress.Player.IsRage.ToString());
         CurrentProgress.currentProgress.Player.onChange += () =>
         {
@@ -35,6 +35,15 @@ public class GameInfoController : MonoBehaviour
         };
 
         UpdateStats();
+    }
+
+    private void SetFields()
+    {
+        hp = transform.GetChild(0).GetComponent<Image>();
+        state = transform.GetChild(1).GetComponent<Image>();
+        funPhrase = transform.GetChild(7).GetComponent<Text>();
+        npcName = transform.GetChild(8).GetComponent<Text>();
+        npcInfo = transform.GetChild(9).GetComponent<Text>();
     }
 
     private void UpdateStats()
