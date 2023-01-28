@@ -34,7 +34,7 @@ public class MainMenuManager : MonoBehaviour
         CurrentProgress.currentProgress.Player =
            new PlayerData(speed: 2,
                 maxHealth: 10,
-                currentHealth: 5,
+                currentHealth: 1,
                 rbPlayer: new Vector2(0f, 0f),
                 harisma: 1,
                 forse: 1,

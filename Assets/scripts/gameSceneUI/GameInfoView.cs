@@ -22,12 +22,18 @@ public class GameInfoView
         inventory   = transform.GetChild(5).GetComponent<Button>();
         menu        = transform.GetChild(6).GetComponent<Button>();
         funPhraseButton = transform.GetChild(7).GetComponent<Button>();
-        SetButtonsOnClick();
+
+        SetButtonsOnClick(transform.GetComponent<GameInfoController>());
     }
 
-    private void SetButtonsOnClick()
+    private void SetButtonsOnClick(GameInfoController parent)
     {
         funPhraseButton.onClick.AddListener(UpdatePhrase);
+        location.onClick.AddListener(parent.NextLocation);
+        diary.onClick.AddListener(parent.OpenDiary);
+        map.onClick.AddListener(parent.OpenMap);
+        inventory.onClick.AddListener(parent.OpenInventory);
+        menu.onClick.AddListener(parent.Pause);
     }
 
     private void UpdatePhrase()

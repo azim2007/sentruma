@@ -9,6 +9,7 @@ public class GameInfoController : MonoBehaviour
     private GameInfoView view;
     private Sprite[] hps;
     private Sprite[] states;
+    private Dictionary<string, Action> keyNameAction;
     void Start()
     {
         transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform);
@@ -19,11 +20,27 @@ public class GameInfoController : MonoBehaviour
         SetImageLists();
         view = new GameInfoView(transform);
         SetPlayerData();
+        SetDictionary();
     }
 
     void Update()
     {
+        foreach(var e in keyNameAction)
+        {
+            if (InputManager.Manager.GetKeyDown(e.Key))
+                e.Value.Invoke();
+        }
+    }
 
+    public void SetDictionary() {
+        keyNameAction = new Dictionary<string, Action>()
+        {
+            { "back", Pause },
+            { "map", OpenMap },
+            { "diar", OpenDiary },
+            { "loc", NextLocation },
+            { "inv", OpenInventory },
+        };
     }
 
     private void SetPlayerData()
@@ -36,6 +53,31 @@ public class GameInfoController : MonoBehaviour
         };
 
         UpdateStats();
+    }
+
+    public void Pause()
+    {
+        Debugger.Log("pause");
+    }
+
+    public void NextLocation()
+    {
+        Debugger.Log("next location");
+    }
+
+    public void OpenDiary()
+    {
+        Debugger.Log("diary");
+    }
+
+    public void OpenMap()
+    {
+        Debugger.Log("map");
+    }
+
+    public void OpenInventory()
+    {
+        Debugger.Log("inventory");
     }
 
     private void UpdateStats()

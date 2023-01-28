@@ -9,6 +9,9 @@ using UnityEngine;
 public class InputManager
 {
     [NonSerialized] private static InputManager manager = new InputManager();
+    private Dictionary<string, Tuple<string, KeyCode>> codesNames;
+    [NonSerialized] private bool paused;
+
     public static InputManager Manager { 
         get 
         { 
@@ -29,16 +32,25 @@ public class InputManager
     private InputManager(Dictionary<string, Tuple<string, KeyCode>> codesNames)
     {
         this.codesNames = codesNames;
+        this.paused = false;
     }
 
-    private Dictionary<string, Tuple<string, KeyCode>> codesNames;
+    public void Pause()
+    {
+        this.paused = true;
+    }
+
+    public void Resume()
+    {
+        this.paused = false;
+    }
 
     public bool GetKey(string id)
     {
         if (!codesNames.ContainsKey(id)) 
             throw new InvalidOperationException("нет кейкода с айди " + id);
 
-        return Input.GetKey(codesNames[id].Item2);
+        return paused ? false : Input.GetKey(codesNames[id].Item2);
     }
 
     public bool GetKeyDown(string id)
@@ -46,7 +58,7 @@ public class InputManager
         if (!codesNames.ContainsKey(id))
             throw new InvalidOperationException("нет кейкода с айди " + id);
 
-        return Input.GetKeyDown(codesNames[id].Item2);
+        return paused ? false : Input.GetKeyDown(codesNames[id].Item2);
     }
 
     public string GetKeyName(string id)
@@ -117,7 +129,7 @@ public class InputManager
         }
 
         else this.codesNames = DefaultControls();
-
+        this.paused = false;
     }
 
     private Dictionary<string, Tuple<string, KeyCode>> DefaultControls()
@@ -128,9 +140,16 @@ public class InputManager
             { "down", new Tuple<string, KeyCode>( "Идти вниз", KeyCode.S ) },
             { "left", new Tuple<string, KeyCode>( "Идти влево", KeyCode.A ) },
             { "right", new Tuple<string, KeyCode>( "Идти вправо", KeyCode.D ) },
-            { "act", new Tuple<string, KeyCode>( "Поговорить (мирный) / ударить (агрессивный)", KeyCode.LeftControl ) },
-            { "state", new Tuple<string, KeyCode>( "Сменить состояние (мирный / агрессивный)", KeyCode.Tab ) },
-            { "back", new Tuple<string, KeyCode>( "Открыть меню / перейти на предыдущую сцену (из меню)", KeyCode.Escape ) },
+            { "act", new Tuple<string, KeyCode>( "Поговорить (мирный) / ударить (агрессивный)", 
+                KeyCode.LeftControl ) },
+            { "state", new Tuple<string, KeyCode>( "Сменить состояние (мирный / агрессивный)", 
+                KeyCode.Tab ) },
+            { "back", new Tuple<string, KeyCode>( "Открыть меню / перейти на предыдущую сцену (из меню)", 
+                KeyCode.Escape ) },
+            { "map", Tuple.Create( "Открыть карту", KeyCode.M ) },
+            { "inv", Tuple.Create( "Открыть инвентарь", KeyCode.I ) },
+            { "loc", Tuple.Create( "Перейти на следующую локацию", KeyCode.L ) },
+            { "diar", Tuple.Create( "Открыть журнал", KeyCode.J ) },
         };
     }
 
