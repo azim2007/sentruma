@@ -20,4 +20,16 @@ public class AllotoSceneManager : MonoBehaviour
     {
         SceneLoader.LoadScene("saves_menu", "Открываем загрузки");
     }
+
+    //функция не доделана, надо еще реализовать паузу для игровых объектов (чтоб они останавливались)
+    public void PauseGame()
+    {
+        InputManager.Manager.Pause();
+    }
+
+    //функция не доделана, надо еще реализовать паузу для игровых объектов (чтоб они возобновляли движ)
+    public void ResumeGame()
+    {
+        InputManager.Manager.Resume();
+    }
 }

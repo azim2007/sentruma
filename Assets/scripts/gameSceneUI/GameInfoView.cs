@@ -46,5 +46,13 @@ public class GameInfoView
         this.hp.sprite = hp;
         this.state.sprite = state;
     }
+
+    public void SetNpsInfo(UnitsIds id)
+    {
+        var name = SendersList.GetSender(id);
+        var info = SendersList.GetSenderInfo(id);
+        npcName.text = name;
+        npcInfo.text = info;
+    }
 }
 

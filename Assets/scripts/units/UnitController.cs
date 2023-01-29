@@ -41,6 +41,9 @@ public class UnitController : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
+            GameObject.FindGameObjectWithTag("GameSceneUI")
+                .GetComponent<GameInfoController>()
+                .SetNPCInfo(this.unitId);
             StartCoroutine(CheckAction(collision.gameObject.GetComponent<Player>()));
         }
     }

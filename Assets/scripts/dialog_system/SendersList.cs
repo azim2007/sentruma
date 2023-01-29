@@ -12,6 +12,14 @@ public static class SendersList
         {UnitsIds.al_kid, GetColorfulName("Алоттенок")},
     };
 
+    private static Dictionary<UnitsIds, string> sendersInfo = new Dictionary<UnitsIds, string>() 
+    {
+        { UnitsIds.pl, "это типо игрок. За него вы играете"},
+        { UnitsIds.al_man, "это есть аллото житель всеведущий, относитесь с уважением"},
+        { UnitsIds.al_woman, "это есть самка аллото, можно пнуть и харкнуть"},
+        { UnitsIds.al_kid, "это есть детеныш аллото, угостите его"},
+    };
+
     private static string GetColorfulName(string color, string name)
     {
         return "<color=#" + color + ">" + name + "</color>";
@@ -27,6 +35,16 @@ public static class SendersList
         if (senders.ContainsKey(id))
         {
             return senders[id];
+        }
+
+        throw new System.InvalidOperationException("нет сендера с айди: " + id);
+    }
+
+    public static string GetSenderInfo(UnitsIds id)
+    {
+        if (sendersInfo.ContainsKey(id))
+        {
+            return sendersInfo[id];
         }
 
         throw new System.InvalidOperationException("нет сендера с айди: " + id);

@@ -80,6 +80,11 @@ public class GameInfoController : MonoBehaviour
         Debugger.Log("inventory");
     }
 
+    public void SetNPCInfo(UnitsIds id)
+    {
+        view.SetNpsInfo(id);
+    }
+
     private void UpdateStats()
     {
         var st = states[CurrentProgress.currentProgress.Player.IsRage ? 1 : 0];

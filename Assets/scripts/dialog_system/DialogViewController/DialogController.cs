@@ -165,6 +165,9 @@ public class DialogController : MonoBehaviour
             StartCoroutine(ShowDialog());
         }
 
+        GameObject.FindGameObjectWithTag("GameSceneManager")
+            .GetComponent<AllotoSceneManager>()
+            .ResumeGame();
         bool CanChange() => (canChange || Input.GetMouseButtonUp(0)) && (!previousReplicsView.IsActive);
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - RoofBody
   - DialogManager
   - GameSceneManager
+  - GameSceneUI
   layers:
   - Default
   - TransparentFX
