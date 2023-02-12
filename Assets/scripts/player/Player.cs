@@ -58,6 +58,7 @@ public class PlayerData
 
     public PlayerData() { }
 
+    [field: System.NonSerialized]
     public event Action onChange;
 
     private float speed;
