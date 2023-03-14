@@ -6,11 +6,13 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D rbPlayer;
+    private Animator animator;
     void Start()
     {
         rbPlayer = GetComponent<Rigidbody2D>();
-        transform.position = new Vector2(CurrentProgress.currentProgress.Player.PositionX, 
+        transform.position = new Vector2(CurrentProgress.currentProgress.Player.PositionX,
             CurrentProgress.currentProgress.Player.PositionY);
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -21,24 +23,47 @@ public class Player : MonoBehaviour
 
     private void CheckRage()
     {
-        if(InputManager.Manager.GetKeyDown(id: "state"))
+        if (InputManager.Manager.GetKeyDown(id: "state"))
         {
-            CurrentProgress.currentProgress.Player.IsRage = 
+            CurrentProgress.currentProgress.Player.IsRage =
                 !CurrentProgress.currentProgress.Player.IsRage;
         }
     }
 
     IEnumerator Move()
     {
-        float yAxis = InputManager.Manager.GetAxis("Vertical") * 
+        float vert = InputManager.Manager.GetAxis("Vertical");
+        float hor = InputManager.Manager.GetAxis("Horizontal");
+        float yAxis = vert *
             CurrentProgress.currentProgress.Player.Speed;
-        float xAxis = InputManager.Manager.GetAxis("Horizontal") *
+        float xAxis = hor *
             CurrentProgress.currentProgress.Player.Speed;
+        var isWalk = vert != 0 || hor != 0;
+        animator.SetBool("IsWalk", isWalk);
+        if(isWalk)
+            transform.eulerAngles = GetRotation((int)vert, (int)hor);
         rbPlayer.velocity = new Vector2(xAxis, yAxis);
-        CurrentProgress.currentProgress.Player.Position 
+        CurrentProgress.currentProgress.Player.Position
             = new Vector2(transform.position.x, transform.position.y);
         yield return null;
     }
+
+    Vector3 GetRotation(int vert, int hor)
+    {
+        var dict = new Dictionary<Tuple<int, int>, float>()
+        {
+            { Tuple.Create(1, 0), 0 },
+            { Tuple.Create(1, 1), -45 },
+            { Tuple.Create(0, 1), -90 },
+            { Tuple.Create(-1, 1), -135 },
+            { Tuple.Create(-1, 0), -180 },
+            { Tuple.Create(-1, -1), 135 },
+            { Tuple.Create(0, -1), 90 },
+            { Tuple.Create(1, -1), 45 },
+        };
+
+        return new Vector3(0, 0, dict[Tuple.Create(vert, hor)]);
+    } 
 }
 
 [System.Serializable]
