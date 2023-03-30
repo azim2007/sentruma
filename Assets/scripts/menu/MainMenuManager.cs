@@ -38,7 +38,10 @@ public class MainMenuManager : MonoBehaviour
                 rbPlayer: new Vector2(0f, 0f),
                 harisma: 1,
                 forse: 1,
-                isRage: false
+                isRage: false,
+                experience: 0,
+                level: 0,
+                rageLevel: 0
             );
         CurrentProgress.currentProgress.GenerateName();
         CurrentProgress.currentProgress.LoadGame();

@@ -77,8 +77,8 @@ public static class AllotoManDialogs
     private static UnitsDialogs dialogs = new UnitsDialogs(
         new List<Dialog>()
         {
-            //nonharismaticDialog,
-            //harismaticDialog,
+            nonharismaticDialog,
+            harismaticDialog,
         },
 
         new Dialog(

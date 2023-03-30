@@ -10,6 +10,7 @@ public class GameInfoController : MonoBehaviour
     private Sprite[] hps;
     private Sprite[] states;
     private Dictionary<string, Action> keyNameAction;
+    private GameObject manager;
     void Start()
     {
         transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform);
@@ -21,6 +22,7 @@ public class GameInfoController : MonoBehaviour
         view = new GameInfoView(transform);
         SetPlayerData();
         SetDictionary();
+        manager = GameObject.FindGameObjectWithTag("GameSceneManager");
     }
 
     void Update()
@@ -78,6 +80,7 @@ public class GameInfoController : MonoBehaviour
     public void OpenInventory()
     {
         Debugger.Log("inventory");
+        manager.GetComponent<InventoryUIManager>().OpenInventory();
     }
 
     public void SetNPCInfo(UnitsIds id)
