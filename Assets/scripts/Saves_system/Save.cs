@@ -23,6 +23,7 @@ public class Save
         CurrentProgress.currentProgress.Name = Name;
         CurrentProgress.currentProgress.CurrentWorld = CurrentWorld;
         CurrentProgress.currentProgress.Date = Date;
+        CurrentProgress.currentProgress.Inventory = Inventory;
     }
     public Save() { }
 
@@ -36,6 +37,7 @@ public class Save
     public Save(Save save)
     {
         this.Player = save.Player;
+        this.Inventory = save.Inventory;
         Name = save.Name;
         CurrentWorld = save.CurrentWorld;
         Date = save.Date;
@@ -45,6 +47,8 @@ public class Save
 
     public PlayerData Player { get; set; }
 
+    public Inventory Inventory { get; set; }
+
     public DateTime Date { get; private set; }
 
     private int currentWorld;
@@ -53,6 +57,7 @@ public class Save
     {
         this.Player = CurrentProgress.currentProgress.Player;
         CurrentWorld = CurrentProgress.currentProgress.CurrentWorld;
+        this.Inventory = CurrentProgress.currentProgress.Inventory;
         Date = DateTime.Now;
 
         GenerateName();

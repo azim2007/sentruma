@@ -10,6 +10,7 @@ public class InventoryFactory : Factory<string>
         {
             "obj",
             "invUI",
+            "objBar",
         };
 
         FillDictionary("prefabs/UI/inventoryUI", namesList);

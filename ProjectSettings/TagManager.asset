@@ -10,6 +10,8 @@ TagManager:
   - DialogManager
   - GameSceneManager
   - GameSceneUI
+  - ObjectBar
+  - InventoryUI
   layers:
   - Default
   - TransparentFX

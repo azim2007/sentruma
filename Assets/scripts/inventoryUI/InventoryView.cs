@@ -35,22 +35,33 @@ public class InventoryView
     private void SetButtonsOnClick(InventoryController p)
     {
         close.onClick.AddListener(p.CloseInventory);
+        plusForce.onClick.AddListener(() => p.PlusStat("force"));
+        plusHarisma.onClick.AddListener(() => p.PlusStat("harisma"));
     }
 
     public void UpdateStats(float force, float harisma, float level, float experience, 
         float rageLevel)
     {
-        slider.transform.position = new Vector3(rageLevel * 80, 0f, 0f);
+        slider.transform.position = new Vector3(rageLevel * (160f / 90f), 0f, 0f);
 
         forceValue.text = ((int)force).ToString();
         harismaValue.text = ((int)harisma).ToString();
         this.experience.text = (int)experience + "/" + 
             (int)CurrentProgress.currentProgress.Player.MaxExp;
-        this.level.text = ((int)level).ToString();
+        this.level.text = "ур. " + (int)level;
 
         var imp = (experience >= CurrentProgress.currentProgress.Player.MaxExp);
         SetPlusButtonState(plusForce, imp);
         SetPlusButtonState(plusHarisma, imp);
+
+        var hasWeapon = CurrentProgress.currentProgress.Player.Weapon != null;
+        var hasArmor = CurrentProgress.currentProgress.Player.Armor != null;
+        weapon.gameObject.SetActive(hasWeapon);
+        armor.gameObject.SetActive(hasArmor);
+        if (hasWeapon)
+            weapon.sprite = CurrentProgress.currentProgress.Player.Weapon.InventoryImage;
+        if(hasArmor)
+            armor.sprite = CurrentProgress.currentProgress.Player.Armor.InventoryImage;
     }
 
     private void SetPlusButtonState(Button b, bool state)

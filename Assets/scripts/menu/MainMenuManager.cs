@@ -41,8 +41,17 @@ public class MainMenuManager : MonoBehaviour
                 isRage: false,
                 experience: 0,
                 level: 0,
-                rageLevel: 0
+                rageLevel: 0,
+                armor: null,
+                weapon: null
             );
+        CurrentProgress.currentProgress.Inventory = new Inventory(inventory: 
+            new Tuple<InventoryObject, int>[3]
+            {
+                Tuple.Create(new DrinkObject() as InventoryObject, 4),
+                Tuple.Create(new Money() as InventoryObject, 2),
+                Tuple.Create(new DrinkObject() as InventoryObject, 1),
+            });
         CurrentProgress.currentProgress.GenerateName();
         CurrentProgress.currentProgress.LoadGame();
     }

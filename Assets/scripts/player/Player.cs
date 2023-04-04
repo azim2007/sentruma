@@ -70,7 +70,8 @@ public class Player : MonoBehaviour
 public class PlayerData
 {
     public PlayerData(float speed, float maxHealth, float currentHealth, Vector2 rbPlayer, 
-        float harisma, float forse, bool isRage, float experience, float level, float rageLevel)
+        float harisma, float forse, bool isRage, float experience, float level, float rageLevel,
+        Armor armor, Weapon weapon)
     {
         this.speed = speed;
         this.maxHealth = maxHealth;
@@ -82,12 +83,20 @@ public class PlayerData
         this.experience = experience;
         this.level = level;
         this.rageLevel = rageLevel;
+        this.weapon = weapon;
+        this.armor = armor;
     }
 
     public PlayerData() { }
 
     [field: System.NonSerialized]
     public event Action onChange;
+
+    private Armor armor;
+    public Armor Armor { get { return armor; } set { armor = value; onChange(); } }
+
+    private Weapon weapon;
+    public Weapon Weapon { get { return weapon; } set { weapon = value; onChange(); } }
 
     private float rageLevel;
     public float RageLevel { get { return rageLevel; } set { rageLevel = value; onChange(); } }

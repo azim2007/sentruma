@@ -54,7 +54,12 @@ public static class AllotoManDialogs
         },
         null,
         () => CurrentProgress.currentProgress.Player.Harisma > 3,
-        () => Debugger.Log("harismatic"),
+        () => 
+        { 
+            Debugger.Log("harismatic");
+            CurrentProgress.currentProgress.Player.Experience += 200;
+            CurrentProgress.currentProgress.Player.RageLevel -= 2;
+        },
         null
         );
 
@@ -69,6 +74,9 @@ public static class AllotoManDialogs
         () => 
         { 
             CurrentProgress.currentProgress.Player.Harisma = 4;
+            CurrentProgress.currentProgress.Inventory.Add(new Money(), 100);
+            CurrentProgress.currentProgress.Inventory.Add(new AllotoWeapon(), 1);
+            CurrentProgress.currentProgress.Inventory.Add(new RoitelWeapon(), 2);
             Debugger.Log("nonharismatic");
         },
         null
