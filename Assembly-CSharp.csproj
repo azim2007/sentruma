@@ -109,6 +109,7 @@
     <Compile Include="Assets\scripts\menu\saves_menu\SaveItemController.cs" />
     <Compile Include="Assets\scripts\menu\saves_menu\SaveSceneManager.cs" />
     <Compile Include="Assets\scripts\menu\settings_menu\SettingsMenuManager.cs" />
+    <Compile Include="Assets\scripts\pauseUI\PauseUIController.cs" />
     <Compile Include="Assets\scripts\player\Player.cs" />
     <Compile Include="Assets\scripts\units\AllUnitsIds.cs" />
     <Compile Include="Assets\scripts\units\UnitController.cs" />

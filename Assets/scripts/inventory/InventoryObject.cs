@@ -191,3 +191,11 @@ public class RoitelWeapon : Weapon
         "сие орудие дарованно роителем", 5, "roitel")
     { }
 }
+
+[System.Serializable]
+public class AllotoArmor : Armor
+{
+    public AllotoArmor() : base("allotoArmor", "броня аллото",
+        "сие броня дарованно аллото просвященным", 3, "alloto")
+    { }
+}

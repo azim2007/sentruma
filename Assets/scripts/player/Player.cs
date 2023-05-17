@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     {
         StartCoroutine(Move());
         CheckRage();
+        StartCoroutine(CheckHit());
     }
 
     private void CheckRage()
@@ -27,6 +28,16 @@ public class Player : MonoBehaviour
         {
             CurrentProgress.currentProgress.Player.IsRage =
                 !CurrentProgress.currentProgress.Player.IsRage;
+        }
+    }
+
+    private IEnumerator CheckHit()
+    {
+        if(CurrentProgress.currentProgress.Player.IsRage&& InputManager.Manager.GetKeyDown("act"))
+        {
+            animator.SetBool("Hit", true);
+            yield return new WaitForSeconds(0.1f);
+            animator.SetBool("Hit", false);
         }
     }
 

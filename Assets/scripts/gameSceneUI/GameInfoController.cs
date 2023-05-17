@@ -60,6 +60,8 @@ public class GameInfoController : MonoBehaviour
     public void Pause()
     {
         Debugger.Log("pause");
+        var factory = new GameInfoFactory();
+        factory.Instantiate("pause");
     }
 
     public void NextLocation()

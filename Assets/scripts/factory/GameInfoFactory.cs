@@ -11,6 +11,7 @@ public class GameInfoFactory : Factory<string>
         var namesList = new List<string>()
         {
             "gameInfo",
+            "pause",
         };
 
         FillDictionary("prefabs/UI/gameInfo", namesList);
