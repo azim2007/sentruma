@@ -110,7 +110,14 @@ public class PlayerData
     public Weapon Weapon { get { return weapon; } set { weapon = value; onChange(); } }
 
     private float rageLevel;
-    public float RageLevel { get { return rageLevel; } set { rageLevel = value; onChange(); } }
+    public float RageLevel { get { return rageLevel; } 
+        set { 
+            if(value >= 3) rageLevel = 3; 
+            if(value <= -3) rageLevel = -3;
+            else rageLevel = value;
+            onChange(); 
+        } 
+    }
 
     private float level;
     public float Level { get { return level; } set { level = value; onChange(); } }

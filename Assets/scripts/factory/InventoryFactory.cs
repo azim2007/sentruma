@@ -8,6 +8,7 @@ public class InventoryFactory : Factory<string>
     {
         var namesList = new List<string>()
         {
+            "infPnl",
             "obj",
             "invUI",
             "objBar",

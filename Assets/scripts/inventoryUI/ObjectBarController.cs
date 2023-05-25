@@ -3,19 +3,14 @@ using UnityEngine.UI;
 
 public class ObjectBarController : MonoBehaviour
 {
-    private Button throwB, throwAll, use;
-    private Text objName;
-    private Text objInfo;
+    private Button throwB, throwAll, use, info, close;
+    private Image preview;
     private int index;
     void Start()
     {
-        transform.localScale = new Vector3(0.5f, 0.5f, 1f);
-        transform.localPosition = new Vector3(-280f, -60f, 0f);
-        throwB = transform.GetChild(1).GetComponent<Button>();
-        throwAll = transform.GetChild(2).GetComponent<Button>();
-        use = transform.GetChild(3).GetComponent<Button>();
-        objName = transform.GetChild(0).GetComponent<Text>();
-        objInfo = transform.GetChild(4).GetComponent<Text>();
+        transform.localScale = new Vector3(1f, 1f, 1f);
+        SetButtons();
+        preview = transform.GetChild(5).GetComponent<Image>();
         SetButtonsOnClick();
         UpdateValues();
     }
@@ -25,15 +20,27 @@ public class ObjectBarController : MonoBehaviour
         
     }
 
+    private void SetButtons()
+    {
+        info = transform.GetChild(0).GetComponent<Button>();
+        throwB = transform.GetChild(1).GetComponent<Button>();
+        throwAll = transform.GetChild(2).GetComponent<Button>();
+        use = transform.GetChild(3).GetComponent<Button>();
+        close = transform.GetChild(4).GetComponent<Button>();
+    }
+
     private void SetButtonsOnClick()
     {
         use.onClick.AddListener(() =>
         {
-            CurrentProgress.currentProgress.Inventory.Use(index);
+            try { CurrentProgress.currentProgress.Inventory.Use(index); }
+            catch { }
             UpdateValues();
         });
         throwB.onClick.AddListener(Throw);
         throwAll.onClick.AddListener(ThrowAll);
+        info.onClick.AddListener(ShowInfo);
+        close.onClick.AddListener(() => Destroy(this.gameObject));
     }
 
     private void Throw()
@@ -56,6 +63,13 @@ public class ObjectBarController : MonoBehaviour
         catch { }
     }
 
+    private void ShowInfo()
+    {
+        var panel = new InventoryFactory().Instantiate("infPnl");
+        panel.transform.SetParent(GameObject.FindGameObjectWithTag("InventoryUI").transform);
+        panel.GetComponent<ObjectInfoPanelController>().ShowInfo(index);
+    }
+
     public void UpdateValues()
     {
         var o = CurrentProgress.currentProgress.Inventory[index];
@@ -65,9 +79,7 @@ public class ObjectBarController : MonoBehaviour
             return; 
         }
 
+        preview.sprite = o.Item1.GetImage();
         Debugger.Log("" + index + " " + o.Item1.Name);
-        objName.text = o.Item1.Name;
-        objInfo.text = o.Item1.Description;
-        use.gameObject.SetActive(o.Item1 is IUsableObject);
     }
 }

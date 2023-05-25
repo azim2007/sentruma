@@ -100,6 +100,7 @@
     <Compile Include="Assets\scripts\inventoryUI\InventoryUIManager.cs" />
     <Compile Include="Assets\scripts\inventoryUI\InventoryView.cs" />
     <Compile Include="Assets\scripts\inventoryUI\ObjectBarController.cs" />
+    <Compile Include="Assets\scripts\inventoryUI\ObjectInfoPanelController.cs" />
     <Compile Include="Assets\scripts\loading_scene_system\LoadingSceneManager.cs" />
     <Compile Include="Assets\scripts\loading_scene_system\SceneLoader.cs" />
     <Compile Include="Assets\scripts\menu\BackButtonManager.cs" />
