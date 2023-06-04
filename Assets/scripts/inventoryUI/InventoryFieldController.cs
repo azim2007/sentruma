@@ -11,7 +11,8 @@ public class InventoryFieldController : MonoBehaviour
         for(int i = 0; i < 25; i++)
         {
             var o = factory.Instantiate("obj");
-            o.GetComponent<InventoryItemController>().SetObject(i);
+            o.AddComponent<InventoryItemInventoryScreenController>();
+            o.GetComponent<InventoryItemInventoryScreenController>().SetObject(i);
             o.transform.SetParent(this.transform);
         }
     }

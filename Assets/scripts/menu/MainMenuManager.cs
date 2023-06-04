@@ -52,6 +52,7 @@ public class MainMenuManager : MonoBehaviour
                 Tuple.Create(new Money() as InventoryObject, 2),
                 Tuple.Create(new DrinkObject() as InventoryObject, 1),
             });
+        CurrentProgress.currentProgress.AllGameChests = new AllGameChests("start");
         CurrentProgress.currentProgress.GenerateName();
         CurrentProgress.currentProgress.LoadGame();
     }

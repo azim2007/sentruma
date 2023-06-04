@@ -1,32 +1,26 @@
 ﻿using System;
 
 [System.Serializable]
-public class Inventory
+public abstract class InventoryObjectsHolder
 {
     private Tuple<InventoryObject, int>[] inventory;
+    public Tuple<InventoryObject, int>[] Inventory { get { return inventory; } }
 
     [field: NonSerialized]
     public event Action onChange;
-    public Inventory(Tuple<InventoryObject, int>[] inventory)
+
+    public InventoryObjectsHolder(int count)
     {
-        onChange += () => { };
-        this.inventory = new Tuple<InventoryObject, int>[25];
-        for(int i = 0; i < inventory.Length; i++)
+        onChange = () => { };
+        inventory = new Tuple<InventoryObject, int>[count];
+    }
+
+    public InventoryObjectsHolder(int count, Tuple<InventoryObject, int>[] inventory) : this(count)
+    {
+        for (int i = 0; i < inventory.Length; i++)
         {
             this.inventory[i] = inventory[i];
         }
-    }
-
-    public Inventory(Inventory inventory)
-    {
-        onChange += () => { };
-        this.inventory = inventory.inventory;
-    }
-
-    public Inventory()
-    {
-        onChange += () => { };
-        this.inventory = new Tuple<InventoryObject, int>[25];
     }
 
     public void ResetOnChange()
@@ -40,7 +34,7 @@ public class Inventory
         {
             if (this.inventory[i] != null && this.inventory[i].Item1.Path == obj.Path)
             {
-                this.inventory[i] = 
+                this.inventory[i] =
                     Tuple.Create(this.inventory[i].Item1, this.inventory[i].Item2 + count);
                 onChange();
                 return true;
@@ -64,11 +58,11 @@ public class Inventory
 
     public void Throw(int index, int count)
     {
-        if (index >= 0 && index < 25 && this.inventory[index] != null)
+        if (index >= 0 && index < inventory.Length && this.inventory[index] != null)
         {
             var newCount = this.inventory[index].Item2 - count;
-            inventory[index] = (newCount > 0) ? 
-                Tuple.Create(this.inventory[index].Item1, newCount) : 
+            inventory[index] = (newCount > 0) ?
+                Tuple.Create(this.inventory[index].Item1, newCount) :
                 null;
         }
 
@@ -77,7 +71,7 @@ public class Inventory
 
     public void Use(int index)
     {
-        if(inventory[index] == null || !(inventory[index].Item1 is IUsableObject)) return;
+        if (inventory[index] == null || !(inventory[index].Item1 is IUsableObject)) return;
         var o = inventory[index].Item1 as IUsableObject;
         o.Effect();
         Throw(index, 1);
@@ -90,4 +84,14 @@ public class Inventory
             return this.inventory[index];
         }
     }
+}
+
+[System.Serializable]
+public class Inventory : InventoryObjectsHolder
+{
+    public Inventory(Tuple<InventoryObject, int>[] inventory) : base(25, inventory) { }
+
+    public Inventory(Inventory inventory) : this(inventory.Inventory) { }
+
+    public Inventory() : base(25) { }
 }

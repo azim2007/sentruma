@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using System;
+﻿using System;
 
 [System.Serializable]
 public class Save
@@ -24,6 +20,7 @@ public class Save
         CurrentProgress.currentProgress.CurrentWorld = CurrentWorld;
         CurrentProgress.currentProgress.Date = Date;
         CurrentProgress.currentProgress.Inventory = Inventory;
+        CurrentProgress.currentProgress.AllGameChests = AllGameChests;
     }
     public Save() { }
 
@@ -40,6 +37,7 @@ public class Save
         this.Inventory = save.Inventory;
         Name = save.Name;
         CurrentWorld = save.CurrentWorld;
+        this.AllGameChests = save.AllGameChests;
         Date = save.Date;
     }
 
@@ -48,6 +46,8 @@ public class Save
     public PlayerData Player { get; set; }
 
     public Inventory Inventory { get; set; }
+
+    public AllGameChests AllGameChests { get; set; }
 
     public DateTime Date { get; private set; }
 
@@ -58,6 +58,7 @@ public class Save
         this.Player = CurrentProgress.currentProgress.Player;
         CurrentWorld = CurrentProgress.currentProgress.CurrentWorld;
         this.Inventory = CurrentProgress.currentProgress.Inventory;
+        this.AllGameChests = CurrentProgress.currentProgress.AllGameChests;
         Date = DateTime.Now;
 
         GenerateName();

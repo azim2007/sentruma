@@ -56,6 +56,7 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\scripts\Saves_system\AllGameChests.cs" />
     <Compile Include="Assets\scripts\Saves_system\CurrentProgress.cs" />
     <Compile Include="Assets\scripts\Saves_system\Save.cs" />
     <Compile Include="Assets\scripts\Saves_system\Saver.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Assets\scripts\alloto\AllotoSceneManager.cs" />
     <Compile Include="Assets\scripts\buildings\BuildingController.cs" />
     <Compile Include="Assets\scripts\buildings\RoofBodyController.cs" />
+    <Compile Include="Assets\scripts\chests\Chest.cs" />
     <Compile Include="Assets\scripts\develope_staff\Debugger.cs" />
     <Compile Include="Assets\scripts\dialog_system\Dialog.cs" />
     <Compile Include="Assets\scripts\dialog_system\DialogManager.cs" />
@@ -81,6 +83,8 @@
     <Compile Include="Assets\scripts\dialog_system\ServiceHandlers\WaitHandler.cs" />
     <Compile Include="Assets\scripts\extensions\Parser.cs" />
     <Compile Include="Assets\scripts\extensions\QueueExtensions.cs" />
+    <Compile Include="Assets\scripts\factory\AllotoGameObjectsFactory.cs" />
+    <Compile Include="Assets\scripts\factory\ChestFactory.cs" />
     <Compile Include="Assets\scripts\factory\DialogFactory.cs" />
     <Compile Include="Assets\scripts\factory\Factory.cs" />
     <Compile Include="Assets\scripts\factory\GameInfoFactory.cs" />
@@ -96,7 +100,7 @@
     <Compile Include="Assets\scripts\inventory\InventoryObject.cs" />
     <Compile Include="Assets\scripts\inventoryUI\InventoryController.cs" />
     <Compile Include="Assets\scripts\inventoryUI\InventoryFieldController.cs" />
-    <Compile Include="Assets\scripts\inventoryUI\InventoryItemController.cs" />
+    <Compile Include="Assets\scripts\inventoryUI\InventoryItemInventoryScreenController.cs" />
     <Compile Include="Assets\scripts\inventoryUI\InventoryUIManager.cs" />
     <Compile Include="Assets\scripts\inventoryUI\InventoryView.cs" />
     <Compile Include="Assets\scripts\inventoryUI\ObjectBarController.cs" />

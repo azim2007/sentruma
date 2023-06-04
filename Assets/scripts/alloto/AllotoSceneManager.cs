@@ -9,6 +9,8 @@ public class AllotoSceneManager : MonoBehaviour
     {
         var playerFactory = new PlayerFactory();
         player = playerFactory.Instantiate(UnitsIds.pl, new Vector2(0f, 0f)).GetComponent<Player>();
+        var chestFactory = new ChestFactory();
+        chestFactory.Instantiate();
     }
 
     void Update()
