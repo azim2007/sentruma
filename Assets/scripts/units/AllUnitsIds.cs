@@ -8,6 +8,7 @@ public enum UnitsIds
     pl,
     al_man,
     al_woman,
-    al_kid
+    al_kid,
+    al_jug
 };
 

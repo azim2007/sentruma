@@ -10,6 +10,7 @@ public static class SendersList
         {UnitsIds.al_man, GetColorfulName("Алоттянец")},
         {UnitsIds.al_woman, GetColorfulName("Алоттянка")},
         {UnitsIds.al_kid, GetColorfulName("Алоттенок")},
+        {UnitsIds.al_jug, GetColorfulName("11f3e5ff" ,"Кувшин")},
     };
 
     private static Dictionary<UnitsIds, string> sendersInfo = new Dictionary<UnitsIds, string>() 
@@ -18,6 +19,7 @@ public static class SendersList
         { UnitsIds.al_man, "это есть аллото житель всеведущий, относитесь с уважением"},
         { UnitsIds.al_woman, "это есть самка аллото, можно пнуть и харкнуть"},
         { UnitsIds.al_kid, "это есть детеныш аллото, угостите его"},
+        { UnitsIds.al_jug, "это кувшин, суда можно вещи сложить и взять их. Только не наглей, праведник!"},
     };
 
     private static string GetColorfulName(string color, string name)

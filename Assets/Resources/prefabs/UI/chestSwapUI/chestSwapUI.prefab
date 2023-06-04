@@ -224,7 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8365169941391491602}
   - component: {fileID: 783708136206695219}
-  - component: {fileID: 475267401203242301}
+  - component: {fileID: 7854039661852094680}
   m_Layer: 0
   m_Name: inventory
   m_TagString: Untagged
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 5
---- !u!114 &475267401203242301
+--- !u!114 &7854039661852094680
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2797541444183334580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b12569ed92ea0894680cc0b0fbf9af57, type: 3}
+  m_Script: {fileID: 11500000, guid: c1f3ddb02a9d50a4b8ccbf46835fc089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3185469595576093810
@@ -373,6 +373,7 @@ GameObject:
   - component: {fileID: 3337126486753616242}
   - component: {fileID: 1442910736403842650}
   - component: {fileID: 3259289177437213273}
+  - component: {fileID: 6909771647546949333}
   m_Layer: 5
   m_Name: chestSwapUI
   m_TagString: Untagged
@@ -463,6 +464,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6909771647546949333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3699530204539639133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91b9ffb66bb88341b469db831ea5da1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6057456162426511593
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,7 +486,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7305006600173001570}
   - component: {fileID: 5383906763229246138}
-  - component: {fileID: 8024690292327813839}
+  - component: {fileID: 2288456990282091866}
   m_Layer: 0
   m_Name: chest
   m_TagString: Untagged
@@ -524,7 +537,7 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 5
---- !u!114 &8024690292327813839
+--- !u!114 &2288456990282091866
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -533,6 +546,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6057456162426511593}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b12569ed92ea0894680cc0b0fbf9af57, type: 3}
+  m_Script: {fileID: 11500000, guid: e71f56343676ec64ba36a58ba6525f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

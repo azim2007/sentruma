@@ -13,7 +13,7 @@ public class Chest : InventoryObjectsHolder
     private bool opened;
 
     [field: NonSerialized]
-    public event Action OnOpen;
+    public event Action onOpen;
     public bool Opened { get { return opened; } }
     public Chest (InventoryObject key, string type) : this(new Tuple<InventoryObject, int>[1], key, type) { }
     public Chest(Tuple<InventoryObject, int>[] chest, InventoryObject key, string type) : base(10, chest) 
@@ -21,7 +21,7 @@ public class Chest : InventoryObjectsHolder
         this.key = key;
         this.type = type;
         opened = false;
-        OnOpen = () => { };
+        onOpen = () => { };
     }
     public Chest(Chest chest) : this(chest.Inventory, chest.key, chest.type) { }
     
@@ -37,7 +37,7 @@ public class Chest : InventoryObjectsHolder
     public bool Open()
     {
         opened = CanOpen;
-        if(CanOpen) OnOpen();
+        if(CanOpen) onOpen();
         return CanOpen;
     }
 }

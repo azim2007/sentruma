@@ -12,11 +12,13 @@ public class ChestFactory
 
     public void Instantiate(int level)
     {
+        var counter = 0;
         foreach(var e in CurrentProgress.currentProgress.AllGameChests[level])
         {
             var jug = factory.Instantiate(e.Item1.Type);
             jug.transform.position = new Vector3(e.Item2, e.Item3);
-            //передать id в контроллер
+            jug.GetComponent<ChestController>().SetIndexes(level, counter);
+            counter++;
         }
     }
 

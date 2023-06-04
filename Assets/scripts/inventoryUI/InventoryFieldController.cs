@@ -16,9 +16,4 @@ public class InventoryFieldController : MonoBehaviour
             o.transform.SetParent(this.transform);
         }
     }
-
-    void Update()
-    {
-        
-    }
 }

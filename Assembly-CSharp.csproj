@@ -65,6 +65,12 @@
     <Compile Include="Assets\scripts\buildings\BuildingController.cs" />
     <Compile Include="Assets\scripts\buildings\RoofBodyController.cs" />
     <Compile Include="Assets\scripts\chests\Chest.cs" />
+    <Compile Include="Assets\scripts\chests\ChestController.cs" />
+    <Compile Include="Assets\scripts\chests\ChestSwap\ChestSwapChestFieldController.cs" />
+    <Compile Include="Assets\scripts\chests\ChestSwap\ChestSwapChestItemController.cs" />
+    <Compile Include="Assets\scripts\chests\ChestSwap\ChestSwapController.cs" />
+    <Compile Include="Assets\scripts\chests\ChestSwap\ChestSwapInventoryFieldController.cs" />
+    <Compile Include="Assets\scripts\chests\ChestSwap\ChestSwapInventoryItemController.cs" />
     <Compile Include="Assets\scripts\develope_staff\Debugger.cs" />
     <Compile Include="Assets\scripts\dialog_system\Dialog.cs" />
     <Compile Include="Assets\scripts\dialog_system\DialogManager.cs" />
@@ -85,6 +91,7 @@
     <Compile Include="Assets\scripts\extensions\QueueExtensions.cs" />
     <Compile Include="Assets\scripts\factory\AllotoGameObjectsFactory.cs" />
     <Compile Include="Assets\scripts\factory\ChestFactory.cs" />
+    <Compile Include="Assets\scripts\factory\ChestSwapUIFactory.cs" />
     <Compile Include="Assets\scripts\factory\DialogFactory.cs" />
     <Compile Include="Assets\scripts\factory\Factory.cs" />
     <Compile Include="Assets\scripts\factory\GameInfoFactory.cs" />
@@ -116,6 +123,7 @@
     <Compile Include="Assets\scripts\menu\settings_menu\SettingsMenuManager.cs" />
     <Compile Include="Assets\scripts\pauseUI\PauseUIController.cs" />
     <Compile Include="Assets\scripts\player\Player.cs" />
+    <Compile Include="Assets\scripts\units\ActingObjectsController.cs" />
     <Compile Include="Assets\scripts\units\AllUnitsIds.cs" />
     <Compile Include="Assets\scripts\units\UnitController.cs" />
     <Compile Include="Assets\scripts\units\UnitsDialogs.cs" />
