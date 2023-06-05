@@ -8,13 +8,16 @@ public class ChestSwapChestFieldController : MonoBehaviour
 
     public void SetIndexes(int sceneIndex, int chestIndex)
     {
+        var buffer = this.GetComponentInParent<ChestSwapController>();
         factory = new InventoryFactory();
         for (int i = 0; i < 10; i++)
         {
             var o = factory.Instantiate("obj");
             o.AddComponent<ChestSwapChestItemController>();
-            o.GetComponent<ChestSwapChestItemController>().SetObject(i);
-            o.GetComponent<ChestSwapChestItemController>().SetIndexes(sceneIndex, chestIndex);
+            var controller = o.GetComponent<ChestSwapChestItemController>();
+            controller.SetObject(i);
+            controller.SetIndexes(sceneIndex, chestIndex);
+            controller.sendToBuffer += buffer.SetBuffer;
             o.transform.SetParent(this.transform);
         }
     }
