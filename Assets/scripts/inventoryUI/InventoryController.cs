@@ -54,4 +54,25 @@ public class InventoryController : MonoBehaviour
         else if(name == "harisma")
             CurrentProgress.currentProgress.Player.Harisma += 1;
     }
+
+    public void RemoveArmor()
+    {
+        if(CurrentProgress.currentProgress.Player.Armor != null) 
+        {
+            CurrentProgress.currentProgress.Inventory
+                .Add(CurrentProgress.currentProgress.Player.Armor, 1);
+            CurrentProgress.currentProgress.Player.Armor = null;
+        }
+            
+    }
+
+    public void RemoveWeapon()
+    {
+        if (CurrentProgress.currentProgress.Player.Weapon != null)
+        {
+            CurrentProgress.currentProgress.Inventory
+                .Add(CurrentProgress.currentProgress.Player.Weapon, 1);
+            CurrentProgress.currentProgress.Player.Weapon = null;
+        }
+    }
 }

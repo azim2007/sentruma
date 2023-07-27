@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class InventoryView
 {
-    private Button close, plusForce, plusHarisma;
+    private Button close, plusForce, plusHarisma, removeWeapon, removeArmor;
     private Text forceValue, harismaValue, level, experience;
     private Image armor, weapon, slider;
 
@@ -23,6 +23,8 @@ public class InventoryView
         harismaValue = stats.GetChild(5).GetComponent<Text>();
 
         close = t.GetChild(10).GetComponent<Button>();
+        removeArmor = t.GetChild(11).GetComponent<Button>();
+        removeWeapon = t.GetChild(12).GetComponent<Button>();
 
         level = t.GetChild(2).GetComponent<Text>();
         experience = t.GetChild(3).GetComponent<Text>();
@@ -37,6 +39,8 @@ public class InventoryView
         close.onClick.AddListener(p.CloseInventory);
         plusForce.onClick.AddListener(() => p.PlusStat("force"));
         plusHarisma.onClick.AddListener(() => p.PlusStat("harisma"));
+        removeArmor.onClick.AddListener(() => p.RemoveArmor());
+        removeWeapon.onClick.AddListener(() => p.RemoveWeapon());
     }
 
     public void UpdateStats(float force, float harisma, float level, float experience, 
