@@ -11,6 +11,7 @@ public class AllotoGameObjectsFactory : Factory<string>
         var namesList = new List<string>()
         {
             "man",
+            "door",
             "house",
             "jug",
         };

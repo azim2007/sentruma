@@ -113,10 +113,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 878, y: 471}
+  m_MinSize: {x: 881, y: 492}
   m_MaxSize: {x: 18004, y: 14042}
   vertical: 0
-  controlID: 171
+  controlID: 167
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -138,10 +138,10 @@ MonoBehaviour:
     y: 0
     width: 482
     height: 947
-  m_MinSize: {x: 477, y: 471}
+  m_MinSize: {x: 478, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 67
+  controlID: 60
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -163,8 +163,8 @@ MonoBehaviour:
     y: 0
     width: 482
     height: 647
-  m_MinSize: {x: 477, y: 200}
-  m_MaxSize: {x: 8002, y: 4021}
+  m_MinSize: {x: 478, y: 221}
+  m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
   controlID: 61
 --- !u!114 &8
@@ -266,10 +266,10 @@ MonoBehaviour:
     y: 0
     width: 802
     height: 947
-  m_MinSize: {x: 200, y: 321}
-  m_MaxSize: {x: 4002, y: 8021}
+  m_MinSize: {x: 202, y: 342}
+  m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
-  controlID: 116
+  controlID: 112
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -471,9 +471,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 223e0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 268bffff1ea6ffff60b3fffff8bdffff44beffff88c6ffff36d2ffff22d3ffff4ad3ffff64d4ffff60fbffff76580000
+      m_ExpandedIDs: bc71ffff4072ffffac86ffffda88ffffe288ffff9a93ffffa293ffff8a94ffffa4c7ffffd0f8ffff60fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -574,19 +574,19 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/prefabs/alloto
+    - Assets/Scenes/menu
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Resources/prefabs/alloto
+  - Assets/Scenes/menu
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Unity Projects\sentruma
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 360}
-    m_SelectedIDs: e43d0000
-    m_LastClickedID: 15844
+    scrollPos: {x: 0, y: 541}
+    m_SelectedIDs: fa3d0000
+    m_LastClickedID: 15866
     m_ExpandedIDs: 00000000963d0000983d00009a3d00009c3d00009e3d0000a03d0000a23d0000a43d0000a63d0000a83d0000aa3d0000ac3d0000ae3d0000b03d0000b23d0000b43d0000b63d0000c63d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -643,21 +643,21 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c62300008c3c0000823d0000d83b0000d2400000d0e5ffff183e0000203e00001c3e0000de3d0000ba3e0000be3e0000524e0000000000008c3f0000003f000012400000ba580000
+    m_ExpandedInstanceIDs: c62300008c3c0000823d0000d83b0000d2400000d0e5ffff183e0000203e00001c3e0000ba3e0000be3e0000524e0000000000008c3f0000003f000012400000ba580000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: al_man
-      m_OriginalName: al_man
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 16144
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_CreateAssetUtility:
@@ -840,9 +840,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -6.7700005, y: -2.54, z: 0}
+    m_Target: {x: -1.8697426, y: -0.40890634, z: -0.9974435}
     speed: 2
-    m_Value: {x: -1.0818185, y: -1.2254024, z: -3.1295018}
+    m_Value: {x: -1.8697426, y: -0.40890634, z: -0.9974435}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -892,9 +892,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 1.3328226
+    m_Target: 10.629226
     speed: 2
-    m_Value: 8.556907
+    m_Value: 10.629226
   m_Ortho:
     m_Target: 1
     speed: 2

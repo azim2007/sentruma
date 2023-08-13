@@ -9,6 +9,7 @@ public enum UnitsIds
     al_man,
     al_woman,
     al_kid,
-    al_jug
+    al_jug,
+    al_door,
 };
 
