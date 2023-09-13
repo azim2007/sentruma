@@ -11,6 +11,7 @@ public class AllotoSceneManager : MonoBehaviour
         player = playerFactory.Instantiate(UnitsIds.pl, new Vector2(0f, 0f)).GetComponent<Player>();
         var chestFactory = new ChestFactory();
         chestFactory.Instantiate();
+        GameObject.FindGameObjectWithTag("MainCamera").AddComponent<GameSceneCamera>();
     }
 
     void Update()

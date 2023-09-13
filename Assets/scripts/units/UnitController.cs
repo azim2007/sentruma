@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UnitController : ActingObjectsController
 {
@@ -23,7 +21,7 @@ public class UnitController : ActingObjectsController
 
     public override void OnRageAction()
     {
-        Debugger.Log($"{UnitName} dead");
+        
     }
 
     public override void OnPeacefulAction()
